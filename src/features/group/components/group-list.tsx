@@ -36,8 +36,8 @@ export function GroupList() {
           <ul className="mb-4 space-y-2">
             {groups.map((group) => (
               <li key={group.id}>
-                <Link href={`/dashboard/${group.id}`} className="">
-                  <div className="flex items-center gap-2 rounded-md border px-2 py-1 hover:bg-slate-50">
+                <Link href={`/dashboard/${group.id}`}>
+                  <div className="flex items-center gap-2 rounded-md bg-slate-100 px-2 py-1 hover:bg-slate-200">
                     <Users2 />
                     {group.title}
                   </div>

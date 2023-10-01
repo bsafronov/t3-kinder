@@ -26,4 +26,25 @@ export const groupRouter = createTRPCRouter({
         },
       });
     }),
+  getById: protectedProcedure
+    .input(z.object({ groupId: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.db.group.findUnique({
+        where: {
+          id: input.groupId,
+        },
+        include: {
+          _count: true,
+        },
+      });
+    }),
+  delete: protectedProcedure
+    .input(z.object({ groupId: z.string() }))
+    .mutation(({ ctx, input }) => {
+      return ctx.db.group.delete({
+        where: {
+          id: input.groupId,
+        },
+      });
+    }),
 });

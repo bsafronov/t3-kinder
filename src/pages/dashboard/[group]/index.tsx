@@ -1,3 +1,10 @@
+import { GroupActions, GroupInfo } from "~/features/group";
+
 export default function GroupPage() {
-  return <div>GroupPage</div>;
+  return (
+    <div>
+      <GroupInfo />
+      <GroupActions />
+    </div>
+  );
 }
