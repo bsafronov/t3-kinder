@@ -13,7 +13,7 @@ export function IntroLayout({ children }: { children?: React.ReactNode }) {
       <IntroNavbar />
       <div className="container mt-4 flex gap-4">
         <IntroSidebar />
-        {children}
+        <main className="grow">{children}</main>
       </div>
     </>
   );
