@@ -42,7 +42,7 @@ export function KidMainInfo() {
 
   const { mutate: update } = api.kids.update.useMutation();
 
-  const { isLoading } = api.kids.getById.useQuery(
+  const { isLoading, isSuccess } = api.kids.getById.useQuery(
     { id: kidId },
     {
       onSuccess: (kid) => {
@@ -62,7 +62,7 @@ export function KidMainInfo() {
     update({ ...values, kidId });
   };
 
-  if (isLoading)
+  if (isLoading || !isSuccess)
     return (
       <Card className="flex items-center justify-center p-4">
         <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
