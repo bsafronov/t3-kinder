@@ -15,4 +15,15 @@ export const groupRouter = createTRPCRouter({
         },
       });
     }),
+  getAll: protectedProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.db.group.findMany({
+        where: {
+          userIDs: {
+            has: input.userId,
+          },
+        },
+      });
+    }),
 });
