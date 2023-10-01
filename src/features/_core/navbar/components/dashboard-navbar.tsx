@@ -15,20 +15,24 @@ export function DashboardNavbar() {
     <div className="container sticky top-0 mt-4">
       <Card className="p-4">
         <div className="flex justify-between">
-          <div className="flex gap-4">
-            <Image alt="logo" src={"/logo.svg"} width={150} height={130} />
-            {groupPageId && (
-              <Link href={`/dashboard/${groupPageId}`}>
-                <Button variant={"ghost"} disabled={isGroupMainPage}>
-                  Главная
-                </Button>
-              </Link>
-            )}
-            {!isProfilePage && (
-              <Link href={"/dashboard"}>
-                <Button variant={"ghost"}>Моя страница</Button>
-              </Link>
-            )}
+          <div className="flex">
+            <div className="flex w-[15rem] items-center">
+              <Image alt="logo" src={"/logo.svg"} width={150} height={130} />
+            </div>
+            <div className="flex gap-2">
+              {groupPageId && (
+                <Link href={`/dashboard/${groupPageId}`}>
+                  <Button variant={"ghost"} disabled={isGroupMainPage}>
+                    Главная
+                  </Button>
+                </Link>
+              )}
+              {!isProfilePage && (
+                <Link href={"/dashboard"}>
+                  <Button variant={"ghost"}>Моя страница</Button>
+                </Link>
+              )}
+            </div>
           </div>
           <div className="flex gap-2">
             <Link href={"/"}>

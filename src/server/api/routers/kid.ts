@@ -45,4 +45,32 @@ export const kidRouter = createTRPCRouter({
         },
       });
     }),
+  update: protectedProcedure
+    .input(
+      z.object({
+        kidId: z.string(),
+        firstName: z.string(),
+        lastName: z.string(),
+        middleName: z.string(),
+        adress: z.string(),
+        omsPolicy: z.string(),
+        birthDate: z.string(),
+      }),
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.db.kid.update({
+        where: {
+          id: input.kidId,
+        },
+        data: {
+          updatedById: ctx.session.user.id,
+          firstName: input.firstName,
+          lastName: input.lastName,
+          middleName: input.middleName,
+          adress: input.adress,
+          omsPolicy: input.omsPolicy,
+          birthDate: input.birthDate,
+        },
+      });
+    }),
 });
