@@ -7,7 +7,9 @@ import { Card } from "~/shared/ui/card";
 
 export function DashboardNavbar() {
   const router = useRouter();
-  const isMainPage = router.pathname === "/dashboard";
+  const isProfilePage = router.pathname === "/dashboard";
+  const isGroupMainPage = router.pathname === "/dashboard/[groupId]";
+  const groupPageId = (router.query.groupId as string) || undefined;
 
   return (
     <div className="container sticky top-0 mt-4">
@@ -15,9 +17,16 @@ export function DashboardNavbar() {
         <div className="flex justify-between">
           <div className="flex gap-4">
             <Image alt="logo" src={"/logo.svg"} width={150} height={130} />
-            {!isMainPage && (
+            {groupPageId && (
+              <Link href={`/dashboard/${groupPageId}`}>
+                <Button variant={"ghost"} disabled={isGroupMainPage}>
+                  Главная
+                </Button>
+              </Link>
+            )}
+            {!isProfilePage && (
               <Link href={"/dashboard"}>
-                <Button variant={"ghost"}>Главная</Button>
+                <Button variant={"ghost"}>Моя страница</Button>
               </Link>
             )}
           </div>

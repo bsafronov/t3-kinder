@@ -4,7 +4,7 @@ import { Card } from "~/shared/ui/card";
 export function DashboardSidebar() {
   return (
     <div className="sticky top-16">
-      <Card className="min-w-[16rem] max-w-[16rem]">
+      <Card className="min-w-[16rem] max-w-[16rem] overflow-hidden">
         <SidebarKidList />
       </Card>
     </div>

@@ -121,8 +121,8 @@ model Kid {
     createdById String @db.ObjectId
     createdBy   User   @relation("created", fields: [createdById], references: [id])
 
-    updatedById String @db.ObjectId
-    updatedBy   User   @relation("updated", fields: [createdById], references: [id])
+    updatedById String? @db.ObjectId
+    updatedBy   User?   @relation("updated", fields: [createdById], references: [id])
 
     groupId String @db.ObjectId
     group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
@@ -147,8 +147,8 @@ model Parent {
     createdById String @db.ObjectId
     createdBy   User   @relation("created", fields: [createdById], references: [id])
 
-    updatedById String @db.ObjectId
-    updatedBy   User   @relation("updated", fields: [createdById], references: [id])
+    updatedById String? @db.ObjectId
+    updatedBy   User?   @relation("updated", fields: [createdById], references: [id])
 
     groupId String @db.ObjectId
     group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
@@ -166,8 +166,8 @@ model Vaccination {
     createdById String @db.ObjectId
     createdBy   User   @relation("created", fields: [createdById], references: [id])
 
-    updatedById String @db.ObjectId
-    updatedBy   User   @relation("updated", fields: [createdById], references: [id])
+    updatedById String? @db.ObjectId
+    updatedBy   User?   @relation("updated", fields: [createdById], references: [id])
 
     groupId String @db.ObjectId
     group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
@@ -199,8 +199,8 @@ model Absence {
     createdById String @db.ObjectId
     createdBy   User   @relation("created", fields: [createdById], references: [id])
 
-    updatedById String @db.ObjectId
-    updatedBy   User   @relation("updated", fields: [createdById], references: [id])
+    updatedById String? @db.ObjectId
+    updatedBy   User?   @relation("updated", fields: [createdById], references: [id])
 
     groupId String @db.ObjectId
     group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
@@ -232,8 +232,8 @@ model Note {
     createdById String @db.ObjectId
     createdBy   User   @relation("created", fields: [createdById], references: [id])
 
-    updatedById String @db.ObjectId
-    updatedBy   User   @relation("updated", fields: [createdById], references: [id])
+    updatedById String? @db.ObjectId
+    updatedBy   User?   @relation("updated", fields: [createdById], references: [id])
 
     groupId String @db.ObjectId
     group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)

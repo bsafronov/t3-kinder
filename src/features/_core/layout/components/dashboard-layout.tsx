@@ -7,7 +7,7 @@ import Head from "next/head";
 export function DashboardLayout({ children }: { children?: React.ReactNode }) {
   const { status } = useSession();
   const router = useRouter();
-  const { group } = router.query;
+  const { groupId } = router.query;
 
   if (status === "unauthenticated") {
     void router.push("/");
@@ -22,7 +22,7 @@ export function DashboardLayout({ children }: { children?: React.ReactNode }) {
       </Head>
       <DashboardNavbar />
       <div className="container mt-4 flex items-start gap-4">
-        {group && <DashboardSidebar />}
+        {groupId && <DashboardSidebar />}
         <main className="grow">{children}</main>
       </div>
     </>

@@ -4,14 +4,14 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const groupRouter = createTRPCRouter({
   create: protectedProcedure
-    .input(z.object({ title: z.string().min(1), createdBy: z.string() }))
+    .input(z.object({ title: z.string().min(1) }))
     .mutation(({ ctx, input }) => {
       return ctx.db.group.create({
         data: {
           title: input.title,
-          createdById: input.createdBy,
-          userIDs: [input.createdBy],
-          adminIDs: [input.createdBy],
+          createdById: ctx.session.user.id,
+          userIDs: [ctx.session.user.id],
+          adminIDs: [ctx.session.user.id],
         },
       });
     }),

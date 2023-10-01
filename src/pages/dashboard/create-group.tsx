@@ -39,7 +39,7 @@ export default function CreateGroupPage() {
   const onSubmit = (values: SchemaType) => {
     if (!user) return;
 
-    create({ createdBy: user.id, title: values.title });
+    create({ title: values.title });
   };
 
   return (

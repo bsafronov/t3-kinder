@@ -5,7 +5,7 @@ import { api } from "~/shared/utils/api";
 
 export function GroupInfo() {
   const router = useRouter();
-  const groupId = router.query.group as string;
+  const groupId = router.query.groupId as string;
 
   const {
     data: group,
