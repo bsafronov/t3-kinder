@@ -1,9 +1,12 @@
+import { SidebarKidList } from "~/features/kid";
 import { Card } from "~/shared/ui/card";
 
 export function DashboardSidebar() {
   return (
-    <div className="sticky top-0">
-      <Card className="p-4">Здесь будет управление группами и детьми</Card>
+    <div className="sticky top-16">
+      <Card className="min-w-[16rem] max-w-[16rem]">
+        <SidebarKidList />
+      </Card>
     </div>
   );
 }

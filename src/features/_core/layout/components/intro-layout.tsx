@@ -11,7 +11,7 @@ export function IntroLayout({ children }: { children?: React.ReactNode }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <IntroNavbar />
-      <div className="container mt-4 flex gap-4">
+      <div className="container mt-4 flex items-start gap-4">
         <IntroSidebar />
         <main className="grow">{children}</main>
       </div>
