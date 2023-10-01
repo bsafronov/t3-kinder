@@ -1,3 +1,3 @@
-export function KidsPage() {
+export default function KidsPage() {
   return <div>KidsPage</div>;
 }
