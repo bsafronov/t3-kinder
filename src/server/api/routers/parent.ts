@@ -2,13 +2,13 @@ import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
-export const kidRouter = createTRPCRouter({
+export const parentRouter = createTRPCRouter({
   getById: protectedProcedure
-    .input(z.object({ id: z.string() }))
+    .input(z.object({ parentId: z.string() }))
     .query(({ ctx, input }) => {
-      return ctx.db.kid.findUnique({
+      return ctx.db.parent.findUnique({
         where: {
-          id: input.id,
+          id: input.parentId,
         },
         include: {
           createdBy: true,
@@ -20,12 +20,16 @@ export const kidRouter = createTRPCRouter({
     .input(
       z.object({
         groupId: z.string(),
+        kidId: z.string(),
       }),
     )
     .query(({ ctx, input }) => {
-      return ctx.db.kid.findMany({
+      return ctx.db.parent.findMany({
         where: {
           groupId: input.groupId,
+          kidIDs: {
+            has: input.kidId,
+          },
         },
       });
     }),
@@ -35,14 +39,18 @@ export const kidRouter = createTRPCRouter({
         firstName: z.string(),
         lastName: z.string(),
         middleName: z.string(),
+        role: z.string(),
         groupId: z.string(),
+        kidIDs: z.array(z.string()),
       }),
     )
     .mutation(({ ctx, input }) => {
-      return ctx.db.kid.create({
+      return ctx.db.parent.create({
         data: {
           createdById: ctx.session.user.id,
           groupId: input.groupId,
+          role: input.role,
+          kidIDs: input.kidIDs,
           firstName: input.firstName,
           lastName: input.lastName,
           middleName: input.middleName,
@@ -52,28 +60,26 @@ export const kidRouter = createTRPCRouter({
   update: protectedProcedure
     .input(
       z.object({
-        kidId: z.string(),
+        parentId: z.string(),
         firstName: z.string(),
         lastName: z.string(),
         middleName: z.string(),
-        adress: z.string(),
-        omsPolicy: z.string(),
-        birthDate: z.string(),
+        role: z.string(),
+        kidIDs: z.array(z.string()).optional(),
       }),
     )
     .mutation(({ ctx, input }) => {
-      return ctx.db.kid.update({
+      return ctx.db.parent.update({
         where: {
-          id: input.kidId,
+          id: input.parentId,
         },
         data: {
           updatedById: ctx.session.user.id,
           firstName: input.firstName,
           lastName: input.lastName,
           middleName: input.middleName,
-          adress: input.adress,
-          omsPolicy: input.omsPolicy,
-          birthDate: input.birthDate,
+          role: input.role,
+          kidIDs: input.kidIDs,
         },
       });
     }),
