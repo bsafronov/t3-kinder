@@ -136,13 +136,14 @@ model Kid {
 }
 
 model Parent {
-    id         String   @id @default(auto()) @map("_id") @db.ObjectId
-    role       String
-    firstName  String?
-    lastName   String?
-    middleName String?
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @updatedAt
+    id           String   @id @default(auto()) @map("_id") @db.ObjectId
+    role         String
+    firstName    String?
+    lastName     String?
+    middleName   String?
+    phoneNumbers String[]
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
 
     createdById String @db.ObjectId
     createdBy   User   @relation("created", fields: [createdById], references: [id])

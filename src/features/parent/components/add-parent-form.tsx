@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Plus, Trash2 } from "lucide-react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -20,6 +21,7 @@ const formSchema = z.object({
   lastName: z.string().min(1, { message: "Обязательное поле" }),
   middleName: z.string().min(1, { message: "Обязательное поле" }),
   role: z.string().min(1, { message: "Обязательное поле" }),
+  phoneNumbers: z.array(z.string()),
 });
 
 type SchemaType = z.infer<typeof formSchema>;
@@ -45,13 +47,26 @@ export function AddParentForm() {
       lastName: "",
       middleName: "",
       role: "",
+      phoneNumbers: [""],
     },
   });
+  const phoneNumbers = form.watch("phoneNumbers");
   const onSubmit = (values: SchemaType) => {
     if (!kidId || !groupId || Array.isArray(kidId) || Array.isArray(groupId))
       return;
 
-    create({ groupId, kidIDs: [kidId], ...values });
+    const filteredPhoneNumbers = phoneNumbers.filter((phone) => phone !== "");
+    create({
+      ...values,
+      groupId,
+      kidIDs: [kidId],
+      phoneNumbers: filteredPhoneNumbers,
+    });
+  };
+
+  const handleCancelCreate = () => {
+    setOpen(false);
+    form.reset();
   };
 
   if (!isOpen) {
@@ -70,7 +85,7 @@ export function AddParentForm() {
         onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}
         className="p-4"
       >
-        <div className="grid grid-cols-1 gap-4  md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-2">
           <FormField
             control={form.control}
             name="role"
@@ -124,13 +139,53 @@ export function AddParentForm() {
               </FormItem>
             )}
           />
+          <div>
+            <FormLabel>Телефоны</FormLabel>
+            <ul className="space-y-2">
+              {phoneNumbers.map((_, index) => (
+                <FormField
+                  key={index}
+                  control={form.control}
+                  name={`phoneNumbers.${index}`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="flex items-center gap-2">
+                        <Input {...field} />
+                        <button
+                          type="button"
+                          className="text-red-500 hover:text-red-600"
+                          onClick={() =>
+                            form.setValue(`phoneNumbers`, [
+                              ...phoneNumbers.slice(0, index),
+                              ...phoneNumbers.slice(index + 1),
+                            ])
+                          }
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              ))}
+            </ul>
+            <div className="mt-2">
+              <button
+                className="flex items-center gap-1 text-xs text-blue-500 hover:text-blue-600"
+                type="button"
+                onClick={() =>
+                  form.setValue("phoneNumbers", [...phoneNumbers, ""])
+                }
+              >
+                <Plus className="h-3 w-3" />
+                Добавить телефон
+              </button>
+            </div>
+          </div>
         </div>
         <div className="mt-4 flex justify-end gap-4">
-          <Button
-            type="button"
-            variant={"ghost"}
-            onClick={() => setOpen(false)}
-          >
+          <Button type="button" variant={"ghost"} onClick={handleCancelCreate}>
             Отмена
           </Button>
           <Button>Добавить</Button>

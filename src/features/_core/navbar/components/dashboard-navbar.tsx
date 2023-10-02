@@ -12,7 +12,7 @@ export function DashboardNavbar() {
   const groupPageId = (router.query.groupId as string) || undefined;
 
   return (
-    <div className="container sticky top-0 mt-4">
+    <div className="container sticky top-0 z-40 mt-4">
       <Card className="p-4">
         <div className="flex justify-between">
           <div className="flex">
