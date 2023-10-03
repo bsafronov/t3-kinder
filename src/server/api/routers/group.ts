@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import { defaultVaccinationTags } from "~/shared/consts/default-vaccination-tags";
 
 export const groupRouter = createTRPCRouter({
   create: protectedProcedure
@@ -12,6 +13,11 @@ export const groupRouter = createTRPCRouter({
           createdById: ctx.session.user.id,
           userIDs: [ctx.session.user.id],
           adminIDs: [ctx.session.user.id],
+          vaccinationTags: {
+            createMany: {
+              data: defaultVaccinationTags,
+            },
+          },
         },
       });
     }),

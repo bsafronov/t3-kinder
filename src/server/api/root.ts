@@ -3,6 +3,8 @@ import { userRouter } from "./routers/user";
 import { groupRouter } from "./routers/group";
 import { kidRouter } from "./routers/kid";
 import { parentRouter } from "./routers/parent";
+import { vaccinationRouter } from "./routers/vaccination";
+import { vaccinationTagRouter } from "./routers/vaccination-tag";
 
 /**
  * This is the primary router for your server.
@@ -14,6 +16,8 @@ export const appRouter = createTRPCRouter({
   groups: groupRouter,
   kids: kidRouter,
   parents: parentRouter,
+  vaccinations: vaccinationRouter,
+  vaccinationTags: vaccinationTagRouter,
 });
 
 // export type definition of API
