@@ -2,7 +2,7 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const vaccinationTagRouter = createTRPCRouter({
-  getAll: protectedProcedure
+  getAllByGroup: protectedProcedure
     .input(z.object({ groupId: z.string() }))
     .query(({ ctx, input }) => {
       return ctx.db.vaccinationTag.findMany({
@@ -11,6 +11,9 @@ export const vaccinationTagRouter = createTRPCRouter({
         },
       });
     }),
+  getAll: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.vaccinationTag.findMany({});
+  }),
   create: protectedProcedure
     .input(
       z.object({

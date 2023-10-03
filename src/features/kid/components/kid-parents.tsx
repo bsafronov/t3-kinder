@@ -25,7 +25,7 @@ export function KidParents() {
     );
   }
   return (
-    <Card>
+    <Card className="overflow-hidden">
       {isSuccess && parents.length > 0 && (
         <ul className="divide-y border-b">
           {parents.map((parent) => (

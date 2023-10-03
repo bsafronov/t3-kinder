@@ -2,7 +2,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { z } from "zod";
+import { useQueryString } from "~/shared/hooks/useQueryString";
 import { Button } from "~/shared/ui/button";
 import {
   Form,
@@ -12,6 +14,7 @@ import {
   FormMessage,
 } from "~/shared/ui/form";
 import { Input } from "~/shared/ui/input";
+import Select from "~/shared/ui/select";
 import { api } from "~/shared/utils/api";
 
 const formSchema = z.object({
@@ -21,29 +24,44 @@ const formSchema = z.object({
 
 type SchemaType = z.infer<typeof formSchema>;
 
-export function CreateVaccinationForm() {
+export function VaccinationEdit() {
+  const { pushQuery } = useQueryString();
   const kidId = useRouter().query.kidId as string;
   const groupId = useRouter().query.groupId as string;
-
-  const form = useForm<SchemaType>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      date: "",
-      tagId: "",
-    },
-  });
-
-  const { data: vaccinationTags } = api.vaccinationTags.getAll.useQuery(
-    { groupId },
+  const vaccinationId = useRouter().query.vaccinationId as string;
+  const ctx = api.useContext();
+  const { data: vaccination } = api.vaccinations.getOneByKid.useQuery(
+    { vaccinationId },
     {
-      enabled: !!groupId,
+      enabled: !!vaccinationId,
     },
   );
 
-  const { mutate: create } = api.vaccinations.create.useMutation({});
+  const { data: vaccinationTags } = api.vaccinationTags.getAllByGroup.useQuery(
+    {
+      groupId,
+    },
+    { enabled: !!groupId },
+  );
+
+  const { mutate: update } = api.vaccinations.update.useMutation({
+    onSuccess: () => {
+      void ctx.vaccinations.getAllByKid.invalidate({ kidId });
+      toast.success("Прививка обновлена!");
+    },
+  });
+
+  const form = useForm<SchemaType>({
+    resolver: zodResolver(formSchema),
+    values: {
+      date: vaccination?.date ?? "",
+      tagId: vaccination?.tagId ?? "",
+    },
+  });
 
   const onSubmit = (values: SchemaType) => {
-    create({ kidId, groupId, date: values.date, tagId: values.tagId });
+    update({ vaccinationId, ...values });
+    pushQuery(null);
   };
 
   return (
@@ -66,28 +84,28 @@ export function CreateVaccinationForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Название</FormLabel>
-              <select {...field} disabled={vaccinationTags?.length === 0}>
-                {vaccinationTags?.length === 0 && (
-                  <option disabled selected>
-                    Нет доступных прививок
-                  </option>
-                )}
-                {vaccinationTags?.map((tag) => (
-                  <option key={tag.id} value={tag.id}>
-                    {tag.label}
-                  </option>
-                ))}
-              </select>
+              <Select
+                value={vaccinationTags?.find((tag) => tag.id === field.value)}
+                selectType="sync"
+                placeholder="Выбрать..."
+                options={vaccinationTags ?? []}
+                onChange={(value) => field.onChange(value?.id ?? "")}
+              />
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button variant={"link"} size={"contents"} type="button">
+        <Button
+          variant={"link"}
+          size={"contents"}
+          type="button"
+          onClick={() => pushQuery({ modal: "vaccination-tag-create" })}
+        >
           <Plus className="h-3 w-3" />
           Добавить названия
         </Button>
         <div className="mt-4 flex justify-end">
-          <Button>Добавить</Button>
+          <Button>Изменить</Button>
         </div>
       </form>
     </Form>
