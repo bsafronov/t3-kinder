@@ -1,7 +1,7 @@
 import { EditIcon, Info, Trash2 } from "lucide-react";
 import { parentRoles } from "~/shared/consts/parent-roles";
 import { Badge } from "~/shared/ui/badge";
-import { api, type RouterOutputs } from "~/shared/utils/api";
+import { type RouterOutputs } from "~/shared/utils/api";
 import { Confirm } from "~/shared/ui/confirm";
 import { formatRelative } from "date-fns";
 import { ru } from "date-fns/locale";
@@ -12,19 +12,15 @@ import {
 } from "~/shared/ui/hover-card";
 import { useQueryString } from "~/shared/hooks/useQueryString";
 import { ModalEnum } from "~/features/_core/modal";
+import { useParentDelete } from "../api/delete";
 
 type Props = RouterOutputs["parents"]["getAll"][number];
 export function ParentItem(parent: Props) {
   const { pushQuery } = useQueryString();
-  const ctx = api.useContext();
   const isUpdated = parent.updatedAt.toString() !== parent.createdAt.toString();
   const isUpdatedByAnotherUser =
     parent.updatedById && parent.updatedById !== parent.createdById;
-  const { mutate: deleteParent } = api.parents.delete.useMutation({
-    onSuccess: () => {
-      void ctx.parents.getAll.invalidate();
-    },
-  });
+  const { mutate: deleteParent } = useParentDelete();
 
   return (
     <div className="group relative px-4 py-2 text-sm hover:bg-slate-50">

@@ -29,4 +29,34 @@ export const vaccinationTagRouter = createTRPCRouter({
         },
       });
     }),
+  delete: protectedProcedure
+    .input(
+      z.object({
+        vaccinationTagId: z.string(),
+      }),
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.db.vaccinationTag.delete({
+        where: {
+          id: input.vaccinationTagId,
+        },
+      });
+    }),
+  update: protectedProcedure
+    .input(
+      z.object({
+        vaccinationTagId: z.string(),
+        label: z.string(),
+      }),
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.db.vaccinationTag.update({
+        where: {
+          id: input.vaccinationTagId,
+        },
+        data: {
+          label: input.label,
+        },
+      });
+    }),
 });
