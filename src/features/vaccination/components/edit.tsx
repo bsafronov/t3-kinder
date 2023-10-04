@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { Form } from "~/shared/ui/form";
-import { useVaccinationGetOne } from "../api/getOne";
+import { useVaccinationGetOne } from "../api/get-one";
 import { useVaccinationUpdate } from "../api/update";
 import { VaccinationFormFields } from "../form";
 import {

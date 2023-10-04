@@ -7,8 +7,8 @@ type Props<T extends FieldValues> = {
   form: UseFormReturn<T>;
   onSubmit: (values: T) => void;
   children: React.ReactNode;
-  cancelText?: string;
-  submitText?: string;
+  cancelText?: "Отмена" | "Назад";
+  submitText?: "Изменить" | "Создать";
 };
 
 export function FormWrapper<T extends FieldValues>({

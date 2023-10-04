@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { ParentFormFields } from "../form";
 import { type ParentSchemaType, useParentForm } from "../form/use-form";
 import { useParentUpdate } from "../api/update";
-import { useParentGetOne } from "../api/getOne";
+import { useParentGetOne } from "../api/get-one";
 import { FormWrapper } from "~/shared/components/form-wrapper";
 
 type Props = {
@@ -31,7 +31,7 @@ export function ParentEdit({ backOnSuccess }: Props) {
   };
 
   return (
-    <FormWrapper form={form} onSubmit={onSubmit}>
+    <FormWrapper form={form} onSubmit={onSubmit} submitText="Создать">
       <ParentFormFields {...form} />
     </FormWrapper>
   );

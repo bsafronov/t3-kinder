@@ -2,11 +2,11 @@ import { useRouter } from "next/router";
 import { FormWrapper } from "~/shared/components/form-wrapper";
 import { badgeVariants } from "~/shared/ui/badge";
 import {
-  VaccinationTagSchemaType,
+  type VaccinationTagSchemaType,
   useVaccinationTagForm,
 } from "../form/use-form";
 import { VaccinationTagFormFields } from "../form";
-import { useVaccinationTagGetManyByGroup } from "../api/getManyByGroup";
+import { useVaccinationTagGetManyByGroup } from "../api/get-many-by-group";
 import { useVaccinationTagCreate } from "../api/create";
 
 export function VaccinationTagCreate() {
