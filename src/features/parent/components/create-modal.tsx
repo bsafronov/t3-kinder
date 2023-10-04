@@ -5,7 +5,7 @@ import { ParentCreate } from "./create";
 export function ParentCreateModal() {
   return (
     <Modal query={ModalEnum.PARENT_CREATE} title="Добавление родителя">
-      <ParentCreate />
+      <ParentCreate backOnSuccess />
     </Modal>
   );
 }

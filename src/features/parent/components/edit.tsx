@@ -1,11 +1,16 @@
 import { useRouter } from "next/router";
-import { Form } from "~/shared/ui/form";
 import { ParentFormFields } from "../form";
 import { type ParentSchemaType, useParentForm } from "../form/use-form";
 import { useParentUpdate } from "../api/update";
 import { useParentGetOne } from "../api/getOne";
+import { FormWrapper } from "~/shared/components/form-wrapper";
 
-export function ParentEdit() {
+type Props = {
+  backOnSuccess?: boolean;
+};
+
+export function ParentEdit({ backOnSuccess }: Props) {
+  const router = useRouter();
   const parentId = useRouter().query.parentId as string;
 
   const { data: parent } = useParentGetOne();
@@ -22,13 +27,12 @@ export function ParentEdit() {
       parentId,
       phoneNumbers: filteredPhoneNumbers,
     });
+    backOnSuccess && router.back();
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
-        <ParentFormFields form={form} phoneNumbers={phoneNumbers} />
-      </form>
-    </Form>
+    <FormWrapper form={form} onSubmit={onSubmit}>
+      <ParentFormFields {...form} />
+    </FormWrapper>
   );
 }

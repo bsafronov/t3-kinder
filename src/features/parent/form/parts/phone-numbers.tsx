@@ -3,12 +3,9 @@ import { type ParentFormType } from "../use-form";
 import { Input } from "~/shared/ui/input";
 import { Plus, Trash2 } from "lucide-react";
 
-type Props = {
-  form: ParentFormType;
-  phoneNumbers: string[];
-};
+export function ParentFormFieldPhoneNumbers(form: ParentFormType) {
+  const phoneNumbers = form.watch("phoneNumbers");
 
-export function ParentFormFieldPhoneNumbers({ form, phoneNumbers }: Props) {
   return (
     <div>
       <FormLabel>Телефоны</FormLabel>

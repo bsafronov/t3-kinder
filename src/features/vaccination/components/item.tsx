@@ -1,25 +1,18 @@
 import { format } from "date-fns";
 import { Edit, Trash2 } from "lucide-react";
-import toast from "react-hot-toast";
 import { ModalEnum } from "~/features/_core/modal";
 import { useQueryString } from "~/shared/hooks/useQueryString";
 import { Badge } from "~/shared/ui/badge";
 import { Confirm } from "~/shared/ui/confirm";
-import { type RouterOutputs, api } from "~/shared/utils/api";
+import { type RouterOutputs } from "~/shared/utils/api";
+import { useVaccinationDelete } from "../api/delete";
 
 type Props = RouterOutputs["vaccinations"]["getAllByKid"][number];
 
 export function VaccinationItem(vaccination: Props) {
   const { pushQuery } = useQueryString();
-  const ctx = api.useContext();
-  const { mutate: deleteVaccination } = api.vaccinations.delete.useMutation({
-    onSuccess: () => {
-      void ctx.vaccinations.getAllByKid.invalidate({
-        kidId: vaccination.kidId,
-      });
-      toast.success("Прививка удалена!");
-    },
-  });
+  const { mutate: deleteVaccination } = useVaccinationDelete();
+
   return (
     <div className="group flex items-center justify-between px-4 py-2 hover:bg-slate-50">
       <div className="flex items-center gap-1">

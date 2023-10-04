@@ -5,7 +5,7 @@ import { ParentEdit } from "./edit";
 export function ParentEditModal() {
   return (
     <Modal query={ModalEnum.PARENT_EDIT} title="Редактирование родителя">
-      <ParentEdit />
+      <ParentEdit backOnSuccess />
     </Modal>
   );
 }
