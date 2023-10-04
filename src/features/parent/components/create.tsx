@@ -1,18 +1,21 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, Trash2 } from "lucide-react";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { parentRoles } from "~/shared/consts/parent-roles";
 import { Button } from "~/shared/ui/button";
 import {
   Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "~/shared/ui/form";
 import { Input } from "~/shared/ui/input";
-import { api, type RouterOutputs } from "~/shared/utils/api";
+import Select from "~/shared/ui/select";
+import { api } from "~/shared/utils/api";
 
 const formSchema = z.object({
   firstName: z.string().min(1, { message: "Обязательное поле" }),
@@ -23,64 +26,74 @@ const formSchema = z.object({
 });
 
 type SchemaType = z.infer<typeof formSchema>;
-type Props = {
-  parent: RouterOutputs["parents"]["getAll"][number];
-  setEditing: React.Dispatch<React.SetStateAction<boolean>>;
-};
 
-export function EditParentForm({ parent, setEditing }: Props) {
+export function ParentCreate() {
+  const groupId = useRouter().query.groupId;
+  const kidId = useRouter().query.kidId;
+
   const ctx = api.useContext();
-  const { mutate: update } = api.parents.update.useMutation({
+  const { mutate: create } = api.parents.create.useMutation({
     onSuccess: () => {
+      form.reset();
       void ctx.parents.getAll.invalidate();
-      setEditing(false);
     },
   });
+
   const form = useForm<SchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: parent.firstName ?? "",
-      lastName: parent.lastName ?? "",
-      middleName: parent.middleName ?? "",
-      role: parent.role ?? "",
-      phoneNumbers: parent.phoneNumbers,
+      firstName: "",
+      lastName: "",
+      middleName: "",
+      role: "",
+      phoneNumbers: [""],
     },
   });
   const phoneNumbers = form.watch("phoneNumbers");
-
   const onSubmit = (values: SchemaType) => {
-    const filteredPhoneNumbers = phoneNumbers.filter((phone) => phone !== "");
+    if (!kidId || !groupId || Array.isArray(kidId) || Array.isArray(groupId))
+      return;
 
-    update({
+    const filteredPhoneNumbers = phoneNumbers.filter((phone) => phone !== "");
+    create({
       ...values,
-      parentId: parent.id,
+      groupId,
+      kidIDs: [kidId],
       phoneNumbers: filteredPhoneNumbers,
     });
+  };
+
+  const handleCancelCreate = () => {
+    form.reset();
   };
 
   return (
     <Form {...form}>
       <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
-        <div className="space-y-2">
+        <div className="grid grid-cols-1 gap-2">
           <FormField
             control={form.control}
             name="role"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Роль</FormLabel>
-                <select
-                  {...field}
-                  className="h-10 w-full rounded-md border bg-transparent px-2"
-                >
-                  {parentRoles.map((r) => (
-                    <option key={r.value} value={r.value}>
-                      {r.label}
-                    </option>
-                  ))}
-                </select>
-                <FormMessage />
-              </FormItem>
-            )}
+            render={({ field }) => {
+              const selectedValue = parentRoles.find(
+                (p) => p.value === field.value,
+              );
+
+              return (
+                <FormItem>
+                  <FormLabel>Роль</FormLabel>
+                  <FormControl>
+                    <Select
+                      selectType="sync"
+                      value={selectedValue}
+                      options={parentRoles}
+                      onChange={(option) => field.onChange(option?.value)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
           />
           <FormField
             control={form.control}
@@ -88,7 +101,9 @@ export function EditParentForm({ parent, setEditing }: Props) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Фамилия</FormLabel>
-                <Input {...field} />
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -99,7 +114,9 @@ export function EditParentForm({ parent, setEditing }: Props) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Имя</FormLabel>
-                <Input {...field} />
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -110,7 +127,9 @@ export function EditParentForm({ parent, setEditing }: Props) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Отчество</FormLabel>
-                <Input {...field} />
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -161,14 +180,10 @@ export function EditParentForm({ parent, setEditing }: Props) {
           </div>
         </div>
         <div className="mt-4 flex justify-end gap-4">
-          <Button
-            variant={"ghost"}
-            type="button"
-            onClick={() => setEditing(false)}
-          >
+          <Button type="button" variant={"ghost"} onClick={handleCancelCreate}>
             Отмена
           </Button>
-          <Button>Сохранить</Button>
+          <Button>Добавить</Button>
         </div>
       </form>
     </Form>
