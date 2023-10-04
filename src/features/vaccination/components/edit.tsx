@@ -81,19 +81,35 @@ export function VaccinationEdit() {
         <FormField
           control={form.control}
           name="tagId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Название</FormLabel>
-              <Select
-                value={vaccinationTags?.find((tag) => tag.id === field.value)}
-                selectType="sync"
-                placeholder="Выбрать..."
-                options={vaccinationTags ?? []}
-                onChange={(value) => field.onChange(value?.id ?? "")}
-              />
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            const selectedTag = vaccinationTags?.find(
+              (v) => v.id === field.value,
+            );
+            const options = (vaccinationTags ?? []).map((t) => ({
+              value: t.id,
+              label: t.label,
+            }));
+
+            return (
+              <FormItem>
+                <FormLabel>Название</FormLabel>
+                <Select
+                  value={
+                    selectedTag
+                      ? { value: selectedTag.id, label: selectedTag.label }
+                      : null
+                  }
+                  selectType="sync"
+                  placeholder="Выбрать..."
+                  options={options}
+                  onChange={(option) =>
+                    field.onChange(option?.value ?? undefined)
+                  }
+                />
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
         <Button
           variant={"link"}

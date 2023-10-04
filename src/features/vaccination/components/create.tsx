@@ -8,6 +8,7 @@ import { useQueryString } from "~/shared/hooks/useQueryString";
 import { Button } from "~/shared/ui/button";
 import {
   Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
@@ -69,7 +70,9 @@ export function VaccinationCreate() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Дата прививки</FormLabel>
-              <Input {...field} type="date" />
+              <FormControl>
+                <Input {...field} type="date" />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
@@ -77,18 +80,36 @@ export function VaccinationCreate() {
         <FormField
           control={form.control}
           name="tagId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Название</FormLabel>
-              <Select
-                value={vaccinationTags?.find((v) => v.groupId === field.value)}
-                selectType="sync"
-                options={vaccinationTags ?? []}
-                onChange={(value) => field.onChange(value?.id ?? undefined)}
-              />
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            const selectedTag = vaccinationTags?.find(
+              (v) => v.id === field.value,
+            );
+            const options = (vaccinationTags ?? []).map((t) => ({
+              value: t.id,
+              label: t.label,
+            }));
+
+            return (
+              <FormItem>
+                <FormLabel>Название</FormLabel>
+                <FormControl>
+                  <Select
+                    selectType="sync"
+                    value={
+                      selectedTag
+                        ? { value: selectedTag.id, label: selectedTag.label }
+                        : null
+                    }
+                    options={options}
+                    onChange={(option) =>
+                      field.onChange(option?.value ?? undefined)
+                    }
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
         <Button
           variant={"link"}

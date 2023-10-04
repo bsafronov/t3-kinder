@@ -12,8 +12,8 @@ import { cn } from "../utils/cn";
 const stylesReactSelect: ClassNamesConfig = {
   container: () => cn("w-full text-sm group"),
   option: ({ isSelected, isFocused }) =>
-    cn("px-4 py-2 transition-colors", {
-      "bg-slate-300": isSelected,
+    cn("px-4 py-2", {
+      "bg-slate-200": isSelected,
       "bg-slate-100": isFocused && !isSelected,
     }),
 
@@ -51,6 +51,31 @@ const stylesReactSelect: ClassNamesConfig = {
   clearIndicator: () => cn(""),
 };
 
+function createStylesReactSelect<
+  Option,
+  IsMulti extends boolean,
+  Group extends GroupBase<Option>,
+>(classNames?: ClassNamesConfig<Option, IsMulti, Group>) {
+  // eslint-disable-next-line
+  const initialStyles: Record<string, (data: any) => string> = {
+    ...stylesReactSelect, // Include predefined styles
+    ...classNames, // Include styles from classNames prop
+  };
+
+  return Object.entries(initialStyles).reduce(
+    (styles, [key, value]) => {
+      if (typeof value === "function") {
+        const defaultStyle = initialStyles[key] ?? (() => "");
+        styles[key as keyof ClassNamesConfig<Option, IsMulti, Group>] = (
+          ...args
+        ) => cn(defaultStyle(...args), value(...args));
+      }
+      return styles;
+    },
+    {} as ClassNamesConfig<Option, IsMulti, Group>,
+  );
+}
+
 type CustomProps<O, M extends boolean, G extends GroupBase<O>> = {
   selectType: "sync" | "async" | "async-creatable";
 } & (
@@ -79,6 +104,7 @@ export default function Select<
     blurInputOnSelect,
     classNames,
     isMulti,
+    value,
     ...rest
   } = props;
 
@@ -92,27 +118,15 @@ export default function Select<
     Component = ReactSelect;
   }
 
-  const mergedStyles = useMemo(() => {
-    /* eslint-disable */
-
-    const initialStyles: Record<string, (data: any) => string> = {
-      ...stylesReactSelect,
-    };
-
-    Object.entries({ ...classNames }).forEach(([key, value]) => {
-      if (typeof value === "function") {
-        const defaultStyle = initialStyles[key] ?? (() => "");
-        initialStyles[key] = (...args) =>
-          cn(defaultStyle(...args), value(...args));
-      }
-    });
-    /* eslint-enable */
-    return initialStyles;
-  }, [classNames]);
+  const mergedStyles = useMemo(
+    () => createStylesReactSelect(classNames),
+    [classNames],
+  );
 
   return (
     <Component
       {...rest}
+      value={value}
       isMulti={isMulti}
       loadOptions={loadOptions}
       closeMenuOnSelect={!isMulti ?? closeMenuOnSelect}
