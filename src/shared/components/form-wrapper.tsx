@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 type Props<T extends FieldValues> = {
   form: UseFormReturn<T>;
-  onSubmit: (values: T) => void;
+  onSubmit: (values: T) => Promise<void>;
   children: React.ReactNode;
   cancelText?: "Отмена" | "Назад";
   submitText?: "Изменить" | "Создать";

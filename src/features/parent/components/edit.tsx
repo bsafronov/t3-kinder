@@ -14,20 +14,21 @@ export function ParentEdit({ backOnSuccess }: Props) {
   const parentId = useRouter().query.parentId as string;
 
   const { data: parent } = useParentGetOne();
-  const { mutate: update } = useParentUpdate();
+  const { mutateAsync: update } = useParentUpdate();
 
   const { form } = useParentForm(parent);
   const phoneNumbers = form.watch("phoneNumbers");
 
-  const onSubmit = (values: ParentSchemaType) => {
-    const filteredPhoneNumbers = phoneNumbers.filter((phone) => phone !== "");
-
-    update({
-      ...values,
-      parentId,
-      phoneNumbers: filteredPhoneNumbers,
-    });
-    backOnSuccess && router.back();
+  const onSubmit = async (values: ParentSchemaType) => {
+    try {
+      const filteredPhoneNumbers = phoneNumbers.filter((phone) => phone !== "");
+      await update({
+        ...values,
+        parentId,
+        phoneNumbers: filteredPhoneNumbers,
+      });
+      backOnSuccess && router.back();
+    } catch (e) {}
   };
 
   return (

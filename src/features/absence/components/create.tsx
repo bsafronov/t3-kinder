@@ -14,15 +14,17 @@ export function AbsenceCreate({ backOnSuccess }: Props) {
   const groupId = useRouter().query.groupId as string;
 
   const { form } = useAbsenceForm();
-  const { mutate: create } = useAbsenceCreate();
+  const { mutateAsync: create } = useAbsenceCreate();
 
-  const onSubmit = (values: AbsenceSchemaType) => {
-    create({
-      ...values,
-      kidId,
-      groupId,
-    });
-    backOnSuccess && void router.back();
+  const onSubmit = async (values: AbsenceSchemaType) => {
+    try {
+      await create({
+        ...values,
+        kidId,
+        groupId,
+      });
+      backOnSuccess && void router.back();
+    } catch (e) {}
   };
 
   return (

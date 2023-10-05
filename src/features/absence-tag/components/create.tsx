@@ -11,10 +11,13 @@ export function AbsenceTagCreate() {
   const { form } = useAbsenceTagForm();
 
   const { data: absenceTags } = useAbsenceTagGetManyByGroup();
-  const { mutate: create } = useAbsenceTagCreate();
+  const { mutateAsync: create } = useAbsenceTagCreate();
 
-  const onSubmit = (values: AbsenceTagSchemaType) => {
-    create({ groupId, label: values.label });
+  const onSubmit = async (values: AbsenceTagSchemaType) => {
+    try {
+      await create({ groupId, label: values.label });
+      form.reset();
+    } catch (e) {}
   };
 
   return (

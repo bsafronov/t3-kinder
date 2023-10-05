@@ -14,10 +14,15 @@ export function VaccinationTagCreate() {
   const { form } = useVaccinationTagForm();
 
   const { data: vaccinationTags } = useVaccinationTagGetManyByGroup();
-  const { mutate: create } = useVaccinationTagCreate();
+  const { mutateAsync: create } = useVaccinationTagCreate();
 
-  const onSubmit = (values: VaccinationTagSchemaType) => {
-    create({ groupId, label: values.label });
+  const onSubmit = async (values: VaccinationTagSchemaType) => {
+    try {
+      await create({ groupId, label: values.label });
+      form.reset();
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

@@ -13,12 +13,14 @@ export function VaccinationEdit() {
   const vaccinationId = useRouter().query.vaccinationId as string;
 
   const { data: vaccination } = useVaccinationGetOne();
-  const { mutate: update } = useVaccinationUpdate();
+  const { mutateAsync: update } = useVaccinationUpdate();
 
   const { form } = useVaccinationForm(vaccination);
 
-  const onSubmit = (values: VaccinationSchemaType) => {
-    update({ vaccinationId, ...values });
+  const onSubmit = async (values: VaccinationSchemaType) => {
+    try {
+      await update({ vaccinationId, ...values });
+    } catch (e) {}
   };
 
   return (

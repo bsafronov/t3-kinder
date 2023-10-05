@@ -12,10 +12,12 @@ export function VaccinationCreate() {
   const groupId = useRouter().query.groupId as string;
   const { form } = useVaccinationForm();
 
-  const { mutate: create } = useVaccinationCreate();
+  const { mutateAsync: create } = useVaccinationCreate();
 
-  const onSubmit = (values: VaccinationSchemaType) => {
-    create({ kidId, groupId, date: values.date, tagId: values.tagId });
+  const onSubmit = async (values: VaccinationSchemaType) => {
+    try {
+      await create({ kidId, groupId, date: values.date, tagId: values.tagId });
+    } catch (e) {}
   };
 
   return (

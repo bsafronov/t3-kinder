@@ -25,11 +25,11 @@ export function AbsenceItem(absence: Props) {
           }
         />
       </div>
-      <div className="flex gap-1 text-xs">
-        <div>
+      <div className="text-xs">
+        <p>
           <span className="text-slate-500">Причина: </span>
-        </div>
-        <p>{absence.reason}</p>
+          {absence.reason}
+        </p>
       </div>
       {absence.tags.length > 0 && (
         <div className="mt-1 flex items-center gap-1 text-xs">

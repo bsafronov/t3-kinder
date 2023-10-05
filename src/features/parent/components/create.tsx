@@ -16,17 +16,19 @@ export function ParentCreate({ backOnSuccess }: Props) {
   const { form } = useParentForm();
   const phoneNumbers = form.watch("phoneNumbers");
 
-  const { mutate: create } = useParentCreate();
+  const { mutateAsync: create } = useParentCreate();
 
-  const onSubmit = (values: ParentSchemaType) => {
-    const filteredPhoneNumbers = phoneNumbers.filter((phone) => phone !== "");
-    create({
-      ...values,
-      groupId,
-      kidIDs: [kidId],
-      phoneNumbers: filteredPhoneNumbers,
-    });
-    backOnSuccess && void router.back();
+  const onSubmit = async (values: ParentSchemaType) => {
+    try {
+      const filteredPhoneNumbers = phoneNumbers.filter((phone) => phone !== "");
+      await create({
+        ...values,
+        groupId,
+        kidIDs: [kidId],
+        phoneNumbers: filteredPhoneNumbers,
+      });
+      backOnSuccess && void router.back();
+    } catch (e) {}
   };
 
   return (

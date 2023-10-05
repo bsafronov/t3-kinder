@@ -14,16 +14,18 @@ export function AbsenceUpdate({ backOnSuccess }: Props) {
   const absenceId = useRouter().query.absenceId as string;
 
   const { data: absence } = useAbsenceGetOne();
-  const { mutate: update } = useAbsenceUpdate();
+  const { mutateAsync: update } = useAbsenceUpdate();
 
   const { form } = useAbsenceForm(absence);
 
-  const onSubmit = (values: AbsenceSchemaType) => {
-    update({
-      ...values,
-      absenceId,
-    });
-    backOnSuccess && router.back();
+  const onSubmit = async (values: AbsenceSchemaType) => {
+    try {
+      await update({
+        ...values,
+        absenceId,
+      });
+      backOnSuccess && router.back();
+    } catch (e) {}
   };
 
   return (

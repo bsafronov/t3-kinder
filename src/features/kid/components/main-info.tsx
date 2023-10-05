@@ -40,7 +40,7 @@ export function KidMainInfo() {
     },
   });
 
-  const { mutate: update } = api.kids.update.useMutation();
+  const { mutateAsync: update } = api.kids.update.useMutation();
 
   const { isLoading, isSuccess } = api.kids.getById.useQuery(
     { id: kidId },
@@ -58,8 +58,10 @@ export function KidMainInfo() {
     },
   );
 
-  const onSubmit = (values: SchemaType) => {
-    update({ ...values, kidId });
+  const onSubmit = async (values: SchemaType) => {
+    try {
+      await update({ ...values, kidId });
+    } catch (e) {}
   };
 
   if (isLoading || !isSuccess)
