@@ -4,7 +4,10 @@ import { api } from "~/shared/utils/api";
 export function useAbsenceGetManyByKid() {
   const kidId = useRouter().query.kidId as string;
 
-  return api.absences.getManyByKid.useQuery({
-    kidId,
-  });
+  return api.absences.getManyByKid.useQuery(
+    {
+      kidId,
+    },
+    { enabled: !!kidId },
+  );
 }

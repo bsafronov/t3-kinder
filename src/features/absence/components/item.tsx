@@ -26,13 +26,17 @@ export function AbsenceItem(absence: Props) {
         />
       </div>
       <div className="flex gap-1 text-xs">
-        <span className="text-slate-500">Причина: </span>
+        <div>
+          <span className="text-slate-500">Причина: </span>
+        </div>
         <p>{absence.reason}</p>
       </div>
       {absence.tags.length > 0 && (
-        <div className="flex gap-1 text-xs">
-          <span>Теги:</span>
+        <div className="mt-1 flex items-center gap-1 text-xs">
           <div>
+            <span className="text-slate-500">Теги:</span>
+          </div>
+          <div className="flex gap-1">
             {absence.tags.map((tag) => (
               <Badge key={tag.id} variant={"secondary"} className="text-xs">
                 {tag.label}

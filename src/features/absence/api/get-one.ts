@@ -4,7 +4,10 @@ import { api } from "~/shared/utils/api";
 export function useAbsenceGetOne() {
   const absenceId = useRouter().query.absenceId as string;
 
-  return api.absences.getOne.useQuery({
-    absenceId,
-  });
+  return api.absences.getOne.useQuery(
+    {
+      absenceId,
+    },
+    { enabled: !!absenceId },
+  );
 }

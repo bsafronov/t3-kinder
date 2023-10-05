@@ -1,1 +1,1 @@
-export { VaccinationTagCreate } from "./components/create";
+export { VaccinationTagCreateModal } from "./components/create-modal";

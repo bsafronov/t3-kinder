@@ -7,7 +7,7 @@ export function useAbsenceTagCreate() {
   return api.absenceTags.create.useMutation({
     onSuccess: (item) => {
       void ctx.absenceTags.getManyByGroup.invalidate({ groupId: item.groupId });
-      toast.success("Отсутствие добавлено!");
+      toast.success("Тег отсутствия добавлен!");
     },
   });
 }

@@ -34,6 +34,19 @@ export const absenceTagRouter = createTRPCRouter({
         },
       });
     }),
+  delete: protectedProcedure
+    .input(
+      z.object({
+        absenceTagId: z.string(),
+      }),
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.db.absenceTag.delete({
+        where: {
+          id: input.absenceTagId,
+        },
+      });
+    }),
   getOne: protectedProcedure
     .input(
       z.object({

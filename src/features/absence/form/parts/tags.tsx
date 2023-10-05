@@ -7,23 +7,59 @@ import {
 } from "~/shared/ui/form";
 import { type AbsenceFormType } from "../use-form";
 import Select from "~/shared/ui/select";
+import { Button } from "~/shared/ui/button";
+import { useQueryString } from "~/shared/hooks/useQueryString";
+import { ModalEnum } from "~/features/_core/modal";
+import { Plus } from "lucide-react";
+import { useAbsenceTagGetManyByGroup } from "~/features/absence-tag";
 
 export function AbsenceFormFieldTags(form: AbsenceFormType) {
+  const { pushQuery } = useQueryString();
+
+  const { data: absenceTags } = useAbsenceTagGetManyByGroup();
   return (
-    <FormField
-      control={form.control}
-      name="tagIDs"
-      render={({}) => {
-        return (
-          <FormItem>
-            <FormLabel>Теги</FormLabel>
-            <FormControl>
-              <Select selectType="sync" />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        );
-      }}
-    />
+    <div>
+      <FormField
+        control={form.control}
+        name="tagIDs"
+        render={({ field }) => {
+          const selectedTags = absenceTags
+            ?.filter((tag) => field.value.includes(tag.id))
+            .map((tag) => ({ value: tag.id, label: tag.label }));
+
+          const options = (absenceTags ?? []).map((t) => ({
+            value: t.id,
+            label: t.label,
+          }));
+
+          return (
+            <FormItem>
+              <FormLabel>Теги</FormLabel>
+              <FormControl>
+                <Select
+                  selectType="sync"
+                  isMulti
+                  value={selectedTags}
+                  options={options}
+                  onChange={(options) =>
+                    field.onChange(options.map((o) => o.value))
+                  }
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          );
+        }}
+      />
+      <Button
+        variant={"link"}
+        size={"contents"}
+        type="button"
+        onClick={() => pushQuery({ modal: ModalEnum.ABSENCE_TAG_CREATE })}
+      >
+        <Plus className="h-3 w-3" />
+        Добавить названия
+      </Button>
+    </div>
   );
 }
