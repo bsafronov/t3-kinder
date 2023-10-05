@@ -46,6 +46,19 @@ export const absenceRouter = createTRPCRouter({
         },
       });
     }),
+  delete: protectedProcedure
+    .input(
+      z.object({
+        absenceId: z.string(),
+      }),
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.db.absence.delete({
+        where: {
+          id: input.absenceId,
+        },
+      });
+    }),
   getOne: protectedProcedure
     .input(
       z.object({
@@ -65,11 +78,11 @@ export const absenceRouter = createTRPCRouter({
       });
     }),
   getManyByKid: protectedProcedure
-    .input(z.object({ groupId: z.string() }))
+    .input(z.object({ kidId: z.string() }))
     .query(({ ctx, input }) => {
       return ctx.db.absence.findMany({
         where: {
-          groupId: input.groupId,
+          kidId: input.kidId,
         },
         include: {
           createdBy: true,

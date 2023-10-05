@@ -5,6 +5,7 @@ import {
   VaccinationEditModal,
 } from "~/features/vaccination";
 import { ParentCreateModal, ParentEditModal } from "~/features/parent";
+import { AbsenceCreateModal, AbsenceUpdateModal } from "~/features/absence";
 
 export function ModalProvider() {
   const [isMounted, setMounted] = useState(false);
@@ -24,6 +25,9 @@ export function ModalProvider() {
 
       <ParentCreateModal />
       <ParentEditModal />
+
+      <AbsenceCreateModal />
+      <AbsenceUpdateModal />
     </>
   );
 }
