@@ -1,8 +1,13 @@
 import { FormField, FormItem, FormLabel, FormMessage } from "~/shared/ui/form";
-import { KidFormType } from "../use-form";
+import { type KidFormType } from "../use-form";
 import { Input } from "~/shared/ui/input";
 
-export function KidFormFieldAdress(form: KidFormType) {
+type Props = {
+  form: KidFormType;
+  isLoading?: boolean;
+};
+
+export function KidFormFieldAdress({ form, isLoading }: Props) {
   return (
     <FormField
       control={form.control}
@@ -10,7 +15,7 @@ export function KidFormFieldAdress(form: KidFormType) {
       render={({ field }) => (
         <FormItem>
           <FormLabel>Домашний адрес</FormLabel>
-          <Input {...field} />
+          <Input {...field} isLoading={isLoading} />
           <FormMessage />
         </FormItem>
       )}

@@ -1,8 +1,13 @@
 import { FormField, FormItem, FormLabel, FormMessage } from "~/shared/ui/form";
-import { KidFormType } from "../use-form";
+import { type KidFormType } from "../use-form";
 import { Input } from "~/shared/ui/input";
 
-export function KidFormFieldOmsPolicy(form: KidFormType) {
+type Props = {
+  form: KidFormType;
+  isLoading?: boolean;
+};
+
+export function KidFormFieldOmsPolicy({ form, isLoading }: Props) {
   return (
     <FormField
       control={form.control}
@@ -10,7 +15,7 @@ export function KidFormFieldOmsPolicy(form: KidFormType) {
       render={({ field }) => (
         <FormItem>
           <FormLabel>Полис ОМС</FormLabel>
-          <Input {...field} />
+          <Input {...field} isLoading={isLoading} />
           <FormMessage />
         </FormItem>
       )}

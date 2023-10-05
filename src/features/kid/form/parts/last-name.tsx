@@ -1,8 +1,12 @@
 import { FormField, FormItem, FormLabel, FormMessage } from "~/shared/ui/form";
-import { KidFormType } from "../use-form";
+import { type KidFormType } from "../use-form";
 import { Input } from "~/shared/ui/input";
 
-export function KidFormFieldLastName(form: KidFormType) {
+type Props = {
+  form: KidFormType;
+  isLoading?: boolean;
+};
+export function KidFormFieldLastName({ form, isLoading }: Props) {
   return (
     <FormField
       control={form.control}
@@ -10,7 +14,7 @@ export function KidFormFieldLastName(form: KidFormType) {
       render={({ field }) => (
         <FormItem>
           <FormLabel>Фамилия</FormLabel>
-          <Input {...field} />
+          <Input {...field} isLoading={isLoading} />
           <FormMessage />
         </FormItem>
       )}
