@@ -31,7 +31,7 @@ export function ParentEdit({ backOnSuccess }: Props) {
   };
 
   return (
-    <FormWrapper form={form} onSubmit={onSubmit} submitText="Создать">
+    <FormWrapper form={form} onSubmit={onSubmit} submitText="Изменить">
       <ParentFormFields {...form} />
     </FormWrapper>
   );

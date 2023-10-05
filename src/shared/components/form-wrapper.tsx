@@ -7,6 +7,7 @@ type Props<T extends FieldValues> = {
   form: UseFormReturn<T>;
   onSubmit: (values: T) => Promise<void>;
   children: React.ReactNode;
+  noCancelButton?: boolean;
   cancelText?: "Отмена" | "Назад";
   submitText?: "Изменить" | "Создать";
 };
@@ -17,6 +18,7 @@ export function FormWrapper<T extends FieldValues>({
   onSubmit,
   cancelText,
   submitText,
+  noCancelButton,
 }: Props<T>) {
   const router = useRouter();
 
@@ -25,9 +27,15 @@ export function FormWrapper<T extends FieldValues>({
       <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
         {children}
         <div className="mt-4 flex items-center justify-end gap-2">
-          <Button onClick={() => router.back()} variant={"ghost"} type="button">
-            {cancelText ?? "Отмена"}
-          </Button>
+          {!noCancelButton && (
+            <Button
+              onClick={() => router.back()}
+              variant={"ghost"}
+              type="button"
+            >
+              {cancelText ?? "Отмена"}
+            </Button>
+          )}
           <Button>{submitText ?? "Создать"}</Button>
         </div>
       </form>

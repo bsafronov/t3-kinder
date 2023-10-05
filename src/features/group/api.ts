@@ -34,7 +34,7 @@ export function useDelete() {
 }
 
 export function useGetOne() {
-  const groupId = useRouter().query.group as string;
+  const groupId = useRouter().query.groupId as string;
   return api.groups.getOne.useQuery(
     {
       groupId,

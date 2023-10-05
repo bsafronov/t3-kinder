@@ -7,6 +7,7 @@ import {
 } from "../form/use-form";
 import { Button } from "~/shared/ui/button";
 import { vaccinationAPI } from "..";
+import { FormWrapper } from "~/shared/components/form-wrapper";
 
 export function VaccinationEdit() {
   const vaccinationId = useRouter().query.vaccinationId as string;
@@ -23,13 +24,8 @@ export function VaccinationEdit() {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
-        <VaccinationFormFields {...form} />
-        <div className="mt-4 flex justify-end">
-          <Button>Изменить</Button>
-        </div>
-      </form>
-    </Form>
+    <FormWrapper form={form} onSubmit={onSubmit} submitText="Изменить">
+      <VaccinationFormFields {...form} />
+    </FormWrapper>
   );
 }
