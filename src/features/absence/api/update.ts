@@ -5,9 +5,9 @@ export function useAbsenceUpdate() {
   const ctx = api.useContext();
 
   const mutation = api.absences.update.useMutation({
-    onSuccess: () => {
+    onSuccess: (item) => {
       toast.success("День отсутствия обновлён!");
-      void ctx.absences.getManyByKid.invalidate();
+      void ctx.absences.getManyByKid.invalidate({ kidId: item.kidId });
     },
   });
 

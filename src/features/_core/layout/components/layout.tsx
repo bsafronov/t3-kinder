@@ -5,9 +5,12 @@ import { DashboardLayout } from "./dashboard-layout";
 export function Layout({ children }: { children?: React.ReactNode }) {
   const { pathname } = useRouter();
 
-  if (pathname.includes("dashboard")) {
-    return <DashboardLayout>{children}</DashboardLayout>;
-  }
-
-  return <IntroLayout>{children}</IntroLayout>;
+  return (
+    <div className="mb-8">
+      {pathname.includes("dashboard") && (
+        <DashboardLayout>{children}</DashboardLayout>
+      )}
+      {!pathname.includes("dashboard") && <IntroLayout>{children}</IntroLayout>}
+    </div>
+  );
 }

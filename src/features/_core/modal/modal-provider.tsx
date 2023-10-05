@@ -3,10 +3,12 @@ import {
   VaccinationCreateModal,
   VaccinationEditModal,
 } from "~/features/vaccination";
+import { VaccinationTagCreateModal } from "~/features/vaccination-tag";
 import { ParentCreateModal, ParentEditModal } from "~/features/parent";
 import { AbsenceCreateModal, AbsenceUpdateModal } from "~/features/absence";
 import { AbsenceTagCreateModal } from "~/features/absence-tag";
-import { VaccinationTagCreateModal } from "~/features/vaccination-tag";
+import { NoteCreateModal, NoteUpdateModal } from "~/features/note";
+import { NoteTagCreateModal } from "~/features/note-tag";
 
 export function ModalProvider() {
   const [isMounted, setMounted] = useState(false);
@@ -29,8 +31,11 @@ export function ModalProvider() {
 
       <AbsenceCreateModal />
       <AbsenceUpdateModal />
-
       <AbsenceTagCreateModal />
+
+      <NoteCreateModal />
+      <NoteUpdateModal />
+      <NoteTagCreateModal />
     </>
   );
 }
