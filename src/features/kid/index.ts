@@ -1,3 +1,5 @@
+export * as kidAPI from "./api";
+
 export { SidebarKidList } from "./components/sidebar-kid-list";
 export { KidMainInfo } from "./components/main-info";
 export { KidAbsences } from "./components/kid-absences";

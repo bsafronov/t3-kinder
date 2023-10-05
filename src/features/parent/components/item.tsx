@@ -3,13 +3,14 @@ import { Badge } from "~/shared/ui/badge";
 import { type RouterOutputs } from "~/shared/utils/api";
 import { useQueryString } from "~/shared/hooks/useQueryString";
 import { ModalEnum } from "~/features/_core/modal";
-import { useParentDelete } from "../api/delete";
-import { EntityActions } from "~/shared/components/entity-actions";
 
-type Props = RouterOutputs["parents"]["getAll"][number];
+import { EntityActions } from "~/shared/components/entity-actions";
+import { parentAPI } from "..";
+
+type Props = RouterOutputs["parents"]["getManyByKid"][number];
 export function ParentItem(parent: Props) {
   const { pushQuery } = useQueryString();
-  const { mutate: deleteParent } = useParentDelete();
+  const { mutate: deleteParent } = parentAPI.useDelete();
 
   return (
     <div className="group relative px-4 py-2 text-sm hover:bg-slate-50">

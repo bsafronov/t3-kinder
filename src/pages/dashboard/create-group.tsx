@@ -11,9 +11,9 @@ import {
 } from "~/shared/ui/form";
 import { Input } from "~/shared/ui/input";
 import { Button } from "~/shared/ui/button";
-import { api } from "~/shared/utils/api";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { groupAPI } from "~/features/group";
 const formSchema = z.object({
   title: z.string().min(1, { message: "Обязательное поле" }),
 });
@@ -24,11 +24,7 @@ export default function CreateGroupPage() {
   const user = useSession().data?.user;
   const router = useRouter();
 
-  const { mutate: create } = api.groups.create.useMutation({
-    onSuccess: (group) => {
-      void router.push(`/dashboard/${group.id}`);
-    },
-  });
+  const { mutateAsync: create } = groupAPI.useCreate();
   const form = useForm<SchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,10 +32,13 @@ export default function CreateGroupPage() {
     },
   });
 
-  const onSubmit = (values: SchemaType) => {
+  const onSubmit = async (values: SchemaType) => {
     if (!user) return;
 
-    create({ title: values.title });
+    try {
+      const group = await create({ title: values.title });
+      void router.push(`/dashboard/${group.id}`);
+    } catch (e) {}
   };
 
   return (

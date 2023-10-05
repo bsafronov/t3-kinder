@@ -1,19 +1,18 @@
 import { useRouter } from "next/router";
 import { Form } from "~/shared/ui/form";
-import { useVaccinationGetOne } from "../api/get-one";
-import { useVaccinationUpdate } from "../api/update";
 import { VaccinationFormFields } from "../form";
 import {
   type VaccinationSchemaType,
   useVaccinationForm,
 } from "../form/use-form";
 import { Button } from "~/shared/ui/button";
+import { vaccinationAPI } from "..";
 
 export function VaccinationEdit() {
   const vaccinationId = useRouter().query.vaccinationId as string;
 
-  const { data: vaccination } = useVaccinationGetOne();
-  const { mutateAsync: update } = useVaccinationUpdate();
+  const { data: vaccination } = vaccinationAPI.useGetOne();
+  const { mutateAsync: update } = vaccinationAPI.useUpdate();
 
   const { form } = useVaccinationForm(vaccination);
 

@@ -10,7 +10,7 @@ const formSchema = z.object({
 export type VaccinationTagSchemaType = z.infer<typeof formSchema>;
 export type VaccinationTagFormType = UseFormReturn<VaccinationTagSchemaType>;
 
-type Props = RouterOutputs["vaccinationTags"]["getAllByGroup"][number];
+type Props = RouterOutputs["vaccinationTags"]["getManyByGroup"][number];
 
 export function useVaccinationTagForm(vaccination?: Props) {
   const form = useForm<VaccinationTagSchemaType>({

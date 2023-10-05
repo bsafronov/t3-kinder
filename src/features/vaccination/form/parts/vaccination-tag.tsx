@@ -11,12 +11,12 @@ import { Button } from "~/shared/ui/button";
 import { Plus } from "lucide-react";
 import { useQueryString } from "~/shared/hooks/useQueryString";
 import { ModalEnum } from "~/features/_core/modal";
-import { useVaccinationTagGetManyByGroup } from "~/features/vaccination-tag/api/get-many-by-group";
+import { vaccinationTagAPI } from "~/features/vaccination-tag";
 
 export function VaccinationFormFieldVaccinationTag(form: VaccinationFormType) {
   const { pushQuery } = useQueryString();
 
-  const { data: vaccinationTags } = useVaccinationTagGetManyByGroup();
+  const { data: vaccinationTags } = vaccinationTagAPI.useGetManyByGroup();
 
   return (
     <div>

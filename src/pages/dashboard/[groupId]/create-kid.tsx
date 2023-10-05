@@ -11,8 +11,8 @@ import {
 } from "~/shared/ui/form";
 import { Input } from "~/shared/ui/input";
 import { Button } from "~/shared/ui/button";
-import { api } from "~/shared/utils/api";
 import { useRouter } from "next/router";
+import { kidAPI } from "~/features/kid";
 const formSchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
@@ -23,13 +23,7 @@ type SchemaType = z.infer<typeof formSchema>;
 
 export default function CreateKidPage() {
   const router = useRouter();
-  const ctx = api.useContext();
-  const { mutate: create } = api.kids.create.useMutation({
-    onSuccess: async (kid) => {
-      await ctx.kids.getAll.invalidate();
-      void router.push(`/dashboard/${kid.groupId}/kids/${kid.id}`);
-    },
-  });
+  const { mutateAsync: create } = kidAPI.useCreate();
   const form = useForm<SchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,10 +33,16 @@ export default function CreateKidPage() {
     },
   });
 
-  const onSubmit = (values: SchemaType) => {
+  const onSubmit = async (values: SchemaType) => {
     const groupId = router.query.groupId as string;
 
-    create({ ...values, groupId });
+    try {
+      const kid = await create({
+        ...values,
+        groupId,
+      });
+      void router.push(`/dashboard/${kid.groupId}/kids/${kid.id}`);
+    } catch (e) {}
   };
 
   return (

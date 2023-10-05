@@ -91,4 +91,22 @@ export const absenceRouter = createTRPCRouter({
         },
       });
     }),
+  getManyByGroup: protectedProcedure
+    .input(
+      z.object({
+        groupId: z.string(),
+      }),
+    )
+    .query(({ ctx, input }) => {
+      return ctx.db.absence.findMany({
+        where: {
+          groupId: input.groupId,
+        },
+        include: {
+          createdBy: true,
+          updatedBy: true,
+          tags: true,
+        },
+      });
+    }),
 });

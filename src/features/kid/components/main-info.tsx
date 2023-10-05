@@ -14,6 +14,7 @@ import { Button } from "~/shared/ui/button";
 import { api } from "~/shared/utils/api";
 import { useRouter } from "next/router";
 import { Loader2 } from "lucide-react";
+import { kidAPI } from "..";
 
 const formSchema = z.object({
   firstName: z.string(),
@@ -40,10 +41,10 @@ export function KidMainInfo() {
     },
   });
 
-  const { mutateAsync: update } = api.kids.update.useMutation();
+  const { mutateAsync: update } = kidAPI.useUpdate();
 
-  const { isLoading, isSuccess } = api.kids.getById.useQuery(
-    { id: kidId },
+  const { isLoading, isSuccess } = api.kids.getOne.useQuery(
+    { kidId },
     {
       onSuccess: (kid) => {
         if (!kid) return;

@@ -1,10 +1,8 @@
 import { useRouter } from "next/router";
 import { NoteFormFields } from "../form";
 import { type NoteSchemaType, useNoteForm } from "../form/use-form";
-import { useNoteUpdate } from "../api/update";
-
 import { FormWrapper } from "~/shared/components/form-wrapper";
-import { useNoteGetOne } from "../api/get-one";
+import { noteAPI } from "..";
 
 type Props = {
   backOnSuccess?: boolean;
@@ -14,8 +12,8 @@ export function NoteUpdate({ backOnSuccess }: Props) {
   const router = useRouter();
   const noteId = useRouter().query.noteId as string;
 
-  const { data: absence } = useNoteGetOne();
-  const { mutateAsync: update } = useNoteUpdate();
+  const { data: absence } = noteAPI.useGetOne();
+  const { mutateAsync: update } = noteAPI.useUpdate();
 
   const { form } = useNoteForm(absence);
 

@@ -3,15 +3,14 @@ import { FormWrapper } from "~/shared/components/form-wrapper";
 import { badgeVariants } from "~/shared/ui/badge";
 import { useAbsenceTagForm, type AbsenceTagSchemaType } from "../form/use-form";
 import { AbsenceTagFormFields } from "../form";
-import { useAbsenceTagGetManyByGroup } from "../api/get-many-by-group";
-import { useAbsenceTagCreate } from "../api/create";
+import { absenceTagAPI } from "..";
 
 export function AbsenceTagCreate() {
   const groupId = useRouter().query.groupId as string;
   const { form } = useAbsenceTagForm();
 
-  const { data: absenceTags } = useAbsenceTagGetManyByGroup();
-  const { mutateAsync: create } = useAbsenceTagCreate();
+  const { data: absenceTags } = absenceTagAPI.useGetManyByGroup();
+  const { mutateAsync: create } = absenceTagAPI.useCreate();
 
   const onSubmit = async (values: AbsenceTagSchemaType) => {
     try {

@@ -2,39 +2,6 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const vaccinationRouter = createTRPCRouter({
-  getAllByGroup: protectedProcedure
-    .input(z.object({ groupId: z.string() }))
-    .query(({ ctx, input }) => {
-      return ctx.db.vaccination.findMany({
-        where: {
-          groupId: input.groupId,
-        },
-      });
-    }),
-  getAllByKid: protectedProcedure
-    .input(z.object({ kidId: z.string() }))
-    .query(({ ctx, input }) => {
-      return ctx.db.vaccination.findMany({
-        where: {
-          kidId: input.kidId,
-        },
-        include: {
-          tag: true,
-        },
-      });
-    }),
-  getOneByKid: protectedProcedure
-    .input(z.object({ vaccinationId: z.string() }))
-    .query(({ ctx, input }) => {
-      return ctx.db.vaccination.findUnique({
-        where: {
-          id: input.vaccinationId,
-        },
-        include: {
-          tag: true,
-        },
-      });
-    }),
   create: protectedProcedure
     .input(
       z.object({
@@ -85,6 +52,39 @@ export const vaccinationRouter = createTRPCRouter({
       return ctx.db.vaccination.delete({
         where: {
           id: input.vaccinationId,
+        },
+      });
+    }),
+  getOne: protectedProcedure
+    .input(z.object({ vaccinationId: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.db.vaccination.findUnique({
+        where: {
+          id: input.vaccinationId,
+        },
+        include: {
+          tag: true,
+        },
+      });
+    }),
+  getManyByKid: protectedProcedure
+    .input(z.object({ kidId: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.db.vaccination.findMany({
+        where: {
+          kidId: input.kidId,
+        },
+        include: {
+          tag: true,
+        },
+      });
+    }),
+  getManyByGroup: protectedProcedure
+    .input(z.object({ groupId: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.db.vaccination.findMany({
+        where: {
+          groupId: input.groupId,
         },
       });
     }),

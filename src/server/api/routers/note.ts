@@ -87,4 +87,18 @@ export const noteRouter = createTRPCRouter({
         },
       });
     }),
+  getManyByGroup: protectedProcedure
+    .input(z.object({ groupId: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.db.note.findMany({
+        where: {
+          groupId: input.groupId,
+        },
+        include: {
+          createdBy: true,
+          updatedBy: true,
+          tags: true,
+        },
+      });
+    }),
 });

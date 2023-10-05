@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
-import { useParentCreate } from "../api/create";
 import { type ParentSchemaType, useParentForm } from "../form/use-form";
 import { ParentFormFields } from "../form";
 import { FormWrapper } from "~/shared/components/form-wrapper";
+import { parentAPI } from "..";
 
 type Props = {
   backOnSuccess?: boolean;
@@ -16,7 +16,7 @@ export function ParentCreate({ backOnSuccess }: Props) {
   const { form } = useParentForm();
   const phoneNumbers = form.watch("phoneNumbers");
 
-  const { mutateAsync: create } = useParentCreate();
+  const { mutateAsync: create } = parentAPI.useCreate();
 
   const onSubmit = async (values: ParentSchemaType) => {
     try {

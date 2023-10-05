@@ -1,22 +1,13 @@
 import { Baby, Loader2, Plus } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { api } from "~/shared/utils/api";
 import { cn } from "~/shared/utils/cn";
+import { kidAPI } from "..";
 
 export function SidebarKidList() {
   const groupId = useRouter().query.groupId as string;
   const kidId = useRouter().query.kidId as string;
-  const {
-    data: kids,
-    isLoading,
-    isSuccess,
-  } = api.kids.getAll.useQuery(
-    { groupId: groupId },
-    {
-      enabled: !!groupId && !Array.isArray(groupId),
-    },
-  );
+  const { data: kids, isLoading, isSuccess } = kidAPI.useGetManyByGroup();
 
   return (
     <div>

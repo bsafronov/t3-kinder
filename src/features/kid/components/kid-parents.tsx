@@ -1,20 +1,13 @@
 import { Plus } from "lucide-react";
-import { useRouter } from "next/router";
 import { ModalEnum } from "~/features/_core/modal/query.types";
-import { ParentItem } from "~/features/parent";
+import { ParentItem, parentAPI } from "~/features/parent";
 import { useQueryString } from "~/shared/hooks/useQueryString";
 import { Button } from "~/shared/ui/button";
 import { Card } from "~/shared/ui/card";
-import { api } from "~/shared/utils/api";
 
 export function KidParents() {
-  const groupId = useRouter().query.groupId as string;
-  const kidId = useRouter().query.kidId as string;
   const { pushQuery } = useQueryString();
-  const { data: parents, isSuccess } = api.parents.getAll.useQuery(
-    { groupId, kidId },
-    { enabled: !!groupId && !!kidId },
-  );
+  const { data: parents, isSuccess } = parentAPI.useGetManyByKid();
 
   return (
     <Card className="overflow-hidden">

@@ -21,18 +21,16 @@ export const groupRouter = createTRPCRouter({
         },
       });
     }),
-  getAll: protectedProcedure
-    .input(z.object({ userId: z.string() }))
-    .query(({ ctx, input }) => {
-      return ctx.db.group.findMany({
+  delete: protectedProcedure
+    .input(z.object({ groupId: z.string() }))
+    .mutation(({ ctx, input }) => {
+      return ctx.db.group.delete({
         where: {
-          userIDs: {
-            has: input.userId,
-          },
+          id: input.groupId,
         },
       });
     }),
-  getById: protectedProcedure
+  getOne: protectedProcedure
     .input(z.object({ groupId: z.string() }))
     .query(({ ctx, input }) => {
       return ctx.db.group.findUnique({
@@ -44,12 +42,14 @@ export const groupRouter = createTRPCRouter({
         },
       });
     }),
-  delete: protectedProcedure
-    .input(z.object({ groupId: z.string() }))
-    .mutation(({ ctx, input }) => {
-      return ctx.db.group.delete({
+  getManyByUser: protectedProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.db.group.findMany({
         where: {
-          id: input.groupId,
+          userIDs: {
+            has: input.userId,
+          },
         },
       });
     }),

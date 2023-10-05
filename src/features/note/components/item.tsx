@@ -3,13 +3,13 @@ import { ModalEnum } from "~/features/_core/modal";
 import { useQueryString } from "~/shared/hooks/useQueryString";
 import { Badge } from "~/shared/ui/badge";
 import { type RouterOutputs } from "~/shared/utils/api";
-import { useNoteDelete } from "../api/delete";
 import { EntityActions } from "~/shared/components/entity-actions";
+import { noteAPI } from "..";
 
 type Props = RouterOutputs["notes"]["getManyByKid"][number];
 export function NoteItem(note: Props) {
   const { pushQuery } = useQueryString();
-  const { mutate: deleteNote } = useNoteDelete();
+  const { mutate: deleteNote } = noteAPI.useDelete();
 
   return (
     <div className="group px-4 py-2">

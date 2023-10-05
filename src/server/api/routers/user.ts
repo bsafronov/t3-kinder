@@ -1,14 +1,29 @@
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
 export const userRouter = createTRPCRouter({
-  getById: publicProcedure
-    .input(z.object({ id: z.string() }))
+  getOne: publicProcedure
+    .input(z.object({ userId: z.string() }))
     .query(({ ctx, input }) => {
       return ctx.db.user.findUnique({
         where: {
-          id: input.id,
+          id: input.userId,
+        },
+      });
+    }),
+  getManyByGroup: protectedProcedure
+    .input(z.object({ groupId: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.db.user.findMany({
+        where: {
+          groupIDs: {
+            has: input.groupId,
+          },
         },
       });
     }),

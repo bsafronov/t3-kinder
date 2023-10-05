@@ -1,7 +1,4 @@
-export { useParentCreate } from "./api/create";
-export { useParentUpdate } from "./api/update";
-export { useParentDelete } from "./api/delete";
-export { useParentGetOne } from "./api/get-one";
+export * as parentAPI from "./api";
 
 export { ParentItem } from "./components/item";
 export { ParentEditModal } from "./components/edit-modal";

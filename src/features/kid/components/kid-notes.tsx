@@ -1,13 +1,13 @@
 import { Plus } from "lucide-react";
 import { ModalEnum } from "~/features/_core/modal/query.types";
-import { NoteItem, useNoteGetManyByKid } from "~/features/note";
+import { NoteItem, noteAPI } from "~/features/note";
 import { useQueryString } from "~/shared/hooks/useQueryString";
 import { Button } from "~/shared/ui/button";
 import { Card } from "~/shared/ui/card";
 
 export function KidNotes() {
   const { pushQuery } = useQueryString();
-  const { data: notes, isSuccess } = useNoteGetManyByKid();
+  const { data: notes, isSuccess } = noteAPI.useGetManyByKid();
 
   return (
     <Card className="overflow-hidden">

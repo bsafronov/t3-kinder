@@ -3,36 +3,6 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const parentRouter = createTRPCRouter({
-  getById: protectedProcedure
-    .input(z.object({ parentId: z.string() }))
-    .query(({ ctx, input }) => {
-      return ctx.db.parent.findUnique({
-        where: {
-          id: input.parentId,
-        },
-        include: {
-          createdBy: true,
-          updatedBy: true,
-        },
-      });
-    }),
-  getAll: protectedProcedure
-    .input(
-      z.object({
-        groupId: z.string(),
-        kidId: z.string(),
-      }),
-    )
-    .query(({ ctx, input }) => {
-      return ctx.db.parent.findMany({
-        where: {
-          groupId: input.groupId,
-          kidIDs: {
-            has: input.kidId,
-          },
-        },
-      });
-    }),
   create: protectedProcedure
     .input(
       z.object({
@@ -97,6 +67,47 @@ export const parentRouter = createTRPCRouter({
       return ctx.db.parent.delete({
         where: {
           id: input.parentId,
+        },
+      });
+    }),
+  getOne: protectedProcedure
+    .input(z.object({ parentId: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.db.parent.findUnique({
+        where: {
+          id: input.parentId,
+        },
+        include: {
+          createdBy: true,
+          updatedBy: true,
+        },
+      });
+    }),
+  getManyByKid: protectedProcedure
+    .input(
+      z.object({
+        kidId: z.string(),
+      }),
+    )
+    .query(({ ctx, input }) => {
+      return ctx.db.parent.findMany({
+        where: {
+          kidIDs: {
+            has: input.kidId,
+          },
+        },
+      });
+    }),
+  getManyByGroup: protectedProcedure
+    .input(
+      z.object({
+        groupId: z.string(),
+      }),
+    )
+    .query(({ ctx, input }) => {
+      return ctx.db.parent.findMany({
+        where: {
+          groupId: input.groupId,
         },
       });
     }),

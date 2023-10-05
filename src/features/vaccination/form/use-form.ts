@@ -11,7 +11,7 @@ const formSchema = z.object({
 export type VaccinationSchemaType = z.infer<typeof formSchema>;
 export type VaccinationFormType = UseFormReturn<VaccinationSchemaType>;
 
-type Props = RouterOutputs["vaccinations"]["getOneByKid"];
+type Props = RouterOutputs["vaccinations"]["getOne"];
 
 export function useVaccinationForm(vaccination?: Props) {
   const form = useForm<VaccinationSchemaType>({

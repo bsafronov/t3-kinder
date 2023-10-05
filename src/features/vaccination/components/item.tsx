@@ -3,14 +3,14 @@ import { ModalEnum } from "~/features/_core/modal";
 import { useQueryString } from "~/shared/hooks/useQueryString";
 import { Badge } from "~/shared/ui/badge";
 import { type RouterOutputs } from "~/shared/utils/api";
-import { useVaccinationDelete } from "../api/delete";
 import { EntityActions } from "~/shared/components/entity-actions";
+import { vaccinationAPI } from "..";
 
-type Props = RouterOutputs["vaccinations"]["getAllByKid"][number];
+type Props = RouterOutputs["vaccinations"]["getManyByKid"][number];
 
 export function VaccinationItem(vaccination: Props) {
   const { pushQuery } = useQueryString();
-  const { mutate: deleteVaccination } = useVaccinationDelete();
+  const { mutate: deleteVaccination } = vaccinationAPI.useDelete();
 
   return (
     <div className="group flex items-center justify-between px-4 py-2 hover:bg-slate-50">

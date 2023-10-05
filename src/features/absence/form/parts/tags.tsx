@@ -11,12 +11,12 @@ import { Button } from "~/shared/ui/button";
 import { useQueryString } from "~/shared/hooks/useQueryString";
 import { ModalEnum } from "~/features/_core/modal";
 import { Plus } from "lucide-react";
-import { useAbsenceTagGetManyByGroup } from "~/features/absence-tag";
+import { absenceTagAPI } from "~/features/absence-tag";
 
 export function AbsenceFormFieldTags(form: AbsenceFormType) {
   const { pushQuery } = useQueryString();
 
-  const { data: absenceTags } = useAbsenceTagGetManyByGroup();
+  const { data: absenceTags } = absenceTagAPI.useGetManyByGroup();
   return (
     <div>
       <FormField

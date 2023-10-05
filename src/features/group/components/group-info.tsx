@@ -1,22 +1,9 @@
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next/router";
 import { Card } from "~/shared/ui/card";
-import { api } from "~/shared/utils/api";
+import { groupAPI } from "..";
 
 export function GroupInfo() {
-  const router = useRouter();
-  const groupId = router.query.groupId as string;
-
-  const {
-    data: group,
-    isLoading,
-    isSuccess,
-  } = api.groups.getById.useQuery(
-    { groupId: groupId ?? "" },
-    {
-      enabled: !!groupId,
-    },
-  );
+  const { data: group, isLoading, isSuccess } = groupAPI.useGetOne();
 
   if (isLoading) {
     return (

@@ -6,15 +6,14 @@ import {
   useVaccinationTagForm,
 } from "../form/use-form";
 import { VaccinationTagFormFields } from "../form";
-import { useVaccinationTagGetManyByGroup } from "../api/get-many-by-group";
-import { useVaccinationTagCreate } from "../api/create";
+import { vaccinationTagAPI } from "..";
 
 export function VaccinationTagCreate() {
   const groupId = useRouter().query.groupId as string;
   const { form } = useVaccinationTagForm();
 
-  const { data: vaccinationTags } = useVaccinationTagGetManyByGroup();
-  const { mutateAsync: create } = useVaccinationTagCreate();
+  const { data: vaccinationTags } = vaccinationTagAPI.useGetManyByGroup();
+  const { mutateAsync: create } = vaccinationTagAPI.useCreate();
 
   const onSubmit = async (values: VaccinationTagSchemaType) => {
     try {

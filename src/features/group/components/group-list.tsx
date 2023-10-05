@@ -1,23 +1,11 @@
 import { Loader2, Users2 } from "lucide-react";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { Button } from "~/shared/ui/button";
 import { Card } from "~/shared/ui/card";
-import { api } from "~/shared/utils/api";
+import { groupAPI } from "..";
 
 export function GroupList() {
-  const user = useSession().data?.user;
-
-  const {
-    data: groups,
-    isSuccess,
-    isLoading,
-  } = api.groups.getAll.useQuery(
-    { userId: user?.id ?? "" },
-    {
-      enabled: !!user,
-    },
-  );
+  const { data: groups, isSuccess, isLoading } = groupAPI.useGetManyByUser();
 
   return (
     <div>

@@ -11,12 +11,12 @@ import { Button } from "~/shared/ui/button";
 import { useQueryString } from "~/shared/hooks/useQueryString";
 import { ModalEnum } from "~/features/_core/modal";
 import { Plus } from "lucide-react";
-import { useNoteTagGetManyByGroup } from "~/features/note-tag";
+import { noteTagAPI } from "~/features/note-tag";
 
 export function NoteFormFieldTags(form: NoteFormType) {
   const { pushQuery } = useQueryString();
 
-  const { data: noteTags } = useNoteTagGetManyByGroup();
+  const { data: noteTags } = noteTagAPI.useGetManyByGroup();
   return (
     <div>
       <FormField

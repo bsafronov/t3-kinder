@@ -14,7 +14,7 @@ const formSchema = z.object({
 export type ParentSchemaType = z.infer<typeof formSchema>;
 export type ParentFormType = UseFormReturn<ParentSchemaType>;
 
-type Props = RouterOutputs["parents"]["getById"];
+type Props = RouterOutputs["parents"]["getOne"];
 
 export function useParentForm(parent?: Props) {
   const form = useForm<ParentSchemaType>({

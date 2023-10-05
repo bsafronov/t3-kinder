@@ -1,24 +1,13 @@
 import { Plus } from "lucide-react";
-import { useRouter } from "next/router";
 import { ModalEnum } from "~/features/_core/modal/query.types";
-import { VaccinationItem } from "~/features/vaccination";
+import { VaccinationItem, vaccinationAPI } from "~/features/vaccination";
 import { useQueryString } from "~/shared/hooks/useQueryString";
 import { Button } from "~/shared/ui/button";
 import { Card } from "~/shared/ui/card";
-import { api } from "~/shared/utils/api";
 
 export function KidVaccinations() {
-  const kidId = useRouter().query.kidId as string;
   const { pushQuery } = useQueryString();
-  const { data: kidVaccinations, isSuccess } =
-    api.vaccinations.getAllByKid.useQuery(
-      {
-        kidId,
-      },
-      {
-        enabled: !!kidId,
-      },
-    );
+  const { data: kidVaccinations, isSuccess } = vaccinationAPI.useGetManyByKid();
 
   return (
     <Card className="overflow-hidden">

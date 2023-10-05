@@ -1,6 +1,3 @@
-export { useAbsenceTagCreate } from "./api/create";
-export { useAbsenceTagDelete } from "./api/delete";
-export { useAbsenceTagUpdate } from "./api/update";
-export { useAbsenceTagGetManyByGroup } from "./api/get-many-by-group";
+export * as absenceTagAPI from "./api";
 
 export { AbsenceTagCreateModal } from "./components/create-modal";

@@ -3,13 +3,13 @@ import { ModalEnum } from "~/features/_core/modal";
 import { useQueryString } from "~/shared/hooks/useQueryString";
 import { Badge } from "~/shared/ui/badge";
 import { type RouterOutputs } from "~/shared/utils/api";
-import { useAbsenceDelete } from "../api/delete";
 import { EntityActions } from "~/shared/components/entity-actions";
+import { absenceAPI } from "..";
 
 type Props = RouterOutputs["absences"]["getManyByKid"][number];
 export function AbsenceItem(absence: Props) {
   const { pushQuery } = useQueryString();
-  const { mutate: deleteAbsence } = useAbsenceDelete();
+  const { mutate: deleteAbsence } = absenceAPI.useDelete();
 
   return (
     <div className="group px-4 py-2">
