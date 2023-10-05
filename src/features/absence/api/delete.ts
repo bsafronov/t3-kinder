@@ -7,7 +7,7 @@ export function useAbsenceDelete() {
   const mutation = api.absences.delete.useMutation({
     onSuccess: (item) => {
       toast.success("День отсутствия удалён!");
-      void ctx.absences.getManyByKid.invalidate({ kidId: item.id });
+      void ctx.absences.getManyByKid.invalidate({ kidId: item.kidId });
     },
   });
 
