@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
-export const absenceTagRouter = createTRPCRouter({
+export const noteTagRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({
@@ -10,7 +10,7 @@ export const absenceTagRouter = createTRPCRouter({
       }),
     )
     .mutation(({ ctx, input }) => {
-      return ctx.db.absenceTag.create({
+      return ctx.db.noteTag.create({
         data: {
           groupId: input.groupId,
           label: input.label,
@@ -20,14 +20,14 @@ export const absenceTagRouter = createTRPCRouter({
   update: protectedProcedure
     .input(
       z.object({
-        absenceTagId: z.string(),
+        noteTagId: z.string(),
         label: z.string(),
       }),
     )
     .mutation(({ ctx, input }) => {
-      return ctx.db.absenceTag.update({
+      return ctx.db.noteTag.update({
         where: {
-          id: input.absenceTagId,
+          id: input.noteTagId,
         },
         data: {
           label: input.label,
@@ -37,33 +37,33 @@ export const absenceTagRouter = createTRPCRouter({
   delete: protectedProcedure
     .input(
       z.object({
-        absenceTagId: z.string(),
+        noteTagId: z.string(),
       }),
     )
     .mutation(({ ctx, input }) => {
-      return ctx.db.absenceTag.delete({
+      return ctx.db.noteTag.delete({
         where: {
-          id: input.absenceTagId,
+          id: input.noteTagId,
         },
       });
     }),
   getOne: protectedProcedure
     .input(
       z.object({
-        absenceTagId: z.string(),
+        noteTagId: z.string(),
       }),
     )
     .query(({ ctx, input }) => {
-      return ctx.db.absenceTag.findUnique({
+      return ctx.db.noteTag.findUnique({
         where: {
-          id: input.absenceTagId,
+          id: input.noteTagId,
         },
       });
     }),
   getManyByGroup: protectedProcedure
     .input(z.object({ groupId: z.string() }))
     .query(({ ctx, input }) => {
-      return ctx.db.absenceTag.findMany({
+      return ctx.db.noteTag.findMany({
         where: {
           groupId: input.groupId,
         },

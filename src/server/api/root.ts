@@ -7,6 +7,8 @@ import { vaccinationRouter } from "./routers/vaccination";
 import { vaccinationTagRouter } from "./routers/vaccination-tag";
 import { absenceRouter } from "./routers/absence";
 import { absenceTagRouter } from "./routers/absence-tag";
+import { noteRouter } from "./routers/note";
+import { noteTagRouter } from "./routers/note-tag";
 
 /**
  * This is the primary router for your server.
@@ -22,6 +24,8 @@ export const appRouter = createTRPCRouter({
   vaccinationTags: vaccinationTagRouter,
   absences: absenceRouter,
   absenceTags: absenceTagRouter,
+  notes: noteRouter,
+  noteTags: noteTagRouter,
 });
 
 // export type definition of API
