@@ -15,7 +15,7 @@ export function VaccinationItem(vaccination: Props) {
   return (
     <div className="group flex items-center justify-between px-4 py-2 hover:bg-slate-50">
       <div className="flex items-center gap-1">
-        <Badge variant={"default"}>
+        <Badge variant={"primary"}>
           {format(new Date(vaccination.date), "dd.MM.yyyy")}
         </Badge>
         <span className="text-sm">{vaccination.tag.label}</span>

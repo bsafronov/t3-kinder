@@ -16,7 +16,7 @@ export function ParentItem(parent: Props) {
     <div className="group relative px-4 py-2 text-sm hover:bg-slate-50">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Badge>
+          <Badge variant={"accent"}>
             {parentRoles.find((r) => r.value === parent.role)?.label}
           </Badge>
           <span>

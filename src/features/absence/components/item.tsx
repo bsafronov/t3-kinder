@@ -15,7 +15,9 @@ export function AbsenceItem(absence: Props) {
     <div className="group px-4 py-2">
       <div className="flex justify-between">
         <div className="mb-1 flex">
-          <Badge>{format(new Date(absence.date), "dd.MM.yyyy")}</Badge>
+          <Badge variant={"primary"}>
+            {format(new Date(absence.date), "dd.MM.yyyy")}
+          </Badge>
         </div>
         <EntityActions
           entity={absence}

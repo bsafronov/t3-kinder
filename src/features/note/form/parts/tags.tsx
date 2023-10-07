@@ -63,10 +63,7 @@ export function NoteFormFieldTags(form: NoteFormType) {
               }
               className="peer hidden"
             />
-            <Badge
-              variant={"outline"}
-              className="cursor-pointer select-none font-normal hover:bg-slate-50 peer-checked:border-blue-200 peer-checked:bg-blue-50 peer-checked:text-blue-600"
-            >
+            <Badge className="cursor-pointer select-none hover:bg-slate-50 peer-checked:border-amber-100 peer-checked:bg-amber-100/20 peer-checked:text-amber-600">
               {tag.label}
             </Badge>
           </label>
