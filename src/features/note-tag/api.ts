@@ -7,7 +7,15 @@ export function useCreate() {
 
   return api.noteTags.create.useMutation({
     onSuccess: (item) => {
-      void ctx.noteTags.getManyByGroup.invalidate({ groupId: item.groupId });
+      void ctx.noteTags.getManyByGroup.setData(
+        { groupId: item.groupId },
+        (list) => {
+          if (list) {
+            return [...list, item];
+          }
+          return [item];
+        },
+      );
       toast.success("Тег примечания добавлен!");
     },
   });
@@ -18,8 +26,18 @@ export function useUpdate() {
 
   return api.noteTags.update.useMutation({
     onSuccess: (item) => {
-      void ctx.noteTags.getManyByGroup.invalidate({ groupId: item.groupId });
       toast.success("Тег примечания обновлён!");
+      void ctx.noteTags.getManyByGroup.setData(
+        { groupId: item.groupId },
+        (list) => {
+          return list?.map((i) => {
+            if (i.id === item.id) {
+              return item;
+            }
+            return i;
+          });
+        },
+      );
     },
   });
 }

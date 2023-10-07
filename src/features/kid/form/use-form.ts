@@ -4,9 +4,9 @@ import { z } from "zod";
 import { type RouterOutputs } from "~/shared/utils/api";
 
 const formSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
-  middleName: z.string(),
+  firstName: z.string().min(1, { message: "Обязательное поле" }),
+  lastName: z.string().min(1, { message: "Обязательное поле" }),
+  middleName: z.string().min(1, { message: "Обязательное поле" }),
   adress: z.string(),
   omsPolicy: z.string(),
   birthDate: z.string(),

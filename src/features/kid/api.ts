@@ -10,7 +10,15 @@ export function useCreate() {
   return api.kids.create.useMutation({
     onSuccess: (item) => {
       toast.success("Ребёнок добавлен!");
-      void ctx.kids.getManyByGroup.invalidate({ groupId: item.groupId });
+      void ctx.kids.getManyByGroup.setData(
+        { groupId: item.groupId },
+        (list) => {
+          if (list) {
+            return [...list, item];
+          }
+          return [item];
+        },
+      );
       void router.push(`/dashboard/${groupId}/kids/${item.id}`);
     },
   });
@@ -22,18 +30,24 @@ export function useUpdate() {
   return api.kids.update.useMutation({
     onSuccess: (item) => {
       toast.success("Ребёнок обновлён!");
-      void ctx.kids.getManyByGroup.invalidate({ groupId: item.groupId });
+      void ctx.kids.getOne.setData({ kidId: item.id }, (i) => {
+        return {
+          ...i,
+          ...item,
+        };
+      });
     },
   });
 }
 
 export function useDelete() {
   const ctx = api.useContext();
-
+  const router = useRouter();
   const mutation = api.kids.delete.useMutation({
     onSuccess: (item) => {
       toast.success("Примечание удалено!");
       void ctx.kids.getManyByGroup.invalidate({ groupId: item.groupId });
+      void router.push(`/dashboard/${item.groupId}/`);
     },
   });
 

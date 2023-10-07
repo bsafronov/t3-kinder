@@ -7,8 +7,13 @@ export function useCreate() {
 
   return api.notes.create.useMutation({
     onSuccess: (item) => {
-      void ctx.notes.getManyByKid.invalidate({ kidId: item.kidId });
       toast.success("Примечание добавлено!");
+      void ctx.notes.getManyByKid.setData({ kidId: item.kidId }, (list) => {
+        if (list) {
+          return [...list, item];
+        }
+        return [item];
+      });
     },
   });
 }
@@ -19,7 +24,14 @@ export function useUpdate() {
   return api.notes.update.useMutation({
     onSuccess: (item) => {
       toast.success("Примечание обновлено!");
-      void ctx.notes.getManyByKid.invalidate({ kidId: item.kidId });
+      void ctx.notes.getManyByKid.setData({ kidId: item.kidId }, (list) => {
+        return list?.map((i) => {
+          if (i.id === item.id) {
+            return item;
+          }
+          return i;
+        });
+      });
     },
   });
 }

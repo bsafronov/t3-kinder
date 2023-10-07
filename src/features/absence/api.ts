@@ -8,7 +8,12 @@ export function useCreate() {
   return api.absences.create.useMutation({
     onSuccess: (item) => {
       toast.success("Отсутствие добавлено!");
-      void ctx.absences.getManyByKid.invalidate({ kidId: item.kidId });
+      void ctx.absences.getManyByKid.setData({ kidId: item.kidId }, (list) => {
+        if (list) {
+          return [...list, item];
+        }
+        return [item];
+      });
     },
   });
 }
@@ -19,7 +24,14 @@ export function useUpdate() {
   const mutation = api.absences.update.useMutation({
     onSuccess: (item) => {
       toast.success("День отсутствия обновлён!");
-      void ctx.absences.getManyByKid.invalidate({ kidId: item.kidId });
+      void ctx.absences.getManyByKid.setData({ kidId: item.kidId }, (list) => {
+        return list?.map((i) => {
+          if (i.id === item.id) {
+            return item;
+          }
+          return i;
+        });
+      });
     },
   });
 

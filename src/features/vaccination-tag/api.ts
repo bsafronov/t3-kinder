@@ -7,9 +7,14 @@ export function useCreate() {
   const ctx = api.useContext();
 
   return api.vaccinationTags.create.useMutation({
-    onSuccess: () => {
-      void ctx.vaccinationTags.getManyByGroup.invalidate({ groupId });
+    onSuccess: (item) => {
       toast.success("Прививка добавлена в перечень!");
+      void ctx.vaccinationTags.getManyByGroup.setData({ groupId }, (list) => {
+        if (list) {
+          return [...list, item];
+        }
+        return [item];
+      });
     },
   });
 }

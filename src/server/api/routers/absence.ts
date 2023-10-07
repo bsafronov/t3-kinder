@@ -22,6 +22,11 @@ export const absenceRouter = createTRPCRouter({
           reason: input.reason,
           tagIDs: input.tagIDs,
         },
+        include: {
+          createdBy: true,
+          updatedBy: true,
+          tags: true,
+        },
       });
     }),
   update: protectedProcedure
@@ -43,6 +48,11 @@ export const absenceRouter = createTRPCRouter({
           date: input.date,
           reason: input.reason,
           tagIDs: input.tagIDs,
+        },
+        include: {
+          createdBy: true,
+          updatedBy: true,
+          tags: true,
         },
       });
     }),

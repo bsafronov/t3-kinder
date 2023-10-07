@@ -55,6 +55,10 @@ export const kidRouter = createTRPCRouter({
           omsPolicy: input.omsPolicy,
           birthDate: input.birthDate,
         },
+        include: {
+          createdBy: true,
+          updatedBy: true,
+        },
       });
     }),
   delete: protectedProcedure

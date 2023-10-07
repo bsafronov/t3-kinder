@@ -9,10 +9,13 @@ export function useCreate() {
   const userId = session.data?.user.id ?? "";
 
   return api.groups.create.useMutation({
-    onSuccess: () => {
+    onSuccess: (item) => {
       toast.success("Группа добавлена!");
-      void ctx.groups.getManyByUser.invalidate({
-        userId,
+      void ctx.groups.getManyByUser.setData({ userId }, (list) => {
+        if (list) {
+          return [...list, item];
+        }
+        return [item];
       });
     },
   });

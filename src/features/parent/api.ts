@@ -7,9 +7,14 @@ export function useCreate() {
   const kidId = useRouter().query.kidId as string;
 
   const mutation = api.parents.create.useMutation({
-    onSuccess: () => {
+    onSuccess: (item) => {
       toast.success("Родитель создан!");
-      void ctx.parents.getManyByKid.invalidate({ kidId });
+      void ctx.parents.getManyByKid.setData({ kidId }, (list) => {
+        if (list) {
+          return [...list, item];
+        }
+        return [item];
+      });
     },
   });
 
@@ -21,9 +26,16 @@ export function useUpdate() {
   const kidId = useRouter().query.kidId as string;
 
   const mutation = api.parents.update.useMutation({
-    onSuccess: () => {
+    onSuccess: (item) => {
       toast.success("Родитель обновлён!");
-      void ctx.parents.getManyByKid.invalidate({ kidId });
+      void ctx.parents.getManyByKid.setData({ kidId }, (list) => {
+        return list?.map((i) => {
+          if (i.id === item.id) {
+            return item;
+          }
+          return i;
+        });
+      });
     },
   });
 

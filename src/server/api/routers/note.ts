@@ -20,6 +20,11 @@ export const noteRouter = createTRPCRouter({
           description: input.description,
           tagIDs: input.tagIDs,
         },
+        include: {
+          createdBy: true,
+          updatedBy: true,
+          tags: true,
+        },
       });
     }),
   update: protectedProcedure
@@ -39,6 +44,11 @@ export const noteRouter = createTRPCRouter({
           updatedById: ctx.session.user.id,
           description: input.description,
           tagIDs: input.tagIDs,
+        },
+        include: {
+          createdBy: true,
+          updatedBy: true,
+          tags: true,
         },
       });
     }),
