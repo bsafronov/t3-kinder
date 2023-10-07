@@ -4,10 +4,16 @@ import { ParentItem, parentAPI } from "~/features/parent";
 import { useQueryString } from "~/shared/hooks/useQueryString";
 import { Button } from "~/shared/ui/button";
 import { Card } from "~/shared/ui/card";
+import { AnimatePresence, motion } from "framer-motion";
+import { LoadingCard } from "~/shared/components/loading-card";
 
 export function KidParents() {
   const { pushQuery } = useQueryString();
-  const { data: parents, isSuccess } = parentAPI.useGetManyByKid();
+  const { data: parents, isSuccess, isLoading } = parentAPI.useGetManyByKid();
+
+  if (isLoading) {
+    return <LoadingCard />;
+  }
 
   return (
     <Card className="overflow-hidden">
@@ -16,15 +22,27 @@ export function KidParents() {
           У ребёнка пока не указаны родители
         </div>
       )}
+
       {isSuccess && parents.length > 0 && (
-        <ul className="divide-y border-b">
-          {parents.map((parent) => (
-            <li key={parent.id}>
-              <ParentItem {...parent} />
-            </li>
-          ))}
-        </ul>
+        <motion.ul initial={{ height: 0 }} animate={{ height: "auto" }}>
+          <AnimatePresence mode="popLayout">
+            {parents.map((parent, index) => (
+              <motion.li
+                layout
+                key={parent.id}
+                initial={{ x: -40, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                viewport={{ once: true, amount: 0.8 }}
+                style={{ borderBottomWidth: "1px" }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <ParentItem {...parent} />
+              </motion.li>
+            ))}
+          </AnimatePresence>
+        </motion.ul>
       )}
+
       <div className="flex justify-end px-4 py-2">
         <Button
           variant={"link"}

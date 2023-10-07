@@ -7,7 +7,12 @@ import {
 import { vaccinationAPI } from "..";
 import { FormWrapper } from "~/shared/components/form-wrapper";
 
-export function VaccinationEdit() {
+type Props = {
+  backOnSuccess?: boolean;
+};
+
+export function VaccinationEdit({ backOnSuccess }: Props) {
+  const router = useRouter();
   const vaccinationId = useRouter().query.vaccinationId as string;
 
   const { data: vaccination } = vaccinationAPI.useGetOne();
@@ -18,6 +23,7 @@ export function VaccinationEdit() {
   const onSubmit = async (values: VaccinationSchemaType) => {
     try {
       await update({ vaccinationId, ...values });
+      backOnSuccess && void router.back();
     } catch (e) {}
   };
 

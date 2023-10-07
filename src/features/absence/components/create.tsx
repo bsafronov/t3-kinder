@@ -24,6 +24,8 @@ export function AbsenceCreate({ backOnSuccess }: Props) {
         kidId,
         groupId,
       });
+      console.log(backOnSuccess);
+
       backOnSuccess && void router.back();
     } catch (e) {}
   };

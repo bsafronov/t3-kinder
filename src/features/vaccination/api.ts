@@ -7,8 +7,13 @@ export function useCreate() {
   const ctx = api.useContext();
 
   return api.vaccinations.create.useMutation({
-    onSuccess: () => {
-      void ctx.vaccinations.getManyByKid.invalidate({ kidId });
+    onSuccess: (item) => {
+      void ctx.vaccinations.getManyByKid.setData({ kidId }, (list) => {
+        if (list) {
+          return [...list, item];
+        }
+        return [item];
+      });
       toast.success("Прививка добавлена!");
     },
   });
@@ -19,9 +24,16 @@ export function useUpdate() {
   const ctx = api.useContext();
 
   const mutation = api.vaccinations.update.useMutation({
-    onSuccess: () => {
+    onSuccess: (item) => {
+      void ctx.vaccinations.getManyByKid.setData({ kidId }, (list) => {
+        return list?.map((i) => {
+          if (i.id === item.id) {
+            return item;
+          }
+          return i;
+        });
+      });
       toast.success("Прививка обновлена!");
-      void ctx.vaccinations.getManyByKid.invalidate({ kidId });
     },
   });
 
@@ -33,9 +45,9 @@ export function useDelete() {
   const ctx = api.useContext();
 
   return api.vaccinations.delete.useMutation({
-    onSuccess: () => {
-      void ctx.vaccinations.getManyByKid.invalidate({
-        kidId,
+    onSuccess: (item) => {
+      void ctx.vaccinations.getManyByKid.setData({ kidId }, (list) => {
+        return list?.filter((i) => i.id !== item.id);
       });
       toast.success("Прививка удалена!");
     },

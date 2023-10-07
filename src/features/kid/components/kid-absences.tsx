@@ -2,13 +2,19 @@ import { Plus } from "lucide-react";
 import { ModalEnum } from "~/features/_core/modal/query.types";
 import { absenceAPI } from "~/features/absence";
 import { AbsenceItem } from "~/features/absence/components/item";
+import { LoadingCard } from "~/shared/components/loading-card";
 import { useQueryString } from "~/shared/hooks/useQueryString";
 import { Button } from "~/shared/ui/button";
 import { Card } from "~/shared/ui/card";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function KidAbsences() {
   const { pushQuery } = useQueryString();
-  const { data: absences, isSuccess } = absenceAPI.useGetManyByKid();
+  const { data: absences, isSuccess, isLoading } = absenceAPI.useGetManyByKid();
+
+  if (isLoading) {
+    return <LoadingCard />;
+  }
 
   return (
     <Card className="overflow-hidden">
@@ -18,13 +24,23 @@ export function KidAbsences() {
         </div>
       )}
       {isSuccess && absences.length > 0 && (
-        <ul className="divide-y border-b">
-          {absences.map((absence) => (
-            <li key={absence.id}>
-              <AbsenceItem {...absence} />
-            </li>
-          ))}
-        </ul>
+        <motion.ul initial={{ height: 0 }} animate={{ height: "auto" }}>
+          <AnimatePresence mode="popLayout">
+            {absences.map((absence, index) => (
+              <motion.li
+                layout
+                key={absence.id}
+                initial={{ x: -40, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                viewport={{ once: true, amount: 0.8 }}
+                style={{ borderBottomWidth: "1px" }}
+                transition={{ delay: index * 0.05 }}
+              >
+                <AbsenceItem {...absence} />
+              </motion.li>
+            ))}
+          </AnimatePresence>
+        </motion.ul>
       )}
       <div className="flex justify-end px-4 py-2">
         <Button

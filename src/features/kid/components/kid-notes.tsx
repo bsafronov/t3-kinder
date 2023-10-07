@@ -1,13 +1,19 @@
 import { Plus } from "lucide-react";
 import { ModalEnum } from "~/features/_core/modal/query.types";
 import { NoteItem, noteAPI } from "~/features/note";
+import { LoadingCard } from "~/shared/components/loading-card";
 import { useQueryString } from "~/shared/hooks/useQueryString";
 import { Button } from "~/shared/ui/button";
 import { Card } from "~/shared/ui/card";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function KidNotes() {
   const { pushQuery } = useQueryString();
-  const { data: notes, isSuccess } = noteAPI.useGetManyByKid();
+  const { data: notes, isSuccess, isLoading } = noteAPI.useGetManyByKid();
+
+  if (isLoading) {
+    return <LoadingCard />;
+  }
 
   return (
     <Card className="overflow-hidden">
@@ -17,13 +23,23 @@ export function KidNotes() {
         </div>
       )}
       {isSuccess && notes.length > 0 && (
-        <ul className="divide-y border-b">
-          {notes.map((note) => (
-            <li key={note.id}>
-              <NoteItem {...note} />
-            </li>
-          ))}
-        </ul>
+        <motion.ul initial={{ height: 0 }} animate={{ height: "auto" }}>
+          <AnimatePresence mode="popLayout">
+            {notes.map((note, index) => (
+              <motion.li
+                layout
+                key={note.id}
+                initial={{ x: -40, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                viewport={{ once: true, amount: 0.8 }}
+                style={{ borderBottomWidth: "1px" }}
+                transition={{ delay: index * 0.05 }}
+              >
+                <NoteItem {...note} />
+              </motion.li>
+            ))}
+          </AnimatePresence>
+        </motion.ul>
       )}
       <div className="flex justify-end px-4 py-2">
         <Button

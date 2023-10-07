@@ -5,7 +5,7 @@ import { VaccinationEdit } from "./edit";
 export function VaccinationEditModal() {
   return (
     <Modal query={ModalEnum.VACCINATION_EDIT} title="Редактирование прививки">
-      <VaccinationEdit />
+      <VaccinationEdit backOnSuccess />
     </Modal>
   );
 }

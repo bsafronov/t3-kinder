@@ -20,6 +20,9 @@ export const vaccinationRouter = createTRPCRouter({
           tagId: input.tagId,
           date: input.date,
         },
+        include: {
+          tag: true,
+        },
       });
     }),
   update: protectedProcedure
@@ -39,6 +42,9 @@ export const vaccinationRouter = createTRPCRouter({
           updatedById: ctx.session.user.id,
           date: input.date,
           tagId: input.tagId,
+        },
+        include: {
+          tag: true,
         },
       });
     }),
