@@ -1,3 +1,4 @@
+import { cn } from "~/shared/utils/cn";
 import { EntityActionDelete } from "./delete";
 import { EntityActionInfo } from "./info";
 import { EntityActionUpdate } from "./update";
@@ -13,15 +14,21 @@ type Props<T extends EntityActionProps> = {
   entity: T;
   onUpdate?: () => void;
   onDelete?: () => void;
+  isAlwaysVisible?: boolean;
 };
 
 export function EntityActions<T extends EntityActionProps>({
   entity,
   onUpdate,
   onDelete,
+  isAlwaysVisible,
 }: Props<T>) {
   return (
-    <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100">
+    <div
+      className={cn("flex items-center gap-2", {
+        "opacity-0 group-hover:opacity-100": !isAlwaysVisible,
+      })}
+    >
       <EntityActionInfo entity={entity} />
       {onUpdate && <EntityActionUpdate onUpdate={onUpdate} />}
       {onDelete && <EntityActionDelete onDelete={onDelete} />}

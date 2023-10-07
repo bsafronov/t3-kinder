@@ -1,4 +1,6 @@
 export enum ModalEnum {
+  KID_CREATE = "kid-create",
+  KID_EDIT = "kid-edit",
   VACCINATION_TAG_CREATE = "vaccination-tag-create",
   VACCINATION_TAG_EDIT = "vaccination-tag-edit",
   VACCINATION_CREATE = "vaccination-create",

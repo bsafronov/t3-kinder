@@ -3,8 +3,12 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { cn } from "~/shared/utils/cn";
 import { kidAPI } from "..";
+import { Button } from "~/shared/ui/button";
+import { useQueryString } from "~/shared/hooks/useQueryString";
+import { ModalEnum } from "~/features/_core/modal";
 
 export function SidebarKidList() {
+  const { pushQuery } = useQueryString();
   const groupId = useRouter().query.groupId as string;
   const kidId = useRouter().query.kidId as string;
   const { data: kids, isLoading, isSuccess } = kidAPI.useGetManyByGroup();
@@ -13,12 +17,13 @@ export function SidebarKidList() {
     <div>
       <div className="flex items-center justify-between border-b px-4 py-1">
         <h5 className="font-semibold">Мои дети</h5>
-        <Link
-          href={`/dashboard/${groupId}/create-kid`}
-          className="text-blue-500 transition-transform hover:rotate-90 hover:text-blue-600"
+        <Button
+          variant={"link"}
+          size={"contents"}
+          onClick={() => pushQuery({ modal: ModalEnum.KID_CREATE })}
         >
           <Plus className="h-4 w-4" />
-        </Link>
+        </Button>
       </div>
       {isLoading && (
         <div className="flex justify-center py-1">

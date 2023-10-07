@@ -1,6 +1,6 @@
 import {
   KidAbsences,
-  KidMainInfo,
+  KidItem,
   KidNotes,
   KidParents,
   KidVaccinations,
@@ -14,7 +14,7 @@ export default function KidPage() {
         <h3 className="mb-1 text-2xl font-semibold text-slate-500">
           Основная информация
         </h3>
-        <KidMainInfo />
+        <KidItem />
       </div>
       <div>
         <h3 className="mb-1 text-2xl font-semibold text-slate-500">Родители</h3>

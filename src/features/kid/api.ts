@@ -3,12 +3,15 @@ import toast from "react-hot-toast";
 import { api } from "~/shared/utils/api";
 
 export function useCreate() {
+  const groupId = useRouter().query.groupId as string;
+  const router = useRouter();
   const ctx = api.useContext();
 
   return api.kids.create.useMutation({
     onSuccess: (item) => {
-      void ctx.kids.getManyByGroup.invalidate({ groupId: item.groupId });
       toast.success("Ребёнок добавлен!");
+      void ctx.kids.getManyByGroup.invalidate({ groupId: item.groupId });
+      void router.push(`/dashboard/${groupId}/kids/${item.id}`);
     },
   });
 }

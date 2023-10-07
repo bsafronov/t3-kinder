@@ -16,21 +16,14 @@ const formSchema = z.object({
 
 type SchemaType = z.infer<typeof formSchema>;
 
-type Props = {
-  backOnSuccess?: boolean;
-};
+export function KidCreate() {
+  const groupId = useRouter().query.groupId as string;
+  const { mutateAsync: create } = kidAPI.useCreate();
 
-export function KidUpdate({ backOnSuccess }: Props) {
-  const router = useRouter();
-  const kidId = useRouter().query.kidId as string;
-  const { mutateAsync: update } = kidAPI.useUpdate();
-  const { data: kid, isLoading } = kidAPI.useGetOne();
-
-  const { form } = useKidForm(kid);
+  const { form } = useKidForm();
   const onSubmit = async (values: SchemaType) => {
     try {
-      await update({ ...values, kidId });
-      backOnSuccess && void router.back();
+      await create({ ...values, groupId });
     } catch (e) {}
   };
 
@@ -40,9 +33,9 @@ export function KidUpdate({ backOnSuccess }: Props) {
       onSubmit={onSubmit}
       cancelText="Назад"
       noCancelButton
-      submitText="Изменить"
+      submitText="Создать"
     >
-      <KidFormFields form={form} isLoading={isLoading} />
+      <KidFormFields form={form} />
     </FormWrapper>
   );
 }

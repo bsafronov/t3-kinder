@@ -6,10 +6,13 @@ export const kidRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({
+        groupId: z.string(),
         firstName: z.string(),
         lastName: z.string(),
         middleName: z.string(),
-        groupId: z.string(),
+        adress: z.string(),
+        omsPolicy: z.string(),
+        birthDate: z.string(),
       }),
     )
     .mutation(({ ctx, input }) => {
@@ -20,6 +23,9 @@ export const kidRouter = createTRPCRouter({
           firstName: input.firstName,
           lastName: input.lastName,
           middleName: input.middleName,
+          adress: input.adress,
+          omsPolicy: input.omsPolicy,
+          birthDate: input.birthDate,
         },
       });
     }),

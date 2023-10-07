@@ -13,13 +13,13 @@ type Props = {
 
 export function KidFormFields({ form, isLoading }: Props) {
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <>
       <KidFormFieldLastName form={form} isLoading={isLoading} />
       <KidFormFieldFirstName form={form} isLoading={isLoading} />
       <KidFormFieldMiddleName form={form} isLoading={isLoading} />
       <KidFormFieldBirthDate form={form} isLoading={isLoading} />
       <KidFormFieldAdress form={form} isLoading={isLoading} />
       <KidFormFieldOmsPolicy form={form} isLoading={isLoading} />
-    </div>
+    </>
   );
 }
