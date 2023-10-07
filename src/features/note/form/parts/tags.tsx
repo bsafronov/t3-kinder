@@ -1,25 +1,20 @@
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "~/shared/ui/form";
 import { type NoteFormType } from "../use-form";
-import Select from "~/shared/ui/select";
 import { Button } from "~/shared/ui/button";
 import { useQueryString } from "~/shared/hooks/useQueryString";
 import { ModalEnum } from "~/features/_core/modal";
 import { Plus } from "lucide-react";
 import { noteTagAPI } from "~/features/note-tag";
+import { Label } from "~/shared/ui/label";
+import { Badge } from "~/shared/ui/badge";
 
 export function NoteFormFieldTags(form: NoteFormType) {
   const { pushQuery } = useQueryString();
 
+  const tagIDs = form.watch("tagIDs");
   const { data: noteTags } = noteTagAPI.useGetManyByGroup();
   return (
     <div>
-      <FormField
+      {/* <FormField
         control={form.control}
         name="tagIDs"
         render={({ field }) => {
@@ -50,7 +45,33 @@ export function NoteFormFieldTags(form: NoteFormType) {
             </FormItem>
           );
         }}
-      />
+      /> */}
+      <Label>Теги</Label>
+      <div className="flex flex-wrap gap-2 rounded-md border p-2">
+        {noteTags?.map((tag) => (
+          <label key={tag.id}>
+            <input
+              type="checkbox"
+              checked={tagIDs.includes(tag.id)}
+              onChange={(e) =>
+                e.target.checked
+                  ? form.setValue("tagIDs", [...tagIDs, tag.id])
+                  : form.setValue(
+                      "tagIDs",
+                      tagIDs.filter((id) => id !== tag.id),
+                    )
+              }
+              className="peer hidden"
+            />
+            <Badge
+              variant={"outline"}
+              className="cursor-pointer select-none font-normal hover:bg-slate-50 peer-checked:border-blue-200 peer-checked:bg-blue-50 peer-checked:text-blue-600"
+            >
+              {tag.label}
+            </Badge>
+          </label>
+        ))}
+      </div>
       <Button
         variant={"link"}
         size={"contents"}

@@ -1,25 +1,19 @@
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "~/shared/ui/form";
 import { type AbsenceFormType } from "../use-form";
-import Select from "~/shared/ui/select";
 import { Button } from "~/shared/ui/button";
 import { useQueryString } from "~/shared/hooks/useQueryString";
 import { ModalEnum } from "~/features/_core/modal";
 import { Plus } from "lucide-react";
 import { absenceTagAPI } from "~/features/absence-tag";
+import { Badge } from "~/shared/ui/badge";
+import { Label } from "~/shared/ui/label";
 
 export function AbsenceFormFieldTags(form: AbsenceFormType) {
   const { pushQuery } = useQueryString();
-
+  const tagIDs = form.watch("tagIDs");
   const { data: absenceTags } = absenceTagAPI.useGetManyByGroup();
   return (
     <div>
-      <FormField
+      {/* <FormField
         control={form.control}
         name="tagIDs"
         render={({ field }) => {
@@ -50,7 +44,33 @@ export function AbsenceFormFieldTags(form: AbsenceFormType) {
             </FormItem>
           );
         }}
-      />
+      /> */}
+      <Label>Теги</Label>
+      <div className="flex flex-wrap gap-2 rounded-md border p-2">
+        {absenceTags?.map((tag) => (
+          <label key={tag.id}>
+            <input
+              type="checkbox"
+              checked={tagIDs.includes(tag.id)}
+              onChange={(e) =>
+                e.target.checked
+                  ? form.setValue("tagIDs", [...tagIDs, tag.id])
+                  : form.setValue(
+                      "tagIDs",
+                      tagIDs.filter((id) => id !== tag.id),
+                    )
+              }
+              className="peer hidden"
+            />
+            <Badge
+              variant={"outline"}
+              className="cursor-pointer select-none font-normal hover:bg-slate-50 peer-checked:border-blue-200 peer-checked:bg-blue-50 peer-checked:text-blue-600"
+            >
+              {tag.label}
+            </Badge>
+          </label>
+        ))}
+      </div>
       <Button
         variant={"link"}
         size={"contents"}
@@ -58,7 +78,7 @@ export function AbsenceFormFieldTags(form: AbsenceFormType) {
         onClick={() => pushQuery({ modal: ModalEnum.ABSENCE_TAG_CREATE })}
       >
         <Plus className="h-3 w-3" />
-        Добавить названия
+        Добавить теги
       </Button>
     </div>
   );

@@ -24,7 +24,10 @@ export function FormWrapper<T extends FieldValues>({
 
   return (
     <Form {...form}>
-      <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
+      <form
+        onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}
+        className="space-y-2"
+      >
         {children}
         <div className="mt-4 flex items-center justify-end gap-2">
           {!noCancelButton && (
