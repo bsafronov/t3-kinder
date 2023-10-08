@@ -1,2 +1,2 @@
-export { DashboardNavbar } from "./components/dashboard-navbar";
+export { DashboardNavbar } from "./components/dashboard";
 export { IntroNavbar } from "./components/intro-navbar";

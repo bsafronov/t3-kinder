@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { Button } from "~/shared/ui/button";
 import { Card } from "~/shared/ui/card";
 
-export function DashboardNavbar() {
+export function DashboardDesktopNavbar() {
   const router = useRouter();
   const isProfilePage = router.pathname === "/dashboard";
   const isGroupMainPage = router.pathname === "/dashboard/[groupId]";
