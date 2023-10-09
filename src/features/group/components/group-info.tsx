@@ -17,17 +17,13 @@ export function GroupInfo() {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {!isLoading && (
             <>
-              {/* <Card className="p-4">
-                <h5 className="mb-2 font-semibold">Дети</h5>
-                <span className="text-slate-500">{group?._count.kids}</span>
-              </Card> */}
               <Card className="p-4">
                 <h5 className="mb-2 font-semibold">Пользователи</h5>
-                <span className="text-slate-500">{group?._count.users}</span>
+                <span className="text-slate-500">{group?.userIDs.length}</span>
               </Card>
               <Card className="p-4">
                 <h5 className="mb-2 font-semibold">Администраторы</h5>
-                <span className="text-slate-500">{group?._count.admins}</span>
+                <span className="text-slate-500">{group?.adminIDs.length}</span>
               </Card>
             </>
           )}
