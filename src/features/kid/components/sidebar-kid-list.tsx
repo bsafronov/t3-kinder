@@ -42,7 +42,7 @@ export function SidebarKidList() {
                 <Link href={`/dashboard/${groupId}/kids/${kid.id}`}>
                   <div
                     className={cn(
-                      "flex items-center gap-1 px-4 py-1 hover:bg-slate-100",
+                      "flex items-center gap-1 px-4 py-1 hover:bg-white",
                       {
                         "text-blue-600": kid.id === kidId,
                       },

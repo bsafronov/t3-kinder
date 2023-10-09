@@ -23,8 +23,11 @@ export const Modal = forwardRef<React.ElementRef<typeof DialogContent>, Props>(
 
     return (
       <Dialog open={isOpen} onOpenChange={() => pushQuery({ modal: [] })}>
-        <DialogContent ref={ref}>
-          <DialogHeader>
+        <DialogContent
+          ref={ref}
+          className="block h-full overflow-auto border-0 px-4"
+        >
+          <DialogHeader className="mb-8 text-start">
             <DialogTitle>{title}</DialogTitle>
             {description && (
               <DialogDescription>{description}</DialogDescription>

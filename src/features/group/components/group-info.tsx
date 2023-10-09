@@ -1,6 +1,7 @@
 import { Card } from "~/shared/ui/card";
 import { groupAPI } from "..";
 import { Skeleton } from "~/shared/ui/skeleton";
+import Link from "next/link";
 
 export function GroupInfo() {
   const { data: group, isLoading } = groupAPI.useGetOne();
@@ -16,10 +17,10 @@ export function GroupInfo() {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {!isLoading && (
             <>
-              <Card className="p-4">
+              {/* <Card className="p-4">
                 <h5 className="mb-2 font-semibold">Дети</h5>
                 <span className="text-slate-500">{group?._count.kids}</span>
-              </Card>
+              </Card> */}
               <Card className="p-4">
                 <h5 className="mb-2 font-semibold">Пользователи</h5>
                 <span className="text-slate-500">{group?._count.users}</span>
@@ -46,24 +47,36 @@ export function GroupInfo() {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {!isLoading && (
             <>
-              <Card className="p-4">
-                <h5 className="mb-2 font-semibold">Родители</h5>
-                <span className="text-slate-500">{group?._count.parents}</span>
-              </Card>
-              <Card className="p-4">
-                <h5 className="mb-2 font-semibold">Примечания</h5>
-                <span className="text-slate-500">{group?._count.notes}</span>
-              </Card>
-              <Card className="p-4">
-                <h5 className="mb-2 font-semibold">Отсутствия</h5>
-                <span className="text-slate-500">{group?._count.absences}</span>
-              </Card>
-              <Card className="p-4">
-                <h5 className="mb-2 font-semibold">Прививки</h5>
-                <span className="text-slate-500">
-                  {group?._count.vaccinations}
-                </span>
-              </Card>
+              <Link href={`/dashboard/${group?.id}/parents`}>
+                <Card className="p-4">
+                  <h5 className="mb-2 font-semibold">Родители</h5>
+                  <span className="text-slate-500">
+                    {group?._count.parents}
+                  </span>
+                </Card>
+              </Link>
+              <Link href={`/dashboard/${group?.id}/notes`}>
+                <Card className="p-4">
+                  <h5 className="mb-2 font-semibold">Примечания</h5>
+                  <span className="text-slate-500">{group?._count.notes}</span>
+                </Card>
+              </Link>
+              <Link href={`/dashboard/${group?.id}/absences`}>
+                <Card className="p-4">
+                  <h5 className="mb-2 font-semibold">Отсутствия</h5>
+                  <span className="text-slate-500">
+                    {group?._count.absences}
+                  </span>
+                </Card>
+              </Link>
+              <Link href={`/dashboard/${group?.id}/vaccinations`}>
+                <Card className="p-4">
+                  <h5 className="mb-2 font-semibold">Прививки</h5>
+                  <span className="text-slate-500">
+                    {group?._count.vaccinations}
+                  </span>
+                </Card>
+              </Link>
             </>
           )}
           {isLoading && (

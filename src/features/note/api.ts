@@ -49,6 +49,17 @@ export function useDelete() {
   return mutation;
 }
 
+export function useGetOne() {
+  const noteId = useRouter().query.noteId as string;
+
+  return api.notes.getOne.useQuery(
+    {
+      noteId,
+    },
+    { enabled: !!noteId },
+  );
+}
+
 export function useGetManyByKid() {
   const kidId = useRouter().query.kidId as string;
 
@@ -60,13 +71,13 @@ export function useGetManyByKid() {
   );
 }
 
-export function useGetOne() {
-  const noteId = useRouter().query.noteId as string;
+export function useGetManyByGroup() {
+  const groupId = useRouter().query.groupId as string;
 
-  return api.notes.getOne.useQuery(
+  return api.notes.getManyByGroup.useQuery(
     {
-      noteId,
+      groupId,
     },
-    { enabled: !!noteId },
+    { enabled: !!groupId },
   );
 }

@@ -31,8 +31,7 @@ export function KidCreate() {
     <FormWrapper
       form={form}
       onSubmit={onSubmit}
-      cancelText="Назад"
-      noCancelButton
+      cancelText="Отмена"
       submitText="Создать"
     >
       <KidFormFields form={form} />

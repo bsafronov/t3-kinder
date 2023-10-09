@@ -5,19 +5,18 @@ import {
   KidParents,
   KidVaccinations,
 } from "~/features/kid";
+import { Heading } from "~/shared/ui/title";
 
 export default function KidPage() {
   return (
     <div className="space-y-8">
-      <h1 className="text-4xl font-semibold">Данные о ребёнке</h1>
+      <Heading title="Данные о ребёнке" />
       <div>
-        <h3 className="mb-1 text-2xl font-semibold text-slate-500">
-          Основная информация
-        </h3>
+        <Heading title="Основная информация" variant="secondary" />
         <KidItem />
       </div>
       <div>
-        <h3 className="mb-1 text-2xl font-semibold text-slate-500">Родители</h3>
+        <Heading title="Родители" variant="secondary" />
         <KidParents />
       </div>
       <div>
@@ -25,15 +24,11 @@ export default function KidPage() {
         <KidVaccinations />
       </div>
       <div>
-        <h3 className="mb-1 text-2xl font-semibold text-slate-500">
-          Дни отсутствия
-        </h3>
+        <Heading title="Дни отсутствия" variant="secondary" />
         <KidAbsences />
       </div>
       <div>
-        <h3 className="mb-1 text-2xl font-semibold text-slate-500">
-          Примечания
-        </h3>
+        <Heading title="Примечания" variant="secondary" />
         <KidNotes />
       </div>
     </div>

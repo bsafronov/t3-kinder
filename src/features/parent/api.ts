@@ -66,3 +66,15 @@ export function useGetManyByKid() {
   const kidId = useRouter().query.kidId as string;
   return api.parents.getManyByKid.useQuery({ kidId }, { enabled: !!kidId });
 }
+
+type GetManyByGroupProps = {
+  page?: number;
+};
+export function useGetManyByGroup(props?: GetManyByGroupProps) {
+  const page = props?.page;
+  const groupId = useRouter().query.groupId as string;
+  return api.parents.getManyByGroup.useQuery(
+    { groupId, page },
+    { enabled: !!groupId },
+  );
+}

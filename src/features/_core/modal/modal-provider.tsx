@@ -10,6 +10,7 @@ import { AbsenceCreateModal, AbsenceUpdateModal } from "~/features/absence";
 import { AbsenceTagCreateModal } from "~/features/absence-tag";
 import { NoteCreateModal, NoteUpdateModal } from "~/features/note";
 import { NoteTagCreateModal } from "~/features/note-tag";
+import { CreateEntityModal } from "~/shared/components/create-entity-modal";
 
 export function ModalProvider() {
   const [isMounted, setMounted] = useState(false);
@@ -40,6 +41,8 @@ export function ModalProvider() {
       <NoteCreateModal />
       <NoteUpdateModal />
       <NoteTagCreateModal />
+
+      <CreateEntityModal />
     </>
   );
 }

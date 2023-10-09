@@ -105,6 +105,13 @@ export const noteRouter = createTRPCRouter({
           groupId: input.groupId,
         },
         include: {
+          kid: {
+            select: {
+              firstName: true,
+              lastName: true,
+              middleName: true,
+            },
+          },
           createdBy: true,
           updatedBy: true,
           tags: true,

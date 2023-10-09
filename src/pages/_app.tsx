@@ -8,6 +8,7 @@ import "~/shared/styles/globals.css";
 import { Layout } from "~/features/_core/layout";
 import { ModalProvider } from "~/features/_core/modal";
 import { Toaster } from "react-hot-toast";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -15,6 +16,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
+      <ReactQueryDevtools />
       <ModalProvider />
       <Toaster />
       <Layout>

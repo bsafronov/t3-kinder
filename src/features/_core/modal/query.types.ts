@@ -15,4 +15,5 @@ export enum ModalEnum {
   NOTE_EDIT = "note-edit",
   NOTE_TAG_CREATE = "note-tag-create",
   NOTE_TAG_EDIT = "note-tag-edit",
+  ENTITY_CREATE = "entity-create",
 }

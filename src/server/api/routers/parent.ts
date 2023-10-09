@@ -102,13 +102,32 @@ export const parentRouter = createTRPCRouter({
     .input(
       z.object({
         groupId: z.string(),
+        page: z.number().optional(),
       }),
     )
-    .query(({ ctx, input }) => {
-      return ctx.db.parent.findMany({
+    .query(async ({ ctx, input }) => {
+      const count = await ctx.db.parent.count({
         where: {
           groupId: input.groupId,
         },
       });
+      const parents = await ctx.db.parent.findMany({
+        where: {
+          groupId: input.groupId,
+        },
+        orderBy: {
+          updatedAt: "desc",
+        },
+        take: 20,
+        skip: input.page && (input.page - 1) * 20,
+        include: {
+          kids: true,
+        },
+      });
+
+      return {
+        count,
+        parents,
+      };
     }),
 });

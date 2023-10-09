@@ -12,8 +12,8 @@ export function DashboardDesktopNavbar() {
   const groupPageId = (router.query.groupId as string) || undefined;
 
   return (
-    <div className="container sticky top-0 z-40 mt-4">
-      <Card className="p-4">
+    <div className="sticky top-4 z-40 mx-auto mt-4 max-w-screen-xl px-4">
+      <Card className="bg-white/50 p-4 backdrop-blur-md">
         <div className="flex justify-between">
           <div className="flex">
             <div className="flex w-[15rem] items-center">
