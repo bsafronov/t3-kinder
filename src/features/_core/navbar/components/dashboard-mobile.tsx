@@ -13,35 +13,45 @@ export function DashboardMobileNavbar() {
   const isKidsPage = useRouter().pathname === `/dashboard/[groupId]/kids`;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center gap-4 border-t border-slate-300 bg-white/50 py-1 backdrop-blur-sm">
+    <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center gap-4 border-t border-slate-300 bg-white/50 py-2 backdrop-blur-sm">
       <Link
         href={`/dashboard/${groupId}`}
-        className={cn("flex items-center justify-center text-slate-500", {
-          "text-blue-500": isMainPage,
-        })}
+        className={cn(
+          "flex flex-col items-center justify-center text-slate-500",
+          {
+            "text-blue-500": isMainPage,
+          },
+        )}
       >
         <Home className="h-6 w-6" />
+        <span className="text-xs">Главная</span>
       </Link>
-      <Link
-        href={`/dashboard/${groupId}/kids`}
-        className={cn("flex items-center justify-center text-slate-500", {
-          "text-blue-500": isKidsPage,
-        })}
+      <button
+        onClick={() => pushQuery({ modal: ModalEnum.KIDS_LIST })}
+        className={cn(
+          "flex flex-col items-center justify-center text-slate-500",
+          {
+            "text-blue-500": isKidsPage,
+          },
+        )}
       >
         <Baby className="h-6 w-6" />
-      </Link>
+        <span className="text-xs">Дети</span>
+      </button>
       <button
         className="text-emerald-500"
         onClick={() => pushQuery({ modal: ModalEnum.ENTITY_CREATE })}
       >
         <PlusCircle className="h-10 w-10" />
       </button>
-      <button className="flex items-center justify-center text-slate-500">
+      <button className="flex flex-col items-center justify-center text-slate-500">
         <LayoutGrid className="h-6 w-6" />
+        <span className="text-xs">Меню</span>
       </button>
 
-      <button className="flex items-center justify-center text-slate-500">
+      <button className="flex flex-col items-center justify-center text-slate-500">
         <User2 className="h-6 w-6" />
+        <span className="text-xs">Профиль</span>
       </button>
     </div>
   );

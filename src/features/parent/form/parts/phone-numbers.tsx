@@ -2,6 +2,7 @@ import { FormField, FormItem, FormLabel, FormMessage } from "~/shared/ui/form";
 import { type ParentFormType } from "../use-form";
 import { Input } from "~/shared/ui/input";
 import { Plus, Trash2 } from "lucide-react";
+import { Button } from "~/shared/ui/button";
 
 export function ParentFormFieldPhoneNumbers(form: ParentFormType) {
   const phoneNumbers = form.watch("phoneNumbers");
@@ -39,14 +40,15 @@ export function ParentFormFieldPhoneNumbers(form: ParentFormType) {
         ))}
       </ul>
       <div className="mt-2">
-        <button
-          className="flex items-center gap-1 text-xs text-blue-500 hover:text-blue-600"
+        <Button
+          size={"contents"}
+          variant={"link"}
           type="button"
           onClick={() => form.setValue("phoneNumbers", [...phoneNumbers, ""])}
         >
           <Plus className="h-3 w-3" />
           Добавить телефон
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -6,8 +6,12 @@ type Props = {
 
 export function EntityActionUpdate({ onUpdate }: Props) {
   return (
-    <button onClick={onUpdate}>
-      <EditIcon className="h-4 w-4 text-blue-500 hover:text-blue-600" />
+    <button
+      onClick={onUpdate}
+      className="flex items-center gap-2 px-4 py-1 text-sm text-blue-500 hover:bg-blue-50"
+    >
+      <EditIcon className="h-4 w-4 " />
+      Изменить
     </button>
   );
 }

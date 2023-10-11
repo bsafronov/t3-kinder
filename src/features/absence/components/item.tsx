@@ -5,6 +5,7 @@ import { Badge } from "~/shared/ui/badge";
 import { type RouterOutputs } from "~/shared/utils/api";
 import { EntityActions } from "~/shared/components/entity-actions";
 import { absenceAPI } from "..";
+import { EntityItem } from "~/shared/components/entity-item";
 
 type Props = RouterOutputs["absences"]["getManyByKid"][number];
 export function AbsenceItem(absence: Props) {
@@ -12,13 +13,9 @@ export function AbsenceItem(absence: Props) {
   const { mutate: deleteAbsence } = absenceAPI.useDelete();
 
   return (
-    <div className="group px-4 py-2">
-      <div className="flex justify-between">
-        <div className="mb-1 flex">
-          <Badge variant={"primary"}>
-            {format(new Date(absence.date), "dd.MM.yyyy")}
-          </Badge>
-        </div>
+    <EntityItem
+      body={<Body {...absence} />}
+      actions={
         <EntityActions
           entity={absence}
           onDelete={() => deleteAbsence({ absenceId: absence.id })}
@@ -26,29 +23,30 @@ export function AbsenceItem(absence: Props) {
             pushQuery({ modal: ModalEnum.ABSENCE_EDIT, absenceId: absence.id })
           }
         />
-      </div>
-      {absence.reason && (
-        <div className="text-xs">
-          <p>
-            <span className="text-slate-500">Причина: </span>
-            {absence.reason}
-          </p>
-        </div>
-      )}
+      }
+    />
+  );
+}
+
+function Body(absence: Props) {
+  return (
+    <>
+      <Badge variant={"primary"}>
+        {format(new Date(absence.date), "dd.MM.yyyy")}
+      </Badge>
+      {absence.reason && <p className="text-sm">{absence.reason}</p>}
       {absence.tags.length > 0 && (
-        <div className="mt-1 flex items-center gap-1 text-xs">
-          <div>
-            <span className="text-slate-500">Теги:</span>
-          </div>
+        <div className="flex items-center gap-1">
+          <span className="text-xs text-slate-500">Теги: </span>
           <div className="flex gap-1">
             {absence.tags.map((tag) => (
-              <Badge key={tag.id} variant={"secondary"} className="text-xs">
+              <Badge key={tag.id} variant={"secondary"}>
                 {tag.label}
               </Badge>
             ))}
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }

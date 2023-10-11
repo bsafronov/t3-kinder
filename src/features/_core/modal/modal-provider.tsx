@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { KidCreateModal, KidUpdateModal } from "~/features/kid";
+import { KidCreateModal, KidListModal, KidUpdateModal } from "~/features/kid";
 import {
   VaccinationCreateModal,
   VaccinationEditModal,
@@ -25,6 +25,7 @@ export function ModalProvider() {
     <>
       <KidCreateModal />
       <KidUpdateModal />
+      <KidListModal />
 
       <VaccinationTagCreateModal />
 

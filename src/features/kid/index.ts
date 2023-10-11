@@ -10,3 +10,4 @@ export { KidAbsences } from "./components/kid-absences";
 export { KidNotes } from "./components/kid-notes";
 export { KidParents } from "./components/kid-parents";
 export { KidVaccinations } from "./components/kid-vaccinations";
+export { KidListModal } from "./components/kid-list-modal";

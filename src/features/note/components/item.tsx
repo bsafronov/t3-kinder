@@ -5,6 +5,7 @@ import { Badge } from "~/shared/ui/badge";
 import { type RouterOutputs } from "~/shared/utils/api";
 import { EntityActions } from "~/shared/components/entity-actions";
 import { noteAPI } from "..";
+import { EntityItem } from "~/shared/components/entity-item";
 
 type Props = RouterOutputs["notes"]["getManyByKid"][number];
 export function NoteItem(note: Props) {
@@ -12,13 +13,9 @@ export function NoteItem(note: Props) {
   const { mutate: deleteNote } = noteAPI.useDelete();
 
   return (
-    <div className="group px-4 py-2">
-      <div className="flex justify-between">
-        <div className="mb-1 flex">
-          <Badge variant={"primary"}>
-            {format(new Date(note.createdAt), "dd.MM.yyyy")}
-          </Badge>
-        </div>
+    <EntityItem
+      body={<Body {...note} />}
+      actions={
         <EntityActions
           entity={note}
           onDelete={() => deleteNote({ noteId: note.id })}
@@ -26,15 +23,20 @@ export function NoteItem(note: Props) {
             pushQuery({ modal: ModalEnum.NOTE_EDIT, noteId: note.id })
           }
         />
-      </div>
-      <div className="text-xs">
-        <p>
-          <span className="text-slate-500">Примечание: </span>
-          {note.description}
-        </p>
-      </div>
+      }
+    />
+  );
+}
+
+function Body(note: Props) {
+  return (
+    <>
+      <Badge variant={"primary"}>
+        {format(new Date(note.createdAt), "dd.MM.yyyy")}
+      </Badge>
+      <p className="text-sm">{note.description}</p>
       {note.tags.length > 0 && (
-        <div className="mt-1 flex items-center gap-1 text-xs">
+        <div className="flex items-center gap-1 text-xs">
           <div>
             <span className="text-slate-500">Теги:</span>
           </div>
@@ -47,6 +49,6 @@ export function NoteItem(note: Props) {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }

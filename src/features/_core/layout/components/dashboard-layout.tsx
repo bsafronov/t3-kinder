@@ -21,7 +21,7 @@ export function DashboardLayout({ children }: { children?: React.ReactNode }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <DashboardNavbar />
-      <div className="mx-auto mt-4 flex max-w-screen-xl items-start gap-4 px-2 md:px-4">
+      <div className="mx-auto mt-4 flex max-w-screen-xl items-start gap-4 px-1 md:px-4">
         {groupId && <DashboardSidebar />}
         <main className="grow">{children}</main>
       </div>

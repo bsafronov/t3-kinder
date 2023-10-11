@@ -36,7 +36,7 @@ export function KidItem() {
           )}
         </div>
       </motion.div>
-      <div className="pb-2">
+      <div>
         <table className="w-full border-b">
           <tbody className="divide-y text-sm">
             <tr className="divide-x border-t">

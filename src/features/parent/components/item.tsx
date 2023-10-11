@@ -6,6 +6,7 @@ import { ModalEnum } from "~/features/_core/modal";
 
 import { EntityActions } from "~/shared/components/entity-actions";
 import { parentAPI } from "..";
+import { EntityItem } from "~/shared/components/entity-item";
 
 type Props = RouterOutputs["parents"]["getManyByKid"][number];
 export function ParentItem(parent: Props) {
@@ -13,27 +14,37 @@ export function ParentItem(parent: Props) {
   const { mutate: deleteParent } = parentAPI.useDelete();
 
   return (
-    <div className="group relative px-4 py-2 text-sm hover:bg-slate-50">
-      <div className="flex items-start justify-between">
-        <div className="flex flex-col items-start gap-1 md:flex-row md:items-center md:gap-2">
-          <Badge variant={"accent"}>
-            {parentRoles.find((r) => r.value === parent.role)?.label}
-          </Badge>
-          <span>
-            {parent.lastName} {parent.firstName} {parent.middleName}
-          </span>
-        </div>
-        <EntityActions
-          entity={parent}
-          onUpdate={() =>
-            pushQuery({ modal: ModalEnum.PARENT_EDIT, parentId: parent.id })
-          }
-          onDelete={() => deleteParent({ parentId: parent.id })}
-        />
+    <>
+      <EntityItem
+        body={<Body {...parent} />}
+        actions={
+          <EntityActions
+            entity={parent}
+            onUpdate={() =>
+              pushQuery({ modal: ModalEnum.PARENT_EDIT, parentId: parent.id })
+            }
+            onDelete={() => deleteParent({ parentId: parent.id })}
+          />
+        }
+      />
+    </>
+  );
+}
+
+function Body(parent: Props) {
+  return (
+    <div className="flex flex-col">
+      <div className="flex flex-col items-start text-sm md:flex-row">
+        <Badge variant={"accent"}>
+          {parentRoles.find((r) => r.value === parent.role)?.label}
+        </Badge>
+        <span>
+          {parent.lastName} {parent.firstName} {parent.middleName}
+        </span>
       </div>
-      <div>
+      <div className="text-sm">
         {parent.phoneNumbers.length > 0 && (
-          <ul className="mt-2 text-xs text-slate-500">
+          <ul className="text-slate-500">
             {parent.phoneNumbers.map((phone, i) => (
               <li key={i}>{phone}</li>
             ))}
