@@ -38,7 +38,7 @@ export function KidItem() {
       </motion.div>
       <div>
         <table className="w-full border-b">
-          <tbody className="divide-y text-sm">
+          <tbody className="divide-y">
             <tr className="divide-x border-t">
               <td className="min-w-[10rem] px-4 text-slate-500">ФИО</td>
               <td className="w-full px-4">

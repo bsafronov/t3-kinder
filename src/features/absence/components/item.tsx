@@ -34,10 +34,10 @@ function Body(absence: Props) {
       <Badge variant={"primary"}>
         {format(new Date(absence.date), "dd.MM.yyyy")}
       </Badge>
-      {absence.reason && <p className="text-sm">{absence.reason}</p>}
+      {absence.reason && <p>{absence.reason}</p>}
       {absence.tags.length > 0 && (
-        <div className="flex items-center gap-1">
-          <span className="text-xs text-slate-500">Теги: </span>
+        <div className="mt-4 flex items-center gap-1">
+          <span className="text-slate-500">Теги: </span>
           <div className="flex gap-1">
             {absence.tags.map((tag) => (
               <Badge key={tag.id} variant={"secondary"}>

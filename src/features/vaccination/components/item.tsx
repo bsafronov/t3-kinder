@@ -20,7 +20,7 @@ export function VaccinationItem(vaccination: Props) {
           <Badge variant={"primary"}>
             {format(new Date(vaccination.date), "dd.MM.yyyy")}
           </Badge>
-          <span className="text-sm">{vaccination.tag.label}</span>
+          <span>{vaccination.tag.label}</span>
         </div>
       }
       actions={

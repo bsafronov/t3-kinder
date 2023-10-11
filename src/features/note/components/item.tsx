@@ -34,15 +34,14 @@ function Body(note: Props) {
       <Badge variant={"primary"}>
         {format(new Date(note.createdAt), "dd.MM.yyyy")}
       </Badge>
-      <p className="text-sm">{note.description}</p>
+      <p>{note.description}</p>
       {note.tags.length > 0 && (
-        <div className="flex items-center gap-1 text-xs">
-          <div>
-            <span className="text-slate-500">Теги:</span>
-          </div>
-          <div className="flex gap-1">
+        <div className="mt-4 flex items-center gap-1">
+          <span className="text-slate-500">Теги:</span>
+
+          <div className=" flex gap-1">
             {note.tags.map((tag) => (
-              <Badge key={tag.id} variant={"secondary"} className="text-xs">
+              <Badge key={tag.id} variant={"secondary"}>
                 {tag.label}
               </Badge>
             ))}

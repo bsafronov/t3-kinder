@@ -30,7 +30,7 @@ export function EntityActions<T extends EntityActionProps>({
           <MoreHorizontal className="h-4 w-4 " />
         </button>
       </PopoverTrigger>
-      <PopoverContent side="bottom" className="w-max overflow-hidden px-0 py-2">
+      <PopoverContent side="left" className="w-max overflow-hidden px-0 py-2">
         <div className="flex flex-col divide-y divide-slate-50">
           {onUpdate && <EntityActionUpdate onUpdate={onUpdate} />}
           {onDelete && <EntityActionDelete onDelete={onDelete} />}

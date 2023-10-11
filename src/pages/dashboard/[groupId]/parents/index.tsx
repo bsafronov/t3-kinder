@@ -17,8 +17,14 @@ export default function ParentsPage() {
   const [searchValue, setSearchValue] = useState<string>("");
 
   const search = useDebounce<string>(searchValue, 1000);
-  const { data, fetchNextPage, isLoading, isFetchingNextPage, hasNextPage } =
-    parentAPI.useGetInfiniteByGroup({ search });
+  const {
+    data,
+    fetchNextPage,
+    isLoading,
+    isSuccess,
+    isFetchingNextPage,
+    hasNextPage,
+  } = parentAPI.useGetInfiniteByGroup({ search });
 
   const { data: count } = parentAPI.useGetCountByGroup();
   const { mutate: deleteParent } = parentAPI.useDelete();
@@ -51,12 +57,12 @@ export default function ParentsPage() {
           {flatItems.map((parent) => (
             <li key={parent.id}>
               <Card className="h-full px-4 py-2">
-                <div className="flex items-start justify-between border-b border-slate-100">
-                  <div className="grow gap-1 pb-3">
+                <div className="flex items-start justify-between">
+                  <div className="grow gap-1">
                     <Badge variant={"accent"}>
                       {utils.findRole(parent.role)}
                     </Badge>
-                    <p className="border-slate-100 text-sm">
+                    <p className="border-slate-100">
                       {utils.formatFio(parent, { full: true })}
                     </p>
                   </div>
@@ -71,32 +77,37 @@ export default function ParentsPage() {
                     }
                   />
                 </div>
-                {parent.phoneNumbers.length > 0 && (
-                  <div className="text-sm">
-                    <span className="text-slate-500">Телефоны: </span>
-                    <span>{parent.phoneNumbers.join(", ")}</span>
-                  </div>
-                )}
-                {parent.kids.length > 0 && (
-                  <div className="flex gap-1 text-sm">
-                    <span className="text-slate-500">Дети: </span>
+                <div className="mt-4">
+                  {parent.phoneNumbers.length > 0 && (
                     <div>
-                      {parent.kids.map((kid) => (
-                        <Link
-                          key={kid.id}
-                          href={`/dashboard/${parent.groupId}/kids/${kid.id}`}
-                          className="text-blue-600 hover:text-blue-500"
-                        >
-                          {utils.formatFio(kid)}
-                        </Link>
-                      ))}
+                      <span className="text-slate-500">Телефоны: </span>
+                      <span>{parent.phoneNumbers.join(", ")}</span>
                     </div>
-                  </div>
-                )}
+                  )}
+                  {parent.kids.length > 0 && (
+                    <div className="flex gap-1">
+                      <span className="text-slate-500">Дети: </span>
+                      <div>
+                        {parent.kids.map((kid) => (
+                          <Link
+                            key={kid.id}
+                            href={`/dashboard/${parent.groupId}/kids/${kid.id}`}
+                            className="text-blue-600 hover:text-blue-500"
+                          >
+                            {utils.formatFio(kid)}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </Card>
             </li>
           ))}
         </ul>
+      )}
+      {isSuccess && flatItems.length === 0 && (
+        <div className="text-center text-slate-500">Ничего не найдено</div>
       )}
       {isFetchingNextPage && <Loader />}
       {hasNextPage && (

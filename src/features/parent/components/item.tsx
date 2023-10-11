@@ -34,7 +34,7 @@ export function ParentItem(parent: Props) {
 function Body(parent: Props) {
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col items-start text-sm md:flex-row md:gap-1">
+      <div className="flex flex-col items-start md:flex-row md:gap-1">
         <Badge variant={"accent"}>
           {parentRoles.find((r) => r.value === parent.role)?.label}
         </Badge>
@@ -42,7 +42,7 @@ function Body(parent: Props) {
           {parent.lastName} {parent.firstName} {parent.middleName}
         </span>
       </div>
-      <div className="text-sm">
+      <div>
         {parent.phoneNumbers.length > 0 && (
           <ul className="text-slate-500">
             {parent.phoneNumbers.map((phone, i) => (
