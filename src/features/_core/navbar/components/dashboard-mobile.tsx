@@ -49,10 +49,13 @@ export function DashboardMobileNavbar() {
         <span className="text-xs">Меню</span>
       </button>
 
-      <button className="flex flex-col items-center justify-center text-slate-500">
+      <Link
+        className="flex flex-col items-center justify-center text-slate-500"
+        href={"/dashboard"}
+      >
         <User2 className="h-6 w-6" />
         <span className="text-xs">Профиль</span>
-      </button>
+      </Link>
     </div>
   );
 }

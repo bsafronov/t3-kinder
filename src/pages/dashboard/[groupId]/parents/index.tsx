@@ -39,7 +39,7 @@ export default function ParentsPage() {
     <>
       <Heading title="Родители" />
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col flex-col-reverse md:flex-row md:items-center md:justify-between">
         <div>
           <Input
             placeholder="Поиск..."

@@ -8,6 +8,7 @@ export function useQueryString() {
 
   const pushQuery = (query: Props) => {
     const parsed = queryString.parseUrl(location.href);
+    console.log({ ...parsed.query, ...query });
 
     const newUrl = queryString.stringifyUrl(
       {

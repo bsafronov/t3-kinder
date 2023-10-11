@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { useDebounce } from "usehooks-ts";
 import { ModalEnum } from "~/features/_core/modal";
 import { noteAPI } from "~/features/note";
+import { noteTagAPI } from "~/features/note-tag";
 import { EntityActions } from "~/shared/components/entity-actions";
 import { Loader } from "~/shared/components/loader";
 import { useQueryString } from "~/shared/hooks/useQueryString";
@@ -11,9 +12,11 @@ import { Button } from "~/shared/ui/button";
 import { Card } from "~/shared/ui/card";
 import { Input } from "~/shared/ui/input";
 import { Heading } from "~/shared/ui/title";
+import { cn } from "~/shared/utils/cn";
 
 export default function NotesPage() {
   const [searchValue, setSearchValue] = useState<string>("");
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const search = useDebounce<string>(searchValue, 1000);
 
   const {
@@ -27,6 +30,7 @@ export default function NotesPage() {
 
   const { data: count } = noteAPI.useGetCountByGroup();
   const { mutate: deleteParent } = noteAPI.useDelete();
+  const { data: noteTags } = noteTagAPI.useGetManyByGroup();
   const { pushQuery } = useQueryString();
 
   const flatItems = useMemo(() => {
@@ -34,10 +38,23 @@ export default function NotesPage() {
     return data?.pages.map(({ items }) => items).flat() || [];
   }, [data]);
 
+  const handleToggleTag = (tagId: string) => {
+    if (selectedTags.includes(tagId)) {
+      setSelectedTags(selectedTags.filter((id) => id !== tagId));
+    } else {
+      setSelectedTags([...selectedTags, tagId]);
+    }
+    pushQuery({ tags: selectedTags });
+  };
+
+  const handleClearTags = () => {
+    setSelectedTags([]);
+    pushQuery({ tags: [] });
+  };
+
   return (
     <>
       <Heading title="Примечания" />
-
       <div className="flex flex-col flex-col-reverse md:flex-row md:items-center md:justify-between">
         <div>
           <Input
@@ -47,6 +64,30 @@ export default function NotesPage() {
           />
         </div>
         <span className="text-slate-500">Всего: {count}</span>
+      </div>
+
+      <div className="mt-4 flex flex-wrap gap-1">
+        <Badge
+          className={cn("border-slate-300", {
+            "border-emerald-300/50 bg-emerald-100/50 text-emerald-600":
+              selectedTags.length === 0,
+          })}
+          onClick={handleClearTags}
+        >
+          Все
+        </Badge>
+        {noteTags?.map((tag) => (
+          <Badge
+            key={tag.id}
+            className={cn("cursor-pointer border-slate-300", {
+              "border-amber-300/50 bg-amber-100/50 text-amber-600":
+                selectedTags.includes(tag.id),
+            })}
+            onClick={() => handleToggleTag(tag.id)}
+          >
+            {tag.label}
+          </Badge>
+        ))}
       </div>
 
       {isLoading && <Loader />}

@@ -27,7 +27,7 @@ export function EntityActions<T extends EntityActionProps>({
     <Popover>
       <PopoverTrigger asChild>
         <button className="flex items-center justify-center text-slate-500 hover:text-slate-600">
-          <MoreHorizontal className="h-4 w-4 " />
+          <MoreHorizontal className="md:h-4 md:w-4" />
         </button>
       </PopoverTrigger>
       <PopoverContent side="left" className="w-max overflow-hidden px-0 py-2">
