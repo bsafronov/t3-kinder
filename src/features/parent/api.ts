@@ -78,3 +78,31 @@ export function useGetManyByGroup(props?: GetManyByGroupProps) {
     { enabled: !!groupId },
   );
 }
+
+type GetInfiniteByGroupProps = {
+  search?: string;
+};
+
+export function useGetInfiniteByGroup(props?: GetInfiniteByGroupProps) {
+  const groupId = useRouter().query.groupId as string;
+  return api.parents.getInfiniteByGroup.useInfiniteQuery(
+    {
+      search: props?.search,
+      groupId,
+      limit: 20,
+    },
+    {
+      enabled: !!groupId,
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    },
+  );
+}
+
+export function useGetCountByGroup() {
+  const groupId = useRouter().query.groupId as string;
+
+  return api.parents.getCountByGroup.useQuery(
+    { groupId },
+    { enabled: !!groupId },
+  );
+}

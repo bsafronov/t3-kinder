@@ -13,7 +13,7 @@ export function EntityActionInfo<T extends EntityActionProps>({
     entity.updatedById && entity.updatedById !== entity.createdById;
 
   return (
-    <div className="flex flex-col px-2 py-1 text-xs text-slate-500">
+    <div className="flex flex-col p-2 text-xs text-slate-500">
       <div>
         <span className="font-semibold">Создано: </span>
         <span>

@@ -8,10 +8,10 @@ export function EntityActionUpdate({ onUpdate }: Props) {
   return (
     <button
       onClick={onUpdate}
-      className="flex items-center gap-2 px-4 py-1 text-sm text-blue-500 hover:bg-blue-50"
+      className="flex items-center justify-between gap-2 px-2 py-1 text-blue-500 hover:bg-blue-50"
     >
-      <EditIcon className="h-4 w-4 " />
       Изменить
+      <EditIcon className="h-4 w-4 " />
     </button>
   );
 }
