@@ -1,5 +1,6 @@
 import { format } from "date-fns";
-import { useMemo, useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "usehooks-ts";
 import { ModalEnum } from "~/features/_core/modal";
 import { noteAPI } from "~/features/note";
@@ -15,8 +16,11 @@ import { Heading } from "~/shared/ui/title";
 import { cn } from "~/shared/utils/cn";
 
 export default function NotesPage() {
+  const router = useRouter();
   const [searchValue, setSearchValue] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [queryLoaded, setQueryLoaded] = useState(false);
+
   const search = useDebounce<string>(searchValue, 1000);
 
   const {
@@ -26,7 +30,7 @@ export default function NotesPage() {
     isSuccess,
     isFetchingNextPage,
     hasNextPage,
-  } = noteAPI.useGetInfiniteByGroup({ search });
+  } = noteAPI.useGetInfiniteByGroup({ search, tagIDs: selectedTags });
 
   const { data: count } = noteAPI.useGetCountByGroup();
   const { mutate: deleteParent } = noteAPI.useDelete();
@@ -44,13 +48,30 @@ export default function NotesPage() {
     } else {
       setSelectedTags([...selectedTags, tagId]);
     }
-    pushQuery({ tags: selectedTags });
   };
 
   const handleClearTags = () => {
-    setSelectedTags([]);
-    pushQuery({ tags: [] });
+    if (selectedTags.length > 0) {
+      setSelectedTags([]);
+    }
   };
+
+  useEffect(() => {
+    if (router.isReady) {
+      const tags = router.query.tags;
+      const parsedTags = tags ? (Array.isArray(tags) ? tags : [tags]) : [];
+      setSelectedTags(parsedTags);
+      setQueryLoaded(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.isReady]);
+
+  useEffect(() => {
+    if (queryLoaded) {
+      pushQuery({ tags: selectedTags });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedTags, queryLoaded]);
 
   return (
     <>
@@ -68,7 +89,7 @@ export default function NotesPage() {
 
       <div className="mt-4 flex flex-wrap gap-1">
         <Badge
-          className={cn("border-slate-300", {
+          className={cn("cursor-pointer border-slate-300", {
             "border-emerald-300/50 bg-emerald-100/50 text-emerald-600":
               selectedTags.length === 0,
           })}

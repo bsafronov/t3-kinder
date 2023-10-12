@@ -139,9 +139,18 @@ export const noteRouter = createTRPCRouter({
             contains: search,
             mode: "insensitive",
           },
-          tagIDs: {
-            hasEvery: tagIDs,
-          },
+          OR: [
+            {
+              tagIDs: {
+                hasSome: tagIDs,
+              },
+            },
+            {
+              tagIDs: {
+                hasEvery: tagIDs,
+              },
+            },
+          ],
         },
         orderBy: {
           updatedAt: "desc",
