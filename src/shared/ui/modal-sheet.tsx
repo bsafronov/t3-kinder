@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import { DialogDescription, DialogTitle } from "./dialog";
-import { useQueryString } from "../hooks/useQueryString";
+import { useQueryString } from "../hooks/use-query-string";
 import type { ModalEnum } from "~/features/_core/modal";
 import { Sheet, SheetContent, SheetHeader } from "./sheet";
 

@@ -3,7 +3,7 @@ import { parentAPI } from "../..";
 import { DataTable } from "~/shared/components/table";
 import { parentColumns } from "./columns";
 import { useState } from "react";
-import { useQueryString } from "~/shared/hooks/useQueryString";
+import { useQueryString } from "~/shared/hooks/use-query-string";
 import { Button } from "~/shared/ui/button";
 import { useRouter } from "next/router";
 

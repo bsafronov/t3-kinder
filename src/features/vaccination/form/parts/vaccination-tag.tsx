@@ -9,7 +9,7 @@ import { type VaccinationFormType } from "../use-form";
 import Select from "~/shared/ui/select";
 import { Button } from "~/shared/ui/button";
 import { Plus } from "lucide-react";
-import { useQueryString } from "~/shared/hooks/useQueryString";
+import { useQueryString } from "~/shared/hooks/use-query-string";
 import { ModalEnum } from "~/features/_core/modal";
 import { vaccinationTagAPI } from "~/features/vaccination-tag";
 

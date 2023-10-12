@@ -1,7 +1,7 @@
 import { Baby, Home, LayoutGrid, PlusCircle, User2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useQueryString } from "~/shared/hooks/useQueryString";
+import { useQueryString } from "~/shared/hooks/use-query-string";
 import { cn } from "~/shared/utils/cn";
 import { ModalEnum } from "../../modal";
 

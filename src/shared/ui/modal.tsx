@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "./dialog";
-import { useQueryString } from "../hooks/useQueryString";
+import { useQueryString } from "../hooks/use-query-string";
 import type { ModalEnum } from "~/features/_core/modal";
 
 type Props = {

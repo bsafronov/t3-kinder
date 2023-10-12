@@ -1,7 +1,7 @@
 import { Plus } from "lucide-react";
 import { ModalEnum } from "~/features/_core/modal/query.types";
 import { VaccinationItem, vaccinationAPI } from "~/features/vaccination";
-import { useQueryString } from "~/shared/hooks/useQueryString";
+import { useQueryString } from "~/shared/hooks/use-query-string";
 import { Button } from "~/shared/ui/button";
 import { Card } from "~/shared/ui/card";
 import { motion, AnimatePresence } from "framer-motion";

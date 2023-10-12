@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { cn } from "~/shared/utils/cn";
 import { kidAPI } from "..";
 import { Button } from "~/shared/ui/button";
-import { useQueryString } from "~/shared/hooks/useQueryString";
+import { useQueryString } from "~/shared/hooks/use-query-string";
 import { ModalEnum } from "~/features/_core/modal";
 
 export function SidebarKidList() {

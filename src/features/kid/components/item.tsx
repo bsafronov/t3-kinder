@@ -3,7 +3,7 @@ import { kidAPI } from "..";
 import { Card } from "~/shared/ui/card";
 import { format } from "date-fns";
 import { EntityActions } from "~/shared/components/entity-actions";
-import { useQueryString } from "~/shared/hooks/useQueryString";
+import { useQueryString } from "~/shared/hooks/use-query-string";
 import { ModalEnum } from "~/features/_core/modal";
 import { motion } from "framer-motion";
 export function KidItem() {

@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import { ModalEnum } from "~/features/_core/modal";
-import { useQueryString } from "~/shared/hooks/useQueryString";
+import { useQueryString } from "~/shared/hooks/use-query-string";
 import { Badge } from "~/shared/ui/badge";
 import { type RouterOutputs } from "~/shared/utils/api";
 import { EntityActions } from "~/shared/components/entity-actions";

@@ -1,6 +1,6 @@
 import { type NoteFormType } from "../use-form";
 import { Button } from "~/shared/ui/button";
-import { useQueryString } from "~/shared/hooks/useQueryString";
+import { useQueryString } from "~/shared/hooks/use-query-string";
 import { ModalEnum } from "~/features/_core/modal";
 import { Plus } from "lucide-react";
 import { noteTagAPI } from "~/features/note-tag";

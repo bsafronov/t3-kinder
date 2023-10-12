@@ -1,7 +1,7 @@
 import { parentRoles } from "~/shared/consts/parent-roles";
 import { Badge } from "~/shared/ui/badge";
 import { type RouterOutputs } from "~/shared/utils/api";
-import { useQueryString } from "~/shared/hooks/useQueryString";
+import { useQueryString } from "~/shared/hooks/use-query-string";
 import { ModalEnum } from "~/features/_core/modal";
 
 import { EntityActions } from "~/shared/components/entity-actions";
