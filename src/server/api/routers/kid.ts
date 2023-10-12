@@ -98,6 +98,9 @@ export const kidRouter = createTRPCRouter({
         where: {
           groupId: input.groupId,
         },
+        orderBy: {
+          lastName: "asc",
+        },
       });
     }),
 });

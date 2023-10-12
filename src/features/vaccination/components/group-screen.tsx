@@ -6,15 +6,17 @@ import { EntityActions } from "~/shared/components/entity-actions";
 import { Loader } from "~/shared/components/loader";
 import { useQueryString } from "~/shared/hooks/use-query-string";
 import { Badge } from "~/shared/ui/badge";
-import { Button } from "~/shared/ui/button";
+import { Button, buttonVariants } from "~/shared/ui/button";
 import { Card } from "~/shared/ui/card";
 import { Input } from "~/shared/ui/input";
 import { Heading } from "~/shared/ui/title";
 import { cn } from "~/shared/utils/cn";
-import { absenceAPI } from "..";
-import { absenceTagAPI } from "~/features/absence-tag";
+import { vaccinationAPI } from "..";
+import { vaccinationTagAPI } from "~/features/vaccination-tag";
+import Link from "next/link";
+import { utils } from "~/shared/utils";
 
-export function AbsenceGroupScreen() {
+export function VaccinationGroupScreen() {
   const [searchValue, setSearchValue] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
@@ -28,12 +30,12 @@ export function AbsenceGroupScreen() {
     isSuccess,
     isFetchingNextPage,
     hasNextPage,
-  } = absenceAPI.useGetInfiniteByGroup({ search, tagIDs });
+  } = vaccinationAPI.useGetInfiniteByGroup({ search, tagIDs });
 
-  const { data: count } = absenceAPI.useGetCountByGroup();
-  const { mutate: deleteAbsence } = absenceAPI.useDelete();
-  const { data: absenceTags, isLoading: isAbsenceTagsLoading } =
-    absenceTagAPI.useGetManyByGroup();
+  const { data: count } = vaccinationAPI.useGetCountByGroup();
+  const { mutate: deleteVaccination } = vaccinationAPI.useDelete();
+  const { data: vaccinationTags, isLoading: isAbsenceTagsLoading } =
+    vaccinationTagAPI.useGetManyByGroup();
   const { pushQuery } = useQueryString();
 
   const flatItems = useMemo(() => {
@@ -57,7 +59,7 @@ export function AbsenceGroupScreen() {
 
   return (
     <>
-      <Heading title="Дни отсутствия" />
+      <Heading title="Прививки" />
       <div className="flex flex-col flex-col-reverse md:flex-row md:items-center md:justify-between">
         <div>
           <Input
@@ -80,7 +82,7 @@ export function AbsenceGroupScreen() {
           >
             Все
           </Badge>
-          {absenceTags?.map((tag) => (
+          {vaccinationTags?.map((tag) => (
             <Badge
               key={tag.id}
               className={cn("cursor-pointer border-slate-300", {
@@ -99,47 +101,43 @@ export function AbsenceGroupScreen() {
 
       {data && (
         <ul className="mt-8 grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4">
-          {flatItems.map((absence) => (
-            <li key={absence.id}>
+          {flatItems.map((vaccination) => (
+            <li key={vaccination.id}>
               <Card className="flex h-full flex-col justify-between px-4 py-2">
                 <div className="flex items-start justify-between">
-                  <div className="grow gap-1 pb-3">
-                    <Badge variant={"primary"}>
-                      {format(new Date(absence.date), "dd.MM.yyyy")}
-                    </Badge>
-                    <p>
-                      {absence.reason ? (
-                        absence.reason
-                      ) : (
-                        <span className=" text-slate-300">
-                          Причина не указана
-                        </span>
-                      )}
-                    </p>
+                  <div>
+                    <div className="flex grow items-center gap-1 gap-2 pb-3">
+                      <Badge variant={"primary"}>
+                        {format(new Date(vaccination.date), "dd.MM.yyyy")}
+                      </Badge>
+                      <span>{vaccination.tag.label}</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-500">Ребёнок: </span>
+                      <Link
+                        href={`/dashboard/${vaccination.groupId}/kids/`}
+                        className={buttonVariants({
+                          size: "contents",
+                          variant: "link",
+                        })}
+                      >
+                        {utils.formatFio(vaccination.kid)}
+                      </Link>
+                    </div>
                   </div>
                   <EntityActions
-                    entity={absence}
-                    onDelete={() => deleteAbsence({ absenceId: absence.id })}
+                    entity={vaccination}
+                    onDelete={() =>
+                      deleteVaccination({ vaccinationId: vaccination.id })
+                    }
                     onUpdate={() =>
                       pushQuery({
-                        modal: ModalEnum.ABSENCE_EDIT,
-                        absenceId: absence.id,
+                        modal: ModalEnum.VACCINATION_EDIT,
+                        absenceId: vaccination.id,
                       })
                     }
                   />
                 </div>
-                {absence.tags.length > 0 ? (
-                  <div className="flex flex-wrap items-center gap-1">
-                    <span className="text-slate-500">Теги: </span>
-                    {absence.tags.map((tag) => (
-                      <Badge key={tag.id} variant={"secondary"}>
-                        {tag.label}
-                      </Badge>
-                    ))}
-                  </div>
-                ) : (
-                  <span className="text-slate-300">Теги не указаны</span>
-                )}
               </Card>
             </li>
           ))}

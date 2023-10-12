@@ -74,3 +74,33 @@ export function useGetManyByKid() {
     },
   );
 }
+
+type GetInfiniteByGroupProps = {
+  search?: string;
+  tagIDs?: string[];
+};
+
+export function useGetInfiniteByGroup(props?: GetInfiniteByGroupProps) {
+  const groupId = useRouter().query.groupId as string;
+  return api.vaccinations.getInfiniteByGroup.useInfiniteQuery(
+    {
+      search: props?.search,
+      tagIDs: props?.tagIDs ?? [],
+      groupId,
+      limit: 20,
+    },
+    {
+      enabled: !!groupId,
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    },
+  );
+}
+
+export function useGetCountByGroup() {
+  const groupId = useRouter().query.groupId as string;
+
+  return api.vaccinations.getCountByGroup.useQuery(
+    { groupId },
+    { enabled: !!groupId },
+  );
+}

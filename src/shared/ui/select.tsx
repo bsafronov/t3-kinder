@@ -10,7 +10,7 @@ import AsyncCreatableSelect, {
 import { cn } from "../utils/cn";
 
 const stylesReactSelect: ClassNamesConfig = {
-  container: () => cn("w-full text-sm group"),
+  container: () => cn("w-full group"),
   option: ({ isSelected, isFocused }) =>
     cn("px-4 py-2", {
       "bg-slate-200": isSelected,
@@ -19,7 +19,7 @@ const stylesReactSelect: ClassNamesConfig = {
 
   control: ({ isFocused, isDisabled }) =>
     cn(
-      "px-3 py-1 border border-border rounded-md hover:border-slate-300 group bg-white transition-[height] group-[.is-error]:bg-rose-50 group-[.is-error]:border-rose-300",
+      "px-3 py-2 border border-border rounded-md hover:border-slate-300 group bg-white transition-[height] group-[.is-error]:bg-rose-50 group-[.is-error]:border-rose-300",
       {
         "border-slate-300": isFocused,
         "bg-slate-100": isDisabled,
@@ -34,13 +34,11 @@ const stylesReactSelect: ClassNamesConfig = {
       "text-slate-500": isFocused,
       // "text-red-500": ,
     }),
-  placeholder: () => cn("text-slate-500 font-normal text-sm"),
+  placeholder: () => cn("text-slate-500 font-normal"),
   menuList: () => cn("divide-y divide-slate-200"),
   valueContainer: () => cn("flex gap-1"),
   multiValue: () =>
-    cn(
-      "rounded-sm text-sm gap-1 bg-slate-200 overflow-hidden truncate max-w-[16rem]",
-    ),
+    cn("rounded-sm gap-1 bg-slate-200 overflow-hidden truncate max-w-[16rem]"),
   multiValueLabel: () => cn("px-2 py-0.5"),
   multiValueRemove: () =>
     cn(

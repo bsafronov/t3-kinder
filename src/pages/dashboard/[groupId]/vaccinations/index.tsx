@@ -1,3 +1,5 @@
+import { VaccinationGroupScreen } from "~/features/vaccination";
+
 export default function VaccinationsPage() {
-  return <div>VaccinationsPage</div>;
+  return <VaccinationGroupScreen />;
 }
