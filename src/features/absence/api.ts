@@ -72,3 +72,33 @@ export function useGetManyByKid() {
     { enabled: !!kidId },
   );
 }
+
+type GetInfiniteByGroupProps = {
+  search?: string;
+  tagIDs?: string[];
+};
+
+export function useGetInfiniteByGroup(props?: GetInfiniteByGroupProps) {
+  const groupId = useRouter().query.groupId as string;
+  return api.absences.getInfiniteByGroup.useInfiniteQuery(
+    {
+      search: props?.search,
+      tagIDs: props?.tagIDs ?? [],
+      groupId,
+      limit: 20,
+    },
+    {
+      enabled: !!groupId,
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    },
+  );
+}
+
+export function useGetCountByGroup() {
+  const groupId = useRouter().query.groupId as string;
+
+  return api.absences.getCountByGroup.useQuery(
+    { groupId },
+    { enabled: !!groupId },
+  );
+}

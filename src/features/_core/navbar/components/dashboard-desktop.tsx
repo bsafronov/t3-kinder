@@ -1,3 +1,4 @@
+import { LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,11 +13,11 @@ export function DashboardDesktopNavbar() {
   const groupPageId = (router.query.groupId as string) || undefined;
 
   return (
-    <div className="sticky top-4 z-40 mx-auto mt-4 max-w-screen-xl px-4">
-      <Card className="bg-white/50 p-4 backdrop-blur-md">
+    <div className="sticky top-0 z-40 mx-auto mt-0 max-w-screen-xl px-4">
+      <Card className="rounded-t-none border  p-4 backdrop-blur-sm">
         <div className="flex justify-between">
           <div className="flex">
-            <div className="flex w-[15rem] items-center">
+            <div className="flex w-[16rem] items-center">
               <Image alt="logo" src={"/logo.svg"} width={150} height={130} />
             </div>
             <div className="flex gap-2">
@@ -39,12 +40,10 @@ export function DashboardDesktopNavbar() {
               <Button variant={"ghost"}>Интро</Button>
             </Link>
 
-            <Button
-              variant={"outline"}
-              onClick={() => void signOut({ callbackUrl: "/" })}
-            >
-              Выйти
-            </Button>
+            <button onClick={() => void signOut({ callbackUrl: "/" })}>
+              <LogOut className="h-6 w-6 text-red-500 hover:text-red-400" />
+              <span className="sr-only">Выйти</span>
+            </button>
           </div>
         </div>
       </Card>

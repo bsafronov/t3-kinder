@@ -13,7 +13,7 @@ export function DashboardMobileNavbar() {
   const isKidsPage = useRouter().pathname === `/dashboard/[groupId]/kids`;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center gap-4 border-t border-slate-300 bg-white/50 py-2 backdrop-blur-sm">
+    <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center gap-4 border-t border-slate-300 bg-white py-2 backdrop-blur-sm">
       <Link
         href={`/dashboard/${groupId}`}
         className={cn(

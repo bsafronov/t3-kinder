@@ -5,7 +5,7 @@ import { ModalEnum } from "~/features/_core/modal";
 import { parentAPI } from "~/features/parent";
 import { EntityActions } from "~/shared/components/entity-actions";
 import { Loader } from "~/shared/components/loader";
-import { useQueryString } from "~/shared/hooks/useQueryString";
+import { useQueryString } from "~/shared/hooks/use-query-string";
 import { Badge } from "~/shared/ui/badge";
 import { Button } from "~/shared/ui/button";
 import { Card } from "~/shared/ui/card";
