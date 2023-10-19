@@ -1,6 +1,4 @@
 import Head from "next/head";
-import { IntroNavbar } from "../../navbar";
-import { IntroSidebar } from "../../sidebar";
 
 export function IntroLayout({ children }: { children?: React.ReactNode }) {
   return (
@@ -10,10 +8,11 @@ export function IntroLayout({ children }: { children?: React.ReactNode }) {
         <meta name="description" content="Создано с любовью для воспитателей" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <IntroNavbar />
-      <div className="container mt-4 flex items-start gap-4">
-        <IntroSidebar />
-        <main className="grow">{children}</main>
+
+      <div className="bg-gradient-to-b from-slate-200 to-fuchsia-200">
+        <main className="mx-auto min-h-screen max-w-screen-xl px-4">
+          {children}
+        </main>
       </div>
     </>
   );
