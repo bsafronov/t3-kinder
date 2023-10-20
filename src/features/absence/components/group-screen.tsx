@@ -6,13 +6,15 @@ import { EntityActions } from "~/shared/components/entity-actions";
 import { Loader } from "~/shared/components/loader";
 import { useQueryString } from "~/shared/hooks/use-query-string";
 import { Badge } from "~/shared/ui/badge";
-import { Button } from "~/shared/ui/button";
+import { Button, buttonVariants } from "~/shared/ui/button";
 import { Card } from "~/shared/ui/card";
 import { Input } from "~/shared/ui/input";
 import { Heading } from "~/shared/ui/title";
 import { cn } from "~/shared/utils/cn";
 import { absenceAPI } from "..";
 import { absenceTagAPI } from "~/features/absence-tag";
+import Link from "next/link";
+import { utils } from "~/shared/utils";
 
 export function AbsenceGroupScreen() {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -69,7 +71,7 @@ export function AbsenceGroupScreen() {
         <span className="text-slate-500">Всего: {count}</span>
       </div>
 
-      {!isAbsenceTagsLoading && (
+      {!isAbsenceTagsLoading && absenceTags && absenceTags.length > 0 && (
         <div className="mt-4 flex flex-wrap gap-1">
           <Badge
             className={cn("cursor-pointer border-slate-300", {
@@ -128,18 +130,32 @@ export function AbsenceGroupScreen() {
                     }
                   />
                 </div>
-                {absence.tags.length > 0 ? (
+                <div>
                   <div className="flex flex-wrap items-center gap-1">
-                    <span className="text-slate-500">Теги: </span>
-                    {absence.tags.map((tag) => (
-                      <Badge key={tag.id} variant={"secondary"}>
-                        {tag.label}
-                      </Badge>
-                    ))}
+                    <span className="text-slate-500">Ребёнок: </span>
+                    <Link
+                      href={`/dashboard/${absence.groupId}/kids/${absence.kidId}`}
+                      className={buttonVariants({
+                        variant: "link",
+                        size: "contents",
+                      })}
+                    >
+                      {utils.formatFio(absence.kid)}
+                    </Link>
                   </div>
-                ) : (
-                  <span className="text-slate-300">Теги не указаны</span>
-                )}
+                  {absence.tags.length > 0 ? (
+                    <div className="flex flex-wrap items-center gap-1">
+                      <span className="text-slate-500">Теги: </span>
+                      {absence.tags.map((tag) => (
+                        <Badge key={tag.id} variant={"secondary"}>
+                          {tag.label}
+                        </Badge>
+                      ))}
+                    </div>
+                  ) : (
+                    <span className="text-slate-300">Теги не указаны</span>
+                  )}
+                </div>
               </Card>
             </li>
           ))}

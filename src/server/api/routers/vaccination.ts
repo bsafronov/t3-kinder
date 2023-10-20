@@ -97,7 +97,6 @@ export const vaccinationRouter = createTRPCRouter({
   getInfiniteByGroup: protectedProcedure
     .input(
       z.object({
-        search: z.string().optional(),
         tagIDs: z.array(z.string()),
         limit: z.number(),
         cursor: z.string().nullish(),

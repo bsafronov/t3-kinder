@@ -98,7 +98,7 @@ export function GroupInfo() {
                       Теги
                     </h5>
                     <span className="text-slate-500">
-                      {group?._count.noteTags}
+                      {group?._count.absenceTags}
                     </span>
                   </div>
                 </Card>
@@ -146,16 +146,21 @@ export function GroupInfo() {
         <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4">
           {!isLoading && (
             <>
-              <Card className="bg-indigo-200/70 p-4 transition-all hover:-translate-y-0.5 hover:shadow-md">
-                <h5 className="mb-2 flex items-center gap-2 font-semibold text-indigo-600">
-                  <UserCheck2 />
+              <Card className="p-4 transition-all hover:-translate-y-0.5 hover:shadow-md">
+                <h5 className="mb-2 flex items-center gap-2 font-semibold">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-200">
+                    <UserCheck2 className="h-5 w-5 text-indigo-600" />
+                  </div>
                   Пользователи
                 </h5>
                 <span className="text-slate-500">{group?.userIDs.length}</span>
               </Card>
-              <Card className="bg-indigo-200/70 p-4 transition-all hover:-translate-y-0.5 hover:shadow-md">
-                <h5 className="mb-2 flex items-center gap-2 font-semibold text-indigo-600">
-                  <UserCheck2 /> Администраторы
+              <Card className="gap-2 p-4 transition-all hover:-translate-y-0.5 hover:shadow-md">
+                <h5 className="mb-2 flex items-center gap-2 font-semibold">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-200">
+                    <UserCheck2 className="h-5 w-5 text-indigo-600" />
+                  </div>
+                  Администраторы
                 </h5>
                 <span className="text-slate-500">{group?.adminIDs.length}</span>
               </Card>

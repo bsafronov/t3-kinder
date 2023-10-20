@@ -84,7 +84,6 @@ export function useGetInfiniteByGroup(props?: GetInfiniteByGroupProps) {
   const groupId = useRouter().query.groupId as string;
   return api.vaccinations.getInfiniteByGroup.useInfiniteQuery(
     {
-      search: props?.search,
       tagIDs: props?.tagIDs ?? [],
       groupId,
       limit: 20,

@@ -9,5 +9,5 @@ body,
 }
 
 body {
-  @apply bg-gradient-to-b from-slate-200 to-fuchsia-200;
+  @apply bg-slate-200;
 }

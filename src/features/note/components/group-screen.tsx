@@ -71,7 +71,7 @@ export function NoteGroupScreen() {
         <span className="text-slate-500">Всего: {count}</span>
       </div>
 
-      {!isNoteTagsLoading && (
+      {!isNoteTagsLoading && noteTags && noteTags.length > 0 && (
         <div className="mt-4 flex flex-wrap gap-1">
           <Badge
             className={cn("cursor-pointer border-slate-300", {

@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Button } from "~/shared/ui/button";
-import { Card } from "~/shared/ui/card";
 
 export function DashboardDesktopNavbar() {
   const router = useRouter();
@@ -13,8 +12,8 @@ export function DashboardDesktopNavbar() {
   const groupPageId = (router.query.groupId as string) || undefined;
 
   return (
-    <div className="sticky top-0 z-40 mx-auto mt-0 max-w-screen-xl px-4">
-      <Card className="rounded-t-none border  p-4 backdrop-blur-sm">
+    <div className="sticky top-0 z-40 mx-auto mt-0 border-b bg-white px-4">
+      <div className="mx-auto max-w-screen-xl p-4 backdrop-blur-sm">
         <div className="flex justify-between">
           <div className="flex">
             <div className="flex w-[16rem] items-center">
@@ -46,7 +45,7 @@ export function DashboardDesktopNavbar() {
             </button>
           </div>
         </div>
-      </Card>
+      </div>
     </div>
   );
 }

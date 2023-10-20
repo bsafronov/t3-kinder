@@ -10,7 +10,7 @@ export function IntroLayout({ children }: { children?: React.ReactNode }) {
       </Head>
 
       <div className="bg-gradient-to-b from-slate-200 to-fuchsia-200">
-        <main className="mx-auto min-h-screen max-w-screen-xl px-4">
+        <main className="mx-auto min-h-screen max-w-screen-xl px-4 pb-8">
           {children}
         </main>
       </div>

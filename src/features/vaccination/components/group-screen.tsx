@@ -8,7 +8,6 @@ import { useQueryString } from "~/shared/hooks/use-query-string";
 import { Badge } from "~/shared/ui/badge";
 import { Button, buttonVariants } from "~/shared/ui/button";
 import { Card } from "~/shared/ui/card";
-import { Input } from "~/shared/ui/input";
 import { Heading } from "~/shared/ui/title";
 import { cn } from "~/shared/utils/cn";
 import { vaccinationAPI } from "..";
@@ -17,10 +16,7 @@ import Link from "next/link";
 import { utils } from "~/shared/utils";
 
 export function VaccinationGroupScreen() {
-  const [searchValue, setSearchValue] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-
-  const search = useDebounce<string>(searchValue, 1000);
   const tagIDs = useDebounce<string[]>(selectedTags, 1000);
 
   const {
@@ -30,7 +26,7 @@ export function VaccinationGroupScreen() {
     isSuccess,
     isFetchingNextPage,
     hasNextPage,
-  } = vaccinationAPI.useGetInfiniteByGroup({ search, tagIDs });
+  } = vaccinationAPI.useGetInfiniteByGroup({ tagIDs });
 
   const { data: count } = vaccinationAPI.useGetCountByGroup();
   const { mutate: deleteVaccination } = vaccinationAPI.useDelete();
@@ -60,42 +56,37 @@ export function VaccinationGroupScreen() {
   return (
     <>
       <Heading title="Прививки" />
-      <div className="flex flex-col flex-col-reverse md:flex-row md:items-center md:justify-between">
-        <div>
-          <Input
-            placeholder="Поиск..."
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-          />
-        </div>
+      <div className="flex justify-end">
         <span className="text-slate-500">Всего: {count}</span>
       </div>
 
-      {!isAbsenceTagsLoading && (
-        <div className="mt-4 flex flex-wrap gap-1">
-          <Badge
-            className={cn("cursor-pointer border-slate-300", {
-              "border-emerald-300/50 bg-emerald-100/50 text-emerald-600":
-                selectedTags.length === 0,
-            })}
-            onClick={handleClearTags}
-          >
-            Все
-          </Badge>
-          {vaccinationTags?.map((tag) => (
+      {!isAbsenceTagsLoading &&
+        vaccinationTags &&
+        vaccinationTags.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-1">
             <Badge
-              key={tag.id}
               className={cn("cursor-pointer border-slate-300", {
-                "border-amber-300/50 bg-amber-100/50 text-amber-600":
-                  selectedTags.includes(tag.id),
+                "border-emerald-300/50 bg-emerald-100/50 text-emerald-600":
+                  selectedTags.length === 0,
               })}
-              onClick={() => handleToggleTag(tag.id)}
+              onClick={handleClearTags}
             >
-              {tag.label}
+              Все
             </Badge>
-          ))}
-        </div>
-      )}
+            {vaccinationTags?.map((tag) => (
+              <Badge
+                key={tag.id}
+                className={cn("cursor-pointer border-slate-300", {
+                  "border-amber-300/50 bg-amber-100/50 text-amber-600":
+                    selectedTags.includes(tag.id),
+                })}
+                onClick={() => handleToggleTag(tag.id)}
+              >
+                {tag.label}
+              </Badge>
+            ))}
+          </div>
+        )}
 
       {isLoading && <Loader />}
 
