@@ -9,7 +9,6 @@ import { Badge } from "~/shared/ui/badge";
 import { Button, buttonVariants } from "~/shared/ui/button";
 import { Card } from "~/shared/ui/card";
 import { Input } from "~/shared/ui/input";
-import { Heading } from "~/shared/ui/title";
 import { cn } from "~/shared/utils/cn";
 import { absenceAPI } from "..";
 import { absenceTagAPI } from "~/features/absence-tag";
@@ -32,7 +31,6 @@ export function AbsenceGroupScreen() {
     hasNextPage,
   } = absenceAPI.useGetInfiniteByGroup({ search, tagIDs });
 
-  const { data: count } = absenceAPI.useGetCountByGroup();
   const { mutate: deleteAbsence } = absenceAPI.useDelete();
   const { data: absenceTags, isLoading: isAbsenceTagsLoading } =
     absenceTagAPI.useGetManyByGroup();
@@ -59,17 +57,11 @@ export function AbsenceGroupScreen() {
 
   return (
     <>
-      <Heading title="Дни отсутствия" />
-      <div className="flex flex-col flex-col-reverse md:flex-row md:items-center md:justify-between">
-        <div>
-          <Input
-            placeholder="Поиск..."
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-          />
-        </div>
-        <span className="text-slate-500">Всего: {count}</span>
-      </div>
+      <Input
+        placeholder="Поиск..."
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+      />
 
       {!isAbsenceTagsLoading && absenceTags && absenceTags.length > 0 && (
         <div className="mt-4 flex flex-wrap gap-1">

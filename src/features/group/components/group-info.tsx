@@ -5,7 +5,6 @@ import Link from "next/link";
 import {
   ClipboardList,
   NavigationOff,
-  Settings,
   Syringe,
   Tag,
   UserCheck2,
@@ -17,20 +16,6 @@ export function GroupInfo() {
 
   return (
     <div>
-      {!isLoading && (
-        <div className="mb-8 flex items-center justify-between">
-          <h1 className=" text-4xl font-bold">{group?.title}</h1>
-          <Link
-            href={`/dashboard/${group?.id}/settings`}
-            className="flex items-center gap-2 text-slate-600 hover:text-slate-500"
-          >
-            <Settings />
-            Настройки
-          </Link>
-        </div>
-      )}
-      {isLoading && <Skeleton className="mb-8 h-10 w-64 bg-white" />}
-
       <div className="mb-8">
         <h3 className="mb-1 text-2xl font-semibold text-slate-500">
           Информация по детям

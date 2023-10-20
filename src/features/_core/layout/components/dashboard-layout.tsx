@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { DashboardNavbar } from "../../navbar";
 import { DashboardSidebar } from "../../sidebar";
 import Head from "next/head";
+import { Breadcrumbs } from "~/shared/components/breadcrumbs";
 
 export function DashboardLayout({ children }: { children?: React.ReactNode }) {
   const { status } = useSession();
@@ -13,6 +14,7 @@ export function DashboardLayout({ children }: { children?: React.ReactNode }) {
     void router.push("/");
   }
 
+  console.log(router.pathname);
   return (
     <>
       <Head>
@@ -20,10 +22,17 @@ export function DashboardLayout({ children }: { children?: React.ReactNode }) {
         <meta name="description" content="Создано с любовью для воспитателей" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <DashboardNavbar />
-      <div className="mx-auto mb-24 mt-4 flex max-w-screen-xl items-start gap-4 px-2 md:mb-8 md:px-4">
-        {groupId && <DashboardSidebar />}
-        <main className="grow">{children}</main>
+
+      <div className="flex min-h-screen flex-col">
+        <DashboardNavbar />
+
+        <div className="mx-auto mb-24 mt-4 flex w-full max-w-screen-xl grow items-start gap-4 px-2 md:mb-8 md:px-4">
+          {groupId && <DashboardSidebar />}
+          <main className="min-h-full grow">
+            <Breadcrumbs />
+            {children}
+          </main>
+        </div>
       </div>
     </>
   );

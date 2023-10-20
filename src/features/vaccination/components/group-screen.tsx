@@ -8,7 +8,6 @@ import { useQueryString } from "~/shared/hooks/use-query-string";
 import { Badge } from "~/shared/ui/badge";
 import { Button, buttonVariants } from "~/shared/ui/button";
 import { Card } from "~/shared/ui/card";
-import { Heading } from "~/shared/ui/title";
 import { cn } from "~/shared/utils/cn";
 import { vaccinationAPI } from "..";
 import { vaccinationTagAPI } from "~/features/vaccination-tag";
@@ -28,7 +27,6 @@ export function VaccinationGroupScreen() {
     hasNextPage,
   } = vaccinationAPI.useGetInfiniteByGroup({ tagIDs });
 
-  const { data: count } = vaccinationAPI.useGetCountByGroup();
   const { mutate: deleteVaccination } = vaccinationAPI.useDelete();
   const { data: vaccinationTags, isLoading: isAbsenceTagsLoading } =
     vaccinationTagAPI.useGetManyByGroup();
@@ -55,11 +53,6 @@ export function VaccinationGroupScreen() {
 
   return (
     <>
-      <Heading title="Прививки" />
-      <div className="flex justify-end">
-        <span className="text-slate-500">Всего: {count}</span>
-      </div>
-
       {!isAbsenceTagsLoading &&
         vaccinationTags &&
         vaccinationTags.length > 0 && (

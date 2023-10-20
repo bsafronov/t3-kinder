@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { useDebounce } from "usehooks-ts";
 import { ModalEnum } from "~/features/_core/modal";
 import { parentAPI } from "~/features/parent";
@@ -10,7 +10,6 @@ import { Badge } from "~/shared/ui/badge";
 import { Button } from "~/shared/ui/button";
 import { Card } from "~/shared/ui/card";
 import { Input } from "~/shared/ui/input";
-import { Heading } from "~/shared/ui/title";
 import { utils } from "~/shared/utils";
 
 export function ParentGroupScreen() {
@@ -27,7 +26,6 @@ export function ParentGroupScreen() {
     hasNextPage,
   } = parentAPI.useGetInfiniteByGroup({ search });
 
-  const { data: count } = parentAPI.useGetCountByGroup();
   const { mutate: deleteParent } = parentAPI.useDelete();
   const { pushQuery } = useQueryString();
 
@@ -38,18 +36,11 @@ export function ParentGroupScreen() {
 
   return (
     <>
-      <Heading title="Родители" />
-
-      <div className="flex flex-col flex-col-reverse md:flex-row md:items-center md:justify-between">
-        <div>
-          <Input
-            placeholder="Поиск..."
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-          />
-        </div>
-        <span className="text-slate-500">Всего: {count}</span>
-      </div>
+      <Input
+        placeholder="Поиск..."
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+      />
 
       {isLoading && <Loader />}
 
@@ -91,14 +82,18 @@ export function ParentGroupScreen() {
                     <div className="flex gap-1">
                       <span className="text-slate-500">Дети: </span>
                       <div>
-                        {parent.kids.map((kid) => (
-                          <Link
-                            key={kid.id}
-                            href={`/dashboard/${parent.groupId}/kids/${kid.id}`}
-                            className="text-blue-600 hover:text-blue-500"
-                          >
-                            {utils.formatFio(kid)}
-                          </Link>
+                        {parent.kids.map((kid, index) => (
+                          <Fragment key={kid.id}>
+                            <Link
+                              href={`/dashboard/${parent.groupId}/kids/${kid.id}`}
+                              className="text-blue-600 hover:text-blue-500"
+                            >
+                              {utils.formatFio(kid)}
+                            </Link>
+                            {parent.kids.length !== index + 1 && (
+                              <span className="text-slate-300"> | </span>
+                            )}
+                          </Fragment>
                         ))}
                       </div>
                     </div>

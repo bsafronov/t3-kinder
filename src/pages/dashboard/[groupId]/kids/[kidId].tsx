@@ -10,7 +10,6 @@ import { Heading } from "~/shared/ui/title";
 export default function KidPage() {
   return (
     <div className="space-y-8">
-      <Heading title="Данные о ребёнке" />
       <div>
         <Heading title="Основная информация" variant="secondary" />
         <KidItem />

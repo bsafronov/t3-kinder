@@ -5,7 +5,11 @@ import {
   VaccinationEditModal,
 } from "~/features/vaccination";
 import { VaccinationTagCreateModal } from "~/features/vaccination-tag";
-import { ParentCreateModal, ParentEditModal } from "~/features/parent";
+import {
+  ParentCreateModal,
+  ParentEditModal,
+  ParentSelectModal,
+} from "~/features/parent";
 import { AbsenceCreateModal, AbsenceUpdateModal } from "~/features/absence";
 import { AbsenceTagCreateModal } from "~/features/absence-tag";
 import { NoteCreateModal, NoteUpdateModal } from "~/features/note";
@@ -34,6 +38,7 @@ export function ModalProvider() {
 
       <ParentCreateModal />
       <ParentEditModal />
+      <ParentSelectModal />
 
       <AbsenceCreateModal />
       <AbsenceUpdateModal />

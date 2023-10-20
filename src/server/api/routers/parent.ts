@@ -33,10 +33,10 @@ export const parentRouter = createTRPCRouter({
     .input(
       z.object({
         parentId: z.string(),
-        firstName: z.string(),
-        lastName: z.string(),
-        middleName: z.string(),
-        role: z.string(),
+        firstName: z.string().optional(),
+        lastName: z.string().optional(),
+        middleName: z.string().optional(),
+        role: z.string().optional(),
         kidIDs: z.array(z.string()).optional(),
         phoneNumbers: z.array(z.string()).optional(),
       }),
@@ -106,12 +106,7 @@ export const parentRouter = createTRPCRouter({
       }),
     )
     .query(async ({ ctx, input }) => {
-      const count = await ctx.db.parent.count({
-        where: {
-          groupId: input.groupId,
-        },
-      });
-      const parents = await ctx.db.parent.findMany({
+      return await ctx.db.parent.findMany({
         where: {
           groupId: input.groupId,
         },
@@ -124,11 +119,6 @@ export const parentRouter = createTRPCRouter({
           kids: true,
         },
       });
-
-      return {
-        count,
-        parents,
-      };
     }),
   getInfiniteByGroup: protectedProcedure
     .input(

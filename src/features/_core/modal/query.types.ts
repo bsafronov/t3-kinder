@@ -8,6 +8,7 @@ export enum ModalEnum {
   VACCINATION_EDIT = "vaccination-edit",
   PARENT_CREATE = "parent-create",
   PARENT_EDIT = "parent-edit",
+  PARENT_SELECT = "parent-select",
   ABSENCE_CREATE = "absence-create",
   ABSENCE_EDIT = "absence-edit",
   ABSENCE_TAG_CREATE = "absence-tag-create",

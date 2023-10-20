@@ -12,7 +12,6 @@ import { Badge } from "~/shared/ui/badge";
 import { Button } from "~/shared/ui/button";
 import { Card } from "~/shared/ui/card";
 import { Input } from "~/shared/ui/input";
-import { Heading } from "~/shared/ui/title";
 import { utils } from "~/shared/utils";
 import { cn } from "~/shared/utils/cn";
 
@@ -32,7 +31,6 @@ export function NoteGroupScreen() {
     hasNextPage,
   } = noteAPI.useGetInfiniteByGroup({ search, tagIDs });
 
-  const { data: count } = noteAPI.useGetCountByGroup();
   const { mutate: deleteParent } = noteAPI.useDelete();
   const { data: noteTags, isLoading: isNoteTagsLoading } =
     noteTagAPI.useGetManyByGroup();
@@ -59,17 +57,11 @@ export function NoteGroupScreen() {
 
   return (
     <>
-      <Heading title="Примечания" />
-      <div className="flex flex-col flex-col-reverse md:flex-row md:items-center md:justify-between">
-        <div>
-          <Input
-            placeholder="Поиск..."
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-          />
-        </div>
-        <span className="text-slate-500">Всего: {count}</span>
-      </div>
+      <Input
+        placeholder="Поиск..."
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+      />
 
       {!isNoteTagsLoading && noteTags && noteTags.length > 0 && (
         <div className="mt-4 flex flex-wrap gap-1">
