@@ -5,11 +5,13 @@ import Link from "next/link";
 import {
   ClipboardList,
   NavigationOff,
+  Settings,
   Syringe,
   Tag,
   UserCheck2,
   Users2,
 } from "lucide-react";
+import { buttonVariants } from "~/shared/ui/button";
 
 export function GroupInfo() {
   const { data: group, isLoading } = groupAPI.useGetOne();
@@ -159,6 +161,15 @@ export function GroupInfo() {
             </>
           )}
         </div>
+      </div>
+      <div className="flex justify-end">
+        <Link
+          href={`/dashboard/${group?.id}/settings`}
+          className={buttonVariants({ variant: "link", size: "contents" })}
+        >
+          <Settings />
+          Настройки
+        </Link>
       </div>
     </div>
   );

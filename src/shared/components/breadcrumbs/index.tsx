@@ -45,7 +45,7 @@ export function Breadcrumbs() {
   }
 
   return (
-    <div className="mb-8 flex items-center gap-1 md:mt-2">
+    <div className="mb-8 flex items-center gap-1 border-b border-slate-300/50 pb-1 pt-3">
       {!entity && <h1 className="text-slate-500">{group.data?.title}</h1>}
       {entity && (
         <>
